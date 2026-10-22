@@ -1,0 +1,1241 @@
+<title>Bodyscan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+
+<style>
+/* Dark-first fitness app — deliberately single-theme dark */
+:root {
+    /* Palette */
+    --bg: #050505;
+    --bg-2: #0A0A0A;
+    --bg-3: #141414;
+    --bg-card: #0D0D0D;
+    --bg-card-h: #181818;
+    --surface: #1A1A1A;
+    --border: #222222;
+    --border-l: #333333;
+    --fg: #EEEEF3;
+    --fg-2: #9E9EB8;
+    --fg-3: #606080;
+    --accent: #F0C800;
+    --accent-h: #FFD83D;
+    --accent-gl: rgba(240,200,0,0.28);
+    --cyan: #FFD83D;
+    --cyan-gl: rgba(255,216,61,0.25);
+    --green: #00C49A;
+    --grad: linear-gradient(135deg, #F0C800, #FFD83D);
+    --grad-s: linear-gradient(135deg, rgba(240,200,0,0.14), rgba(255,216,61,0.14));
+    /* Radii */
+    --r-s: 8px; --r: 12px; --r-l: 16px; --r-xl: 24px;
+    /* Type */
+    --f: 'DM Sans', system-ui, sans-serif;
+    --f-d: 'Outfit', var(--f);
+    /* Motion */
+    --ease: cubic-bezier(.4,0,.2,1);
+    --t: .3s var(--ease);
+    color-scheme: dark;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box }
+html { scroll-behavior:smooth }
+body {
+    font-family: var(--f);
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    padding-block: 0;
+    text-align: center;
+}
+a { color: var(--accent); text-decoration: none }
+img { max-width: 100% }
+
+/* LOADER */
+#app-loader {
+    position:fixed; inset:0; z-index:9999;
+    background:var(--bg);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:24px;
+    transition: opacity .5s, visibility .5s;
+}
+#app-loader.hid { opacity:0; visibility:hidden; pointer-events:none }
+.ld-bar { width:180px; height:3px; background:var(--bg-3); border-radius:3px; overflow:hidden }
+.ld-fill { height:100%; width:0; background:var(--grad); border-radius:3px; animation: ldFill 1s ease-out forwards }
+@keyframes ldFill { to { width:100% } }
+
+/* BUTTONS */
+.btn {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 24px; font:600 14px/1 var(--f);
+    border:none; border-radius:var(--r); cursor:pointer;
+    transition:var(--t); position:relative; overflow:hidden;
+}
+.btn-p { background:var(--grad); color:#000; font-weight:700 }
+.btn-p:hover { transform:translateY(-1px); box-shadow:0 4px 20px var(--accent-gl) }
+.btn-o { background:transparent; color:var(--fg); border:1.5px solid var(--border-l) }
+.btn-o:hover { border-color:var(--accent); color:var(--accent) }
+.btn-g { background:transparent; color:var(--fg-2); border:none; padding:8px 16px }
+.btn-g:hover { color:var(--fg); background:var(--bg-3) }
+.btn-sm { padding:8px 16px; font-size:13px }
+.btn-lg { padding:14px 28px; font-size:16px }
+.btn-full { width:100%; justify-content:center }
+.btn-soc {
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    width:100%; padding:12px; background:var(--bg-3); color:var(--fg);
+    font:500 14px/1 var(--f); border:1px solid var(--border); border-radius:var(--r); cursor:pointer;
+    transition:var(--t);
+}
+.btn-soc:hover { background:var(--surface); border-color:var(--border-l) }
+.g-modal { position:fixed; inset:0; background:rgba(0,0,0,.6); display:flex; align-items:center; justify-content:center; z-index:9999; padding:16px; backdrop-filter:blur(4px) }
+.g-box { background:#fff; border-radius:12px; padding:36px 32px 28px; width:100%; max-width:360px; text-align:center; color:#202124 }
+.g-logo { display:flex; justify-content:center; gap:2px; margin-bottom:20px }
+.g-logo span { font-size:22px; font-weight:500; font-family:'Product Sans',Arial,sans-serif }
+.g-box h3 { font:400 22px/1.3 Arial,sans-serif; color:#202124; margin-bottom:6px }
+.g-box p { font-size:14px; color:#5f6368; margin-bottom:22px }
+.g-box .g-fg { margin-bottom:16px; text-align:left }
+.g-box .g-fg label { font-size:12px; color:#5f6368; margin-bottom:4px; display:block }
+.g-box .g-fg input { width:100%; padding:12px 14px; border:1px solid #dadce0; border-radius:6px; font-size:15px; color:#202124; background:#fff; box-sizing:border-box; outline:none }
+.g-box .g-fg input:focus { border-color:#1a73e8; box-shadow:0 0 0 2px rgba(26,115,232,.2) }
+.g-box .g-fg input::placeholder { color:#9aa0a6 }
+.g-sub { font-size:12px; color:#5f6368; margin-top:20px; line-height:1.5 }
+.g-btn { width:100%; padding:12px; background:#1a73e8; color:#fff; border:none; border-radius:6px; font-size:15px; font-weight:500; cursor:pointer; margin-top:22px; transition:background .2s }
+.g-btn:hover { background:#1765cc }
+
+/* NAV */
+#nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(8,8,13,.82); backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--border); transition:var(--t);
+}
+.nav-in {
+    max-width:1200px; margin:0 auto; height:60px;
+    display:flex; align-items:center; justify-content:space-between;
+    padding-inline: max(16px, env(safe-area-inset-left, 0px));
+}
+.logo { display:flex; align-items:center; gap:8px; font:700 20px var(--f-d); color:var(--fg) }
+.logo-i { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:22px }
+.n-links { display:flex; gap:28px }
+.n-link { color:var(--fg-2); font:500 14px var(--f); transition:var(--t) }
+.n-link:hover { color:var(--fg) }
+.n-acts { display:flex; align-items:center; gap:12px }
+.burger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:8px }
+.burger span { display:block; width:20px; height:2px; background:var(--fg); border-radius:2px; transition:var(--t) }
+.mob-menu { display:none; flex-direction:column; padding:16px 24px 24px; border-top:1px solid var(--border) }
+.mob-menu.open { display:flex }
+.mob-link { padding:12px 0; color:var(--fg-2); font-size:15px; border-bottom:1px solid var(--border) }
+.mob-acts { display:flex; flex-direction:column; gap:12px; margin-top:16px }
+@media(max-width:768px) {
+    .n-links,.n-acts { display:none }
+    .burger { display:flex }
+}
+
+/* VIEWS & TRANSITIONS */
+.vw { display:none; opacity:0; transform:translateY(12px); transition:opacity .4s ease, transform .4s ease }
+.vw.on { display:block; opacity:1; transform:translateY(0) }
+
+.gt { background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent }
+
+/* HERO */
+.hero {
+    position:relative; min-height:100dvh; display:flex; align-items:center;
+    padding:100px 0 60px; max-width:1200px; margin:0 auto; gap:60px;
+    overflow:hidden;
+}
+.hero-bg { position:absolute; inset:0; overflow:hidden; pointer-events:none }
+.h-orb { position:absolute; border-radius:50%; filter:blur(100px); opacity:.25 }
+.h-o1 { width:480px; height:480px; background:#F0C800; top:-120px; left:-120px }
+.h-o2 { width:380px; height:380px; background:#FFD83D; bottom:-60px; right:-80px }
+.h-o3 { width:260px; height:260px; background:#F0C800; bottom:80px; left:38% }
+.h-grid {
+    position:absolute; inset:0;
+    background-image: linear-gradient(rgba(240,200,0,.03) 1px,transparent 1px), linear-gradient(90deg,rgba(240,200,0,.03) 1px,transparent 1px);
+    background-size:56px 56px;
+}
+.hero-c { flex:1; position:relative; z-index:1 }
+.h-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    padding:5px 14px; background:rgba(240,200,0,.1); border:1px solid rgba(240,200,0,.28);
+    border-radius:100px; font-size:13px; color:var(--accent); font-weight:500;
+    margin-bottom:24px; animation:fiu .6s ease forwards;
+}
+.h-badge-dot { width:6px; height:6px; background:var(--accent); border-radius:50%; animation:pulse 2s infinite }
+.h-title {
+    font:800 clamp(34px,5vw,60px)/1.08 var(--f-d);
+    letter-spacing:-.02em; margin-bottom:18px;
+    animation:fiu .6s .1s ease both;
+}
+.h-sub { font-size:17px; color:var(--fg-2); max-width:460px; margin-bottom:30px; animation:fiu .6s .2s ease both }
+.h-cta { display:flex; gap:14px; margin-bottom:44px; animation:fiu .6s .3s ease both; flex-wrap:wrap }
+.h-stats { display:flex; align-items:center; gap:22px; animation:fiu .6s .4s ease both; flex-wrap:wrap }
+.st-n { display:block; font:700 26px var(--f-d); color:var(--fg) }
+.st-l { font-size:12px; color:var(--fg-3) }
+.st-d { width:1px; height:36px; background:var(--border) }
+
+/* Phone Mockup */
+.hero-v { flex:0 0 320px; position:relative; z-index:1; animation:fiu .8s .3s ease both }
+.phone {
+    width:260px; height:520px; background:var(--bg-2); border-radius:34px;
+    border:2px solid var(--border-l); padding:10px; position:relative;
+    box-shadow:0 8px 48px rgba(0,0,0,.5), 0 0 70px var(--accent-gl);
+    margin:0 auto;
+}
+.phone-scr { width:100%; height:100%; background:var(--bg); border-radius:26px; overflow:hidden; display:flex; align-items:center; justify-content:center }
+.sc-prev { width:100%; height:100%; position:relative; display:flex; align-items:center; justify-content:center }
+.sc-sil { position:relative; width:140px; height:290px }
+.sc-sil svg { width:100%; height:100% }
+.sc-line {
+    position:absolute; left:0; right:0; height:2px;
+    background:var(--grad); box-shadow:0 0 18px var(--cyan-gl), 0 0 50px var(--cyan-gl);
+    animation:scanL 3s ease-in-out infinite;
+}
+@keyframes scanL { 0%{top:0} 50%{top:100%} 100%{top:0} }
+.sc-pts .sc-pt {
+    position:absolute; width:7px; height:7px; background:var(--cyan);
+    border-radius:50%; box-shadow:0 0 10px var(--cyan-gl); transform:translate(-50%,-50%);
+}
+.sc-pt span { position:absolute; left:12px; top:-3px; font-size:9px; color:var(--cyan); white-space:nowrap; font-weight:500 }
+.sc-pt.lbl-l span { left:auto; right:12px }
+
+@keyframes fiu { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+@media(max-width:900px) {
+    .hero { flex-direction:column; text-align:center; padding-top:110px }
+    .h-sub { margin-inline:auto }
+    .h-cta { justify-content:center }
+    .h-stats { justify-content:center }
+    .hero-v { flex:0 0 auto }
+}
+
+/* SECTIONS */
+.sec { padding:90px 0; max-width:1200px; margin:0 auto }
+.sec-dk { background:var(--bg-2); max-width:100%; padding-inline: max(16px, env(safe-area-inset-left, 0px)) }
+.sec-dk > * { max-width:1200px; margin-inline:auto }
+.sec-hd { text-align:center; margin-bottom:56px }
+.sec-tag {
+    display:inline-block; padding:4px 13px; font-size:11px; font-weight:600;
+    text-transform:uppercase; letter-spacing:.1em; color:var(--accent);
+    background:rgba(240,200,0,.1); border-radius:100px; margin-bottom:14px;
+}
+.sec-title { font:700 clamp(26px,4vw,42px)/1.2 var(--f-d) }
+
+/* FEATURES */
+.feat-g { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px }
+.feat-c {
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l);
+    padding:28px; transition:var(--t);
+}
+.feat-c:hover { border-color:var(--accent); background:var(--bg-card-h); transform:translateY(-3px); box-shadow:0 6px 28px rgba(240,200,0,.08) }
+.feat-i {
+    width:52px; height:52px; display:flex; align-items:center; justify-content:center;
+    background:var(--grad-s); border-radius:var(--r); color:var(--accent); margin-bottom:18px;
+}
+.feat-c h3 { font:600 17px var(--f-d); margin-bottom:6px }
+.feat-c p { font-size:14px; color:var(--fg-2); line-height:1.6 }
+
+/* STEPS */
+.steps-g { display:flex; align-items:flex-start; justify-content:center; gap:14px }
+.step-c { flex:1; max-width:300px; text-align:center; padding:28px 20px }
+.step-n { font:800 44px var(--f-d); background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; opacity:.25; margin-bottom:14px }
+.step-ib {
+    width:72px; height:72px; display:inline-flex; align-items:center; justify-content:center;
+    background:var(--bg-3); border:1px solid var(--border); border-radius:var(--r-l); color:var(--accent);
+    margin-bottom:18px;
+}
+.step-c h3 { font:600 17px var(--f-d); margin-bottom:6px }
+.step-c p { font-size:14px; color:var(--fg-2) }
+.step-con { display:flex; align-items:center; padding-top:90px }
+@media(max-width:768px) { .steps-g{flex-direction:column;align-items:center} .step-con{display:none} }
+
+/* PRICING */
+.pr-g { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px; align-items:start }
+.pr-c { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-xl); padding:32px 26px; position:relative; transition:var(--t) }
+.pr-c:hover { border-color:var(--border-l); transform:translateY(-3px) }
+.pr-pop { border-color:var(--accent); background:linear-gradient(180deg,rgba(240,200,0,.07) 0%,var(--bg-card) 50%); box-shadow:0 0 36px rgba(240,200,0,.12) }
+.pr-badge { position:absolute; top:-11px; left:50%; transform:translateX(-50%); padding:4px 14px; background:var(--grad); color:#fff; font-size:11px; font-weight:600; border-radius:100px; white-space:nowrap }
+.pr-hd { margin-bottom:26px }
+.pr-hd h3 { font:600 19px var(--f-d); margin-bottom:10px }
+.pr-price { display:flex; align-items:baseline; gap:4px; margin-bottom:6px }
+.pr-amt { font:800 38px var(--f-d) }
+.pr-per { color:var(--fg-3); font-size:14px }
+.pr-desc { font-size:14px; color:var(--fg-2) }
+.pr-feat { list-style:none; display:flex; flex-direction:column; gap:12px; margin-bottom:26px }
+.pr-feat li { display:flex; align-items:center; gap:9px; font-size:14px; color:var(--fg-2) }
+.pr-check { width:16px; height:16px; color:var(--accent); flex-shrink:0 }
+
+/* CTA */
+.sec-cta { padding:50px 0 90px }
+.cta-box {
+    position:relative; max-width:780px; margin:0 auto; text-align:center;
+    padding:72px 36px; background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--r-xl); overflow:hidden;
+}
+.cta-orb { position:absolute; width:360px; height:360px; background:radial-gradient(circle,rgba(240,200,0,.18),transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); pointer-events:none }
+.cta-box h2 { font:700 clamp(22px,3.5vw,34px)/1.2 var(--f-d); margin-bottom:14px; position:relative }
+.cta-box p { color:var(--fg-2); margin-bottom:28px; font-size:16px; position:relative }
+.cta-box .btn { position:relative }
+
+/* FOOTER */
+.ft { border-top:1px solid var(--border); padding:50px 0 20px }
+.ft-in { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; gap:36px; margin-bottom:36px; padding-inline: max(16px, env(safe-area-inset-left, 0px)) }
+.ft-brand { max-width:280px }
+.ft-brand p { color:var(--fg-3); font-size:13px; margin-top:10px }
+.ft-links { display:flex; gap:52px }
+.ft-col { display:flex; flex-direction:column; gap:9px }
+.ft-col h4 { font-size:13px; font-weight:600; margin-bottom:2px }
+.ft-col a { font-size:12px; color:var(--fg-3); transition:var(--t) }
+.ft-col a:hover { color:var(--fg) }
+.ft-bot { max-width:1200px; margin:0 auto; padding-top:20px; border-top:1px solid var(--border); text-align:center; padding-inline: max(16px, env(safe-area-inset-left, 0px)) }
+.ft-bot p { font-size:12px; color:var(--fg-3) }
+@media(max-width:768px) { .ft-in{flex-direction:column} .ft-links{flex-wrap:wrap;gap:28px} }
+
+/* AUTH */
+.auth-pg { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:76px 0 36px }
+.auth-cd {
+    width:100%; max-width:400px; background:var(--bg-card); border:1px solid var(--border);
+    border-radius:var(--r-xl); padding:36px 28px;
+}
+.auth-hd { text-align:center; margin-bottom:28px }
+.auth-hd .logo { justify-content:center; margin-bottom:22px }
+.auth-hd h2 { font:700 22px var(--f-d); margin-bottom:6px }
+.auth-hd p { color:var(--fg-2); font-size:14px }
+.auth-f { display:flex; flex-direction:column; gap:14px; margin-bottom:18px }
+.fg { display:flex; flex-direction:column; gap:5px }
+.fg label { font-size:12px; font-weight:500; color:var(--fg-2) }
+.fg input, .fg select {
+    padding:11px 14px; background:var(--bg); border:1px solid var(--border);
+    border-radius:var(--r); color:var(--fg); font:400 14px var(--f);
+    transition:var(--t); outline:none;
+}
+.fg input::placeholder { color:var(--fg-3) }
+.fg input:focus, .fg select:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-gl) }
+.fg select {
+    cursor:pointer; appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23606080' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 12px center; padding-right:34px;
+}
+.fr { display:grid; grid-template-columns:1fr 1fr; gap:10px }
+.auth-div { display:flex; align-items:center; gap:10px; margin:16px 0; color:var(--fg-3); font-size:13px }
+.auth-div::before, .auth-div::after { content:''; flex:1; height:1px; background:var(--border) }
+.auth-sw { text-align:center; font-size:14px; color:var(--fg-2); margin-top:18px }
+.auth-sw a { font-weight:600 }
+.rg { display:flex; gap:18px; padding:6px 0 }
+.rl { display:flex; align-items:center; gap:7px; cursor:pointer; font-size:14px; color:var(--fg-2) }
+.rl input[type="radio"] { accent-color:var(--accent); width:15px; height:15px }
+
+/* DASHBOARD */
+.dash { display:flex; min-height:100vh; padding-top:60px }
+.d-side {
+    width:220px; position:fixed; top:60px; left:0; bottom:0;
+    background:var(--bg-2); border-right:1px solid var(--border);
+    padding:22px 14px; display:flex; flex-direction:column; z-index:10;
+}
+.d-nav { display:flex; flex-direction:column; gap:3px; flex:1 }
+.d-link {
+    display:flex; align-items:center; gap:9px; padding:9px 12px;
+    color:var(--fg-2); font:500 14px var(--f); border-radius:var(--r-s); transition:var(--t);
+}
+.d-link:hover { color:var(--fg); background:var(--bg-3) }
+.d-link.on { color:var(--accent); background:rgba(240,200,0,.1) }
+.d-lo { margin-top:auto }
+.d-main { flex:1; margin-left:220px; padding:28px; min-height:calc(100vh - 60px) }
+.d-panel { display:none; animation:fiu .3s ease }
+.d-panel.on { display:block }
+.d-hd { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:28px }
+.d-hd h1 { font:700 26px var(--f-d) }
+.d-sub { color:var(--fg-2); font-size:14px; margin-top:3px }
+
+.d-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:14px; margin-bottom:36px }
+.d-st-c {
+    display:flex; align-items:center; gap:14px;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l); padding:18px;
+}
+.d-st-i { width:44px; height:44px; display:flex; align-items:center; justify-content:center; border-radius:var(--r); flex-shrink:0 }
+.d-st-l { font-size:12px; color:var(--fg-3) }
+.d-st-v { font:700 18px var(--f-d) }
+
+.d-empty { text-align:center; padding:54px 18px }
+.d-empty h3 { font:600 18px var(--f-d); margin-bottom:7px }
+.d-empty p { color:var(--fg-2); font-size:14px; margin-bottom:22px; max-width:380px; margin-inline:auto }
+
+@media(max-width:768px) {
+    .d-side {
+        width:100%; position:fixed; top:auto; bottom:0; left:0; right:0;
+        height:auto; flex-direction:row; padding:7px 14px;
+        border-right:none; border-top:1px solid var(--border); z-index:50;
+    }
+    .d-nav { flex-direction:row; justify-content:space-around; gap:0 }
+    .d-link { flex-direction:column; gap:3px; font-size:10px; padding:6px }
+    .d-link svg { width:16px; height:16px }
+    .d-lo { display:none }
+    .d-main { margin-left:0; padding:18px 14px 90px }
+}
+
+/* UPLOAD */
+.up-area { max-width:560px }
+.up-zone {
+    border:2px dashed var(--border-l); border-radius:var(--r-xl);
+    padding:52px 28px; text-align:center; cursor:pointer; transition:var(--t);
+}
+.up-zone:hover, .up-zone.dg { border-color:var(--accent); background:rgba(240,200,0,.04) }
+.up-icon { color:var(--fg-3); margin-bottom:14px }
+.up-txt { font-size:15px; font-weight:500; margin-bottom:3px }
+.up-hint { font-size:12px; color:var(--fg-3) }
+.up-prev { border-radius:var(--r-xl); overflow:hidden; border:2px solid var(--accent); margin-bottom:14px }
+.up-prev img { width:100%; max-height:360px; object-fit:cover; display:block }
+.sc-tips { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l); padding:22px; margin-top:22px }
+.sc-tips h4 { font-size:13px; font-weight:600; margin-bottom:14px }
+.tips-g { display:grid; grid-template-columns:1fr 1fr; gap:10px }
+.tip { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--fg-2) }
+.sc-form { margin-top:22px; display:flex; flex-direction:column; gap:14px }
+
+/* SCANNING */
+.scan-pg {
+    min-height:100vh; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; padding:76px 0; position:relative;
+}
+.scan-vis { display:flex; align-items:center; gap:52px; margin-bottom:44px; position:relative }
+.scan-orb {
+    position:absolute; width:280px; height:280px;
+    background:radial-gradient(circle,var(--accent-gl),transparent 70%);
+    top:50%; left:50%; transform:translate(-50%,-50%);
+    animation:pg 2s ease-in-out infinite;
+}
+@keyframes pg { 0%,100%{opacity:1} 50%{opacity:.5} }
+.scan-body { position:relative; width:180px; height:360px }
+.scan-body svg { width:100%; height:100% }
+.scan-anim {
+    position:absolute; left:-18px; right:-18px; height:3px;
+    background:var(--grad); box-shadow:0 0 28px var(--cyan-gl), 0 0 56px var(--cyan-gl);
+    animation:scanL 2.5s ease-in-out infinite; border-radius:3px;
+}
+.scan-d { display:flex; flex-direction:column; gap:14px; min-width:180px }
+.sd-item {
+    display:flex; align-items:center; justify-content:space-between; gap:8px; padding:10px 14px;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r);
+    opacity:0; animation:fiu .4s ease forwards; white-space:nowrap; overflow:hidden;
+}
+.sd-item:nth-child(1){animation-delay:.5s} .sd-item:nth-child(2){animation-delay:1s}
+.sd-item:nth-child(3){animation-delay:1.5s} .sd-item:nth-child(4){animation-delay:2s}
+.sd-item:nth-child(5){animation-delay:2.5s}
+.sdl { font-size:12px; color:var(--fg-3); flex-shrink:0 }
+.sdv { font-size:11px; font-weight:600; color:var(--accent); text-align:right; flex-shrink:0 }
+.scan-prog { text-align:center; width:100%; max-width:360px }
+.scan-status { font-size:15px; font-weight:500; margin-bottom:14px; color:var(--fg-2) }
+.scan-bar { width:100%; height:4px; background:var(--bg-3); border-radius:4px; overflow:hidden; margin-bottom:7px }
+.scan-bar-f { height:100%; width:0; background:var(--grad); border-radius:4px; transition:width .3s ease }
+.scan-pct { font:600 13px var(--f-d); color:var(--accent) }
+@media(max-width:600px) {
+    .scan-vis{flex-direction:column;gap:28px}
+    .scan-d{display:grid;grid-template-columns:1fr 1fr;gap:8px;min-width:0}
+    .sd-item{min-width:0}
+    .sd-item:last-child:nth-child(odd){grid-column:1/-1;max-width:50%;margin:0 auto}
+}
+
+/* RESULTS */
+.res-pg { max-width:760px; margin:0 auto; padding:76px 0 54px }
+.res-hd { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px }
+.res-hd h1 { font:700 26px var(--f-d) }
+
+.rc {
+    position:relative; background:linear-gradient(135deg,#160E30 0%,#0A1520 100%);
+    border-radius:var(--r-xl); padding:28px; overflow:hidden; margin-bottom:36px;
+    border:1px solid rgba(240,200,0,.25);
+}
+.rc-bg { position:absolute; inset:0; pointer-events:none }
+.rc-ob { position:absolute; border-radius:50%; filter:blur(56px); opacity:.25 }
+.rc-ob1 { width:180px; height:180px; background:#F0C800; top:-44px; right:-44px }
+.rc-ob2 { width:140px; height:140px; background:#FFD83D; bottom:-36px; left:-36px }
+.rc-hdr { display:flex; justify-content:space-between; margin-bottom:22px; position:relative }
+.rc-logo { font:700 15px var(--f-d) }
+.rc-date { font-size:12px; color:var(--fg-3) }
+.rc-body { display:flex; align-items:center; gap:36px; position:relative }
+.rc-morph { text-align:center; flex-shrink:0 }
+.rc-mbadge {
+    display:inline-block; padding:5px 18px; background:var(--grad);
+    border-radius:100px; font:700 13px var(--f-d); letter-spacing:.04em; margin-bottom:14px;
+    text-align:center; min-width:140px;
+}
+.rc-sil { width:90px }
+.rc-sil svg { width:100% }
+.rc-stats { flex:1; display:grid; grid-template-columns:1fr 1fr; gap:14px; min-width:0 }
+.rc-st { background:rgba(255,255,255,.04); border-radius:var(--r); padding:14px }
+.rc-st-l { font-size:10px; color:var(--fg-3); text-transform:uppercase; letter-spacing:.04em; display:block; margin-bottom:3px }
+.rc-st-v { font:600 15px var(--f-d) }
+.rc-ft {
+    display:flex; justify-content:space-between; margin-top:22px; padding-top:14px;
+    border-top:1px solid rgba(255,255,255,.07); font-size:11px; color:var(--fg-3); position:relative;
+}
+@media(max-width:600px) { .rc-body{flex-direction:column} .rc-stats{width:100%} }
+
+.res-det { display:flex; flex-direction:column; gap:28px; margin-bottom:36px }
+.res-sec { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l); padding:24px }
+.res-sec h3 {
+    display:flex; align-items:center; gap:9px;
+    font:600 17px var(--f-d); margin-bottom:18px; color:var(--accent);
+}
+.morph-det p { color:var(--fg-2); line-height:1.7; font-size:14px }
+.prop-bars { display:flex; flex-direction:column; gap:12px }
+.pb-item { display:flex; flex-direction:column; gap:5px }
+.pb-hd { display:flex; justify-content:space-between; font-size:12px }
+.pb-hd span:first-child { color:var(--fg-2) }
+.pb-hd span:last-child { color:var(--accent); font-weight:600 }
+.pb-track { height:7px; background:var(--bg); border-radius:7px; overflow:hidden }
+.pb-fill { height:100%; background:var(--grad); border-radius:7px; transition:width 1s ease }
+
+.tp,.np { display:flex; flex-direction:column; gap:10px }
+.plan-i { display:flex; gap:12px; padding:14px; background:var(--bg); border-radius:var(--r); align-items:flex-start }
+.plan-ic {
+    width:34px; height:34px; display:flex; align-items:center; justify-content:center;
+    background:var(--grad-s); border-radius:var(--r-s); flex-shrink:0; font-size:16px;
+}
+.plan-ct h4 { font-size:13px; font-weight:600; margin-bottom:3px }
+.plan-ct p { font-size:12px; color:var(--fg-2); line-height:1.5 }
+
+.res-acts { display:flex; gap:14px; justify-content:center }
+@media(max-width:600px) { .res-acts{flex-direction:column} }
+
+/* Profile */
+.prof-c {
+    display:flex; align-items:center; gap:18px;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l); padding:22px;
+}
+.prof-av {
+    width:58px; height:58px; display:flex; align-items:center; justify-content:center;
+    background:var(--grad); border-radius:50%; font:700 22px var(--f-d); flex-shrink:0;
+}
+.prof-info h3 { font-size:17px; font-weight:600 }
+.prof-info p { font-size:13px; color:var(--fg-2) }
+.prof-badge {
+    display:inline-block; margin-top:6px; padding:3px 10px;
+    font-size:11px; font-weight:600; background:rgba(240,200,0,.14);
+    color:var(--accent); border-radius:100px;
+}
+
+/* HISTORY CARDS */
+.hist-list { display:flex; flex-direction:column; gap:14px }
+.hist-card {
+    display:flex; align-items:center; gap:16px; padding:18px;
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l);
+    cursor:pointer; transition:var(--t); text-align:left;
+}
+.hist-card:hover { border-color:var(--accent); background:var(--bg-card-h); transform:translateY(-2px) }
+.hist-ic { width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:var(--grad-s); border-radius:var(--r); flex-shrink:0; color:var(--accent) }
+.hist-info { flex:1; min-width:0 }
+.hist-info h4 { font:600 14px var(--f-d); margin-bottom:3px }
+.hist-info p { font-size:12px; color:var(--fg-2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis }
+.hist-date { font-size:11px; color:var(--fg-3); white-space:nowrap }
+.hist-muscles { display:flex; flex-wrap:wrap; gap:5px; margin-top:6px }
+.hist-muscles span {
+    padding:2px 8px; font-size:10px; font-weight:500; color:var(--accent);
+    background:rgba(240,200,0,.1); border-radius:100px;
+}
+
+/* MUSCLES GRID */
+.muscles-grid { display:flex; flex-wrap:wrap; gap:8px; text-align:left }
+.muscle-tag {
+    display:inline-flex; align-items:center; gap:5px; padding:6px 12px;
+    background:var(--bg); border:1px solid var(--border); border-radius:100px;
+    font-size:12px; color:var(--fg); transition:var(--t);
+}
+.muscle-tag .dot { width:6px; height:6px; background:var(--accent); border-radius:50% }
+.muscle-tag .pct { color:var(--accent); font-weight:600 }
+
+/* RESULTS ALIGNMENT FIX */
+.res-sec h3 { justify-content:flex-start; text-align:left }
+.res-sec { text-align:left }
+.plan-i { text-align:left }
+.plan-ct { text-align:left }
+.morph-det p { text-align:center }
+.pb-hd { text-align:left }
+
+/* DASHBOARD MORPHOTYPE FIT */
+.d-st-v { font-size:clamp(13px,3.5vw,18px); word-break:break-word; line-height:1.2 }
+
+/* TOAST */
+.toast {
+    position:fixed; bottom:22px; left:50%;
+    transform:translateX(-50%) translateY(90px);
+    padding:12px 22px; background:var(--surface); border:1px solid var(--border-l);
+    border-radius:var(--r); font-size:13px; color:var(--fg);
+    box-shadow:0 8px 40px rgba(0,0,0,.5); z-index:9999;
+    transition:transform .4s var(--ease); display:flex; align-items:center; gap:8px;
+}
+.toast.show { transform:translateX(-50%) translateY(0) }
+
+/* SVG icons inline helper */
+.ck { width:16px; height:16px }
+
+/* PAYWALL */
+.paywall-blur { filter:blur(8px); -webkit-filter:blur(8px); pointer-events:none; user-select:none }
+.paywall-overlay {
+    position:fixed; inset:0; z-index:200;
+    display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+    padding:80px 20px 40px; text-align:center;
+    background:rgba(5,5,5,.92); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    overflow-y:auto;
+}
+.pw-lock { margin-bottom:16px; color:var(--accent) }
+.pw-title { font:700 clamp(20px,4vw,28px)/1.2 var(--f-d); margin-bottom:8px }
+.pw-sub { font-size:14px; color:var(--fg-2); margin-bottom:28px; max-width:460px; margin-inline:auto }
+.pw-plans { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; max-width:720px; margin:0 auto 24px }
+.pw-card {
+    background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l);
+    padding:20px 14px; transition:var(--t); position:relative;
+}
+.pw-card:hover { border-color:var(--accent); transform:translateY(-2px) }
+.pw-card.pw-pop { border-color:var(--accent); box-shadow:0 0 24px rgba(240,200,0,.12) }
+.pw-pop-badge {
+    position:absolute; top:-10px; left:50%; transform:translateX(-50%);
+    padding:3px 12px; background:var(--grad); color:#000; font-size:10px; font-weight:700;
+    border-radius:100px; white-space:nowrap;
+}
+.pw-card h4 { font:600 15px var(--f-d); margin-bottom:6px }
+.pw-price { font:800 24px var(--f-d); margin-bottom:4px }
+.pw-price span { font-size:13px; font-weight:400; color:var(--fg-3) }
+.pw-feats { list-style:none; display:flex; flex-direction:column; gap:6px; margin-bottom:14px; font-size:12px; color:var(--fg-2) }
+.pw-feats li { display:flex; align-items:center; gap:6px }
+.pw-feats li::before { content:'✓'; color:var(--accent); font-weight:700; font-size:11px }
+.pw-card .btn { font-size:13px; padding:10px 16px }
+.res-pg { position:relative }
+@media(max-width:600px) {
+    .pw-plans { grid-template-columns:1fr; max-width:320px }
+    .paywall-overlay { padding:70px 16px 32px }
+}
+
+/* MOBILE GLOBAL TWEAKS */
+@media(max-width:480px) {
+    .hero { padding:90px 16px 40px; gap:36px }
+    .h-title { font-size:28px }
+    .h-sub { font-size:15px }
+    .h-cta .btn { width:100%; justify-content:center }
+    .h-stats { gap:14px }
+    .st-n { font-size:22px }
+    .hero-v { flex:0 0 auto; margin:0 auto; overflow:hidden }
+    .hero-v .phone { width:180px; height:360px; border-radius:24px }
+    .hero-v .sc-sil { width:100px; height:210px }
+    .sec { padding:50px 16px }
+    .sec-dk { padding:50px 16px }
+    .sec-title { font-size:24px }
+    .feat-g { grid-template-columns:1fr; gap:12px }
+    .feat-c { padding:20px }
+    .pr-g { grid-template-columns:1fr; gap:14px }
+    .pr-c { padding:24px 18px }
+    .pr-amt { font-size:32px }
+    .cta-box { padding:40px 20px }
+    .auth-cd { padding:28px 20px }
+    .d-cards { grid-template-columns:1fr 1fr; gap:10px }
+    .d-st-c { padding:14px; gap:10px }
+    .d-st-i { width:36px; height:36px }
+    .d-st-v { font-size:14px }
+    .d-hd { flex-direction:column; gap:14px }
+    .d-hd .btn { width:100%; justify-content:center }
+    .up-zone { padding:36px 20px }
+    .tips-g { grid-template-columns:1fr; gap:8px }
+    .res-pg { padding:68px 14px 40px }
+    .res-hd h1 { font-size:20px }
+    .rc { padding:20px }
+    .rc-mbadge { font-size:11px; padding:4px 14px }
+    .rc-sil { width:70px }
+    .rc-st { padding:10px }
+    .rc-st-l { font-size:9px }
+    .rc-st-v { font-size:13px }
+    .res-sec { padding:18px }
+    .plan-i { padding:10px; gap:10px }
+    .plan-ic { width:28px; height:28px; font-size:14px }
+    .plan-ct h4 { font-size:12px }
+    .plan-ct p { font-size:11px }
+    .ft-in { padding-inline:16px }
+    .ft-bot { padding-inline:16px }
+}
+</style>
+
+<!-- LOADER -->
+<div id="app-loader">
+    <svg width="44" height="44" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="10" r="5" fill="url(#g1)"/><path d="M24 16C20 16 16 20 15 28L14 38H20L21 30H27L28 38H34L33 28C32 20 28 16 24 16Z" fill="url(#g1)"/><path d="M15 28L10 40H16L19 32" fill="url(#g1)" opacity=".7"/><path d="M33 28L38 40H32L29 32" fill="url(#g1)" opacity=".7"/><defs><linearGradient id="g1" x1="10" y1="5" x2="38" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#F0C800"/><stop offset="1" stop-color="#FFD83D"/></linearGradient></defs></svg>
+    <div class="ld-bar"><div class="ld-fill"></div></div>
+</div>
+
+<!-- APP -->
+<div id="app">
+<!-- NAV -->
+<nav id="nav">
+<div class="nav-in">
+    <a href="#" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
+    <div class="n-links" id="nlinks">
+        <a href="#features" class="n-link">Fonctionnalités</a>
+        <a href="#how" class="n-link">Comment ça marche</a>
+        <a href="#pricing" class="n-link">Tarifs</a>
+    </div>
+    <div class="n-acts" id="nacts">
+        <button class="btn btn-g" id="navLoginD" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Connexion</button>
+        <button class="btn btn-p btn-sm" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Commencer</button>
+    </div>
+    <button class="burger" id="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</div>
+<div class="mob-menu" id="mob-menu">
+    <a href="#features" class="mob-link" onclick="toggleMenu()">Fonctionnalités</a>
+    <a href="#how" class="mob-link" onclick="toggleMenu()">Comment ça marche</a>
+    <a href="#pricing" class="mob-link" onclick="toggleMenu()">Tarifs</a>
+    <div class="mob-acts">
+        <button class="btn btn-g" id="navLoginM" onclick="toggleMenu();document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Connexion</button>
+        <button class="btn btn-p" onclick="toggleMenu();document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Commencer</button>
+    </div>
+</div>
+</nav>
+
+<!-- ===== LANDING ===== -->
+<section class="vw on" id="vw-landing">
+<div class="hero">
+    <div class="hero-bg">
+        <div class="h-orb h-o1"></div><div class="h-orb h-o2"></div><div class="h-orb h-o3"></div>
+        <div class="h-grid"></div>
+    </div>
+    <div class="hero-c">
+        <div class="h-badge"><span class="h-badge-dot"></span> Propulsé par l'IA</div>
+        <h1 class="h-title">Découvre ton <span class="gt">morphotype</span> en 30 secondes</h1>
+        <p class="h-sub">Une simple photo suffit. Notre IA analyse ta silhouette et génère un plan personnalisé pour atteindre tes objectifs.</p>
+        <div class="h-cta">
+            <button class="btn btn-p btn-lg" onclick="goTo('signup')">Scanner mon corps <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="btn btn-o btn-lg" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Voir la démo</button>
+        </div>
+        <div class="h-stats">
+            <div><span class="st-n">12K+</span><span class="st-l">Scans réalisés</span></div>
+            <div class="st-d"></div>
+            <div><span class="st-n">98%</span><span class="st-l">Satisfaction</span></div>
+            <div class="st-d"></div>
+            <div><span class="st-n">30s</span><span class="st-l">Par scan</span></div>
+        </div>
+    </div>
+    <div class="hero-v">
+        <div class="phone">
+            <div class="phone-scr">
+                <div class="sc-prev">
+                    <div class="sc-sil">
+                        <svg viewBox="0 0 200 420" fill="none">
+<defs><linearGradient id="sg" x1="50" y1="0" x2="150" y2="420"><stop stop-color="#F0C800"/><stop offset="1" stop-color="#FFD83D"/></linearGradient></defs>
+<circle cx="100" cy="52" r="36" fill="url(#sg)"/>
+<path d="M100 88C82 88 64 96 56 112C48 128 44 152 42 172L36 220C34 228 38 234 44 234L60 234L54 300C52 312 58 318 66 318L74 318L70 390C68 404 76 414 86 414L88 414C96 414 102 406 102 396L104 318L96 318L100 260L104 318L112 318L102 396C102 406 108 414 116 414L118 414C128 414 136 404 134 390L130 318L138 318C146 318 152 312 150 300L144 234L160 234C166 234 170 228 168 220L162 172C160 152 156 128 148 112C140 96 122 88 100 88Z" fill="url(#sg)"/>
+</svg>
+                        <div class="sc-line"></div>
+                        <div class="sc-pts">
+                                                        <div class="sc-pt lbl-l" style="top:28%;left:20%"><span>Épaules</span></div>
+                            <div class="sc-pt" style="top:44%;left:88%"><span>Bras</span></div>
+                            <div class="sc-pt lbl-l" style="top:80%;left:25%"><span>Jambes</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="sec sec-dk" id="how">
+    <div class="sec-hd"><span class="sec-tag">Comment ça marche</span><h2 class="sec-title">3 étapes, <span class="gt">zéro prise de tête</span></h2></div>
+    <div class="steps-g">
+        <div class="step-c"><div class="step-n">01</div><div class="step-ib"><svg width="40" height="40" viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="4" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="7" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="3" fill="currentColor"/></svg></div><h3>Prends une photo</h3><p>De face, en tenue de sport. Notre IA s'adapte.</p></div>
+        <div class="step-con"><svg width="36" height="2"><line x1="0" y1="1" x2="36" y2="1" stroke="url(#cg)" stroke-width="2" stroke-dasharray="4 4"/><defs><linearGradient id="cg"><stop stop-color="#F0C800"/><stop offset="1" stop-color="#FFD83D"/></linearGradient></defs></svg></div>
+        <div class="step-c"><div class="step-n">02</div><div class="step-ib"><svg width="40" height="40" viewBox="0 0 48 48" fill="none"><path d="M24 8C15.16 8 8 15.16 8 24C8 32.84 15.16 40 24 40C32.84 40 40 32.84 40 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="24" r="4" fill="currentColor"/><path d="M28 20L36 12M36 12H30M36 12V18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>L'IA analyse</h3><p>Proportions, morphotype et zones de force détectés.</p></div>
+        <div class="step-con"><svg width="36" height="2"><line x1="0" y1="1" x2="36" y2="1" stroke="url(#cg)" stroke-width="2" stroke-dasharray="4 4"/></svg></div>
+        <div class="step-c"><div class="step-n">03</div><div class="step-ib"><svg width="40" height="40" viewBox="0 0 48 48" fill="none"><rect x="10" y="6" width="28" height="36" rx="4" stroke="currentColor" stroke-width="2"/><path d="M18 16H30M18 22H30M18 28H26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="34" cy="34" r="8" fill="#F0C800"/><path d="M31 34L33 36L37 32" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Reçois ton plan</h3><p>Morphotype, nutrition et programme d'entraînement personnalisé.</p></div>
+    </div>
+</div>
+
+<div class="sec" id="pricing">
+    <div class="sec-hd"><span class="sec-tag">Tarifs</span><h2 class="sec-title">Choisis ton <span class="gt">plan</span></h2></div>
+    <div class="pr-g">
+        <div class="pr-c">
+            <div class="pr-hd"><h3>Pro</h3><div class="pr-price"><span class="pr-amt">7,99€</span><span class="pr-per">/mois</span></div><p class="pr-desc">L'essentiel pour progresser</p></div>
+            <ul class="pr-feat">
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> 5 scans par mois</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Analyse morphotype</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Programme d'entraînement</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Fiche partageable</li>
+            </ul>
+            <button class="btn btn-o btn-full" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+        </div>
+        <div class="pr-c pr-pop">
+            <div class="pr-badge">Le + populaire</div>
+            <div class="pr-hd"><h3>Premium</h3><div class="pr-price"><span class="pr-amt">14,99€</span><span class="pr-per">/mois</span></div><p class="pr-desc">Pour ceux qui veulent des résultats</p></div>
+            <ul class="pr-feat">
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Scans illimités</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Analyse avancée</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Programme perso complet</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Suivi progression</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Plan nutrition détaillé</li>
+            </ul>
+            <button class="btn btn-p btn-full" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+        </div>
+        <div class="pr-c">
+            <div class="pr-hd"><h3>Elite</h3><div class="pr-price"><span class="pr-amt">24,99€</span><span class="pr-per">/mois</span></div><p class="pr-desc">L'expérience ultime</p></div>
+            <ul class="pr-feat">
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Tout Premium inclus</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Coach IA en temps réel</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Analyse vidéo mouvement</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Accès prioritaire</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Support dédié 24/7</li>
+            </ul>
+            <button class="btn btn-o btn-full" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+        </div>
+    </div>
+</div>
+
+<div class="sec" id="features">
+    <div class="sec-hd"><span class="sec-tag">Fonctionnalités</span><h2 class="sec-title">Tout pour <span class="gt">transformer</span> ton corps</h2></div>
+    <div class="feat-g">
+        <div class="feat-c"><div class="feat-i"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="2"/><path d="M16 8V16L22 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><h3>Scan en 30 secondes</h3><p>Prends une photo, et notre IA fait le reste. Résultats instantanés.</p></div>
+        <div class="feat-c"><div class="feat-i"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M6 26V6L26 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M6 22L12 16L18 20L26 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><h3>Analyse morphologique</h3><p>Détecte ton morphotype et tes proportions clés automatiquement.</p></div>
+        <div class="feat-c"><div class="feat-i"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><rect x="4" y="4" width="24" height="24" rx="4" stroke="currentColor" stroke-width="2"/><path d="M10 16H22M16 10V22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div><h3>Plan personnalisé</h3><p>Entraînement et nutrition adaptés à ton morphotype unique.</p></div>
+        <div class="feat-c"><div class="feat-i"><svg width="28" height="28" viewBox="0 0 32 32" fill="none"><path d="M16 4L20 12L28 14L22 20L24 28L16 24L8 28L10 20L4 14L12 12L16 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div><h3>Fiche partageable</h3><p>Génère ta fiche morphotype stylée pour tes stories Instagram.</p></div>
+    </div>
+</div>
+
+<div class="sec sec-cta">
+    <div class="cta-box">
+        <div class="cta-orb"></div>
+        <h2>Prêt à découvrir ton <span class="gt">potentiel</span> ?</h2>
+        <p>Rejoins des milliers d'utilisateurs qui transforment leur corps avec l'IA.</p>
+        <button class="btn btn-p btn-lg" onclick="goTo('signup')">Commencer gratuitement <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+</div>
+
+<footer class="ft">
+    <div class="ft-in">
+        <div class="ft-brand"><span class="logo"><span class="logo-i">&#x2B21;</span> Bodyscan</span><p>L'analyse morphologique propulsée par l'IA.</p></div>
+        <div class="ft-links">
+            <div class="ft-col"><h4>Produit</h4><a href="#">Fonctionnalités</a><a href="#">Tarifs</a><a href="#">FAQ</a></div>
+            <div class="ft-col"><h4>Légal</h4><a href="#">CGU</a><a href="#">Confidentialité</a><a href="#">Mentions légales</a></div>
+            <div class="ft-col"><h4>Contact</h4><a href="#">Support</a><a href="#">Instagram</a><a href="#">TikTok</a></div>
+        </div>
+    </div>
+    <div class="ft-bot"><p>&copy; 2026 Bodyscan. Tous droits réservés.</p></div>
+</footer>
+</section>
+
+<!-- ===== LOGIN ===== -->
+<section class="vw" id="vw-login">
+<div class="auth-pg"><div class="auth-cd">
+    <div class="auth-hd">
+        <a href="#" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
+        <h2>Content de te revoir</h2><p>Connecte-toi pour accéder à tes scans</p>
+    </div>
+    <form class="auth-f" onsubmit="handleLogin(event)">
+        <div class="fg"><label>Email</label><input type="email" id="l-email" placeholder="ton@email.com" required></div>
+        <div class="fg"><label>Mot de passe</label><input type="password" id="l-pw" placeholder="••••••••" required></div>
+        <button type="submit" class="btn btn-p btn-full btn-lg">Se connecter</button>
+    </form>
+    <div class="auth-div"><span>ou</span></div>
+    <button class="btn-soc" onclick="handleGoogleLogin()"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.8h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.32z" fill="#4285F4"/><path d="M10 20c2.7 0 4.96-.9 6.62-2.42l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.58-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/><path d="M4.42 11.92A6.01 6.01 0 014.1 10c0-.66.12-1.31.32-1.92V5.5H1.08A9.99 9.99 0 000 10c0 1.61.39 3.14 1.08 4.5l3.34-2.58z" fill="#FBBC05"/><path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.5l3.34 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/></svg> Continuer avec Google</button>
+    <p class="auth-sw">Pas encore de compte ? <a href="#" onclick="goTo('signup')">Créer un compte</a></p>
+</div></div>
+</section>
+
+<!-- ===== SIGNUP ===== -->
+<section class="vw" id="vw-signup">
+<div class="auth-pg"><div class="auth-cd">
+    <div class="auth-hd">
+        <a href="#" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
+        <h2>Crée ton compte</h2><p>Commence ton analyse gratuitement</p>
+    </div>
+    <form class="auth-f" onsubmit="handleSignup(event)">
+        <div class="fr">
+            <div class="fg"><label>Prénom</label><input type="text" id="s-name" placeholder="Jean" required></div>
+            <div class="fg"><label>Âge</label><input type="number" id="s-age" placeholder="25" min="14" max="99" required></div>
+        </div>
+        <div class="fg"><label>Email</label><input type="email" id="s-email" placeholder="ton@email.com" required></div>
+        <div class="fg"><label>Mot de passe</label><input type="password" id="s-pw" placeholder="8 caractères min" minlength="8" required></div>
+        <div class="fg"><label>Objectif</label>
+            <select id="s-goal" required>
+                <option value="" disabled selected>Choisis ton objectif</option>
+                <option value="muscle">Prise de muscle</option>
+                <option value="fat-loss">Perte de gras</option>
+                <option value="recomp">Recomposition corporelle</option>
+                <option value="maintain">Maintien / santé</option>
+                <option value="perf">Performance sportive</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-p btn-full btn-lg">Créer mon compte</button>
+    </form>
+    <div class="auth-div"><span>ou</span></div>
+    <button class="btn-soc" onclick="handleGoogleSignup()"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.8h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.32z" fill="#4285F4"/><path d="M10 20c2.7 0 4.96-.9 6.62-2.42l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.58-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/><path d="M4.42 11.92A6.01 6.01 0 014.1 10c0-.66.12-1.31.32-1.92V5.5H1.08A9.99 9.99 0 000 10c0 1.61.39 3.14 1.08 4.5l3.34-2.58z" fill="#FBBC05"/><path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.5l3.34 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/></svg> Continuer avec Google</button>
+    <p class="auth-sw">Déjà un compte ? <a href="#" onclick="goTo('login')">Se connecter</a></p>
+</div></div>
+</section>
+
+<!-- ===== DASHBOARD ===== -->
+<section class="vw" id="vw-dashboard">
+<div class="dash">
+    <div class="d-side">
+        <nav class="d-nav">
+            <a href="#" class="d-link on" onclick="switchTab(this,'dp-home')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3L17 10V17H12V13H8V17H3V10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Accueil</a>
+            <a href="#" class="d-link" onclick="switchTab(this,'dp-scan')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg> Scan</a>
+            <a href="#" class="d-link" onclick="switchTab(this,'dp-hist')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 5H16M4 10H16M4 15H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Historique</a>
+            <a href="#" class="d-link" onclick="switchTab(this,'dp-prof')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18C3 14 6 12 10 12C14 12 17 14 17 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Profil</a>
+        </nav>
+        <button class="btn btn-g d-lo" onclick="handleLogout()"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M6 15H3V3H6M12 12L15 9L12 6M7 9H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Déconnexion</button>
+    </div>
+    <div class="d-main">
+        <!-- HOME -->
+        <div class="d-panel on" id="dp-home">
+            <div class="d-hd"><div><h1>Salut <span id="uname">!</span> 👋</h1><p class="d-sub">Prêt pour un nouveau scan ?</p></div>
+                <button class="btn btn-p" onclick="switchTab(document.querySelector('[onclick*=dp-scan]'),'dp-scan')"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M9 3V15M3 9H15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> Nouveau scan</button>
+            </div>
+            <div class="d-cards">
+                <div class="d-st-c"><div class="d-st-i" style="background:rgba(240,200,0,.14);color:#F0C800"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg></div><div><p class="d-st-l">Scans</p><p class="d-st-v" id="st-scans">0</p></div></div>
+                <div class="d-st-c"><div class="d-st-i" style="background:rgba(255,216,61,.14);color:#FFD83D"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 4L14.5 9H19.5L15.5 13L17 18L12 15L7 18L8.5 13L4.5 9H9.5L12 4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></div><div><p class="d-st-l">Morphotype</p><p class="d-st-v" id="st-morph">—</p></div></div>
+                <div class="d-st-c"><div class="d-st-i" style="background:rgba(0,196,154,.14);color:#00C49A"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 20V4L20 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M4 16L10 10L14 14L20 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><p class="d-st-l">Progression</p><p class="d-st-v" id="st-prog">—</p></div></div>
+            </div>
+            <div class="d-empty" id="d-empty">
+                <svg width="100" height="200" viewBox="0 0 200 420" fill="none" style="margin-bottom:20px">
+<circle cx="100" cy="60" r="52" stroke="var(--accent)" stroke-width="13" fill="none" opacity=".3"/>
+<line x1="100" y1="134" x2="100" y2="310" stroke="var(--accent)" stroke-width="11" stroke-linecap="round" opacity=".3"/>
+<line x1="100" y1="134" x2="12" y2="235" stroke="var(--accent)" stroke-width="15" stroke-linecap="round" opacity=".3"/>
+<line x1="100" y1="134" x2="188" y2="235" stroke="var(--accent)" stroke-width="15" stroke-linecap="round" opacity=".3"/>
+<line x1="100" y1="328" x2="23" y2="418" stroke="var(--accent)" stroke-width="15" stroke-linecap="round" opacity=".3"/>
+<line x1="100" y1="328" x2="177" y2="418" stroke="var(--accent)" stroke-width="15" stroke-linecap="round" opacity=".3"/>
+</svg>
+                <h3>Aucun scan pour l'instant</h3>
+                <p>Lance ton premier scan pour découvrir ton morphotype et ton plan perso.</p>
+                <button class="btn btn-p" onclick="switchTab(document.querySelector('[onclick*=dp-scan]'),'dp-scan')">Faire mon premier scan</button>
+            </div>
+        </div>
+        <!-- SCAN -->
+        <div class="d-panel" id="dp-scan">
+            <div class="d-hd"><div><h1>Nouveau scan</h1><p class="d-sub">Télécharge une photo de face en tenue de sport</p></div></div>
+            <div class="up-area">
+                <div class="up-zone" id="upz" onclick="document.getElementById('phIn').click()" ondragover="event.preventDefault();this.classList.add('dg')" ondragleave="this.classList.remove('dg')" ondrop="hDrop(event)">
+                    <input type="file" id="phIn" accept="image/*" hidden onchange="hFile(event)">
+                    <div class="up-icon"><svg width="44" height="44" viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="4" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="7" stroke="currentColor" stroke-width="2"/><path d="M16 40L24 32L32 40" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg></div>
+                    <p class="up-txt">Clique ou glisse ta photo ici</p>
+                    <p class="up-hint">JPG, PNG · De face · En tenue de sport</p>
+                </div>
+                <div class="up-prev" id="upprev" hidden><img id="prevImg" src="" alt="Preview"><button class="btn btn-g" onclick="clearUp()">Changer de photo</button></div>
+                <div class="sc-tips"><h4>Conseils pour un bon scan :</h4><div class="tips-g"><div class="tip">📸 Photo de face, corps entier</div><div class="tip">👕 Tenue ajustée (sport)</div><div class="tip">💡 Bon éclairage, fond neutre</div><div class="tip">🧍 Posture droite, bras le long du corps</div></div></div>
+                <div class="sc-form" id="scForm" hidden>
+                    <div class="fr">
+                        <div class="fg"><label>Taille (cm)</label><input type="number" id="scH" placeholder="175" min="100" max="250" required></div>
+                        <div class="fg"><label>Poids (kg)</label><input type="number" id="scW" placeholder="75" min="30" max="300" required></div>
+                    </div>
+                    <div class="fg"><label>Sexe</label><div class="rg"><label class="rl"><input type="radio" name="scSex" value="male" checked> Homme</label><label class="rl"><input type="radio" name="scSex" value="female"> Femme</label></div></div>
+                    <button class="btn btn-p btn-lg btn-full" onclick="startScan()"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="2"/></svg> Lancer l'analyse</button>
+                </div>
+            </div>
+        </div>
+        <!-- HISTORY -->
+        <div class="d-panel" id="dp-hist">
+            <div class="d-hd"><div><h1>Historique</h1><p class="d-sub">Tous tes scans précédents</p></div></div>
+            <div id="hist-container"><div class="d-empty" id="hist-empty"><p>Aucun scan dans l'historique.</p></div></div>
+        </div>
+        <!-- PROFILE -->
+        <div class="d-panel" id="dp-prof"><div class="d-hd"><div><h1>Mon profil</h1><p class="d-sub">Gère tes informations</p></div></div>
+            <div class="prof-c"><div class="prof-av" id="profAv">J</div><div class="prof-info"><h3 id="profN">—</h3><p id="profE">—</p><span class="prof-badge">Plan Pro</span></div></div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- ===== SCANNING ===== -->
+<section class="vw" id="vw-scanning">
+<div class="scan-pg">
+    <div class="scan-vis">
+        <div class="scan-orb"></div>
+        <div class="scan-body">
+            <svg viewBox="0 0 200 420" fill="none">
+<defs><linearGradient id="sg2" x1="50" y1="0" x2="150" y2="420"><stop stop-color="#F0C800"/><stop offset="1" stop-color="#FFD83D"/></linearGradient></defs>
+<circle cx="100" cy="52" r="36" fill="url(#sg2)"/>
+<path d="M100 88C82 88 64 96 56 112C48 128 44 152 42 172L36 220C34 228 38 234 44 234L60 234L54 300C52 312 58 318 66 318L74 318L70 390C68 404 76 414 86 414L88 414C96 414 102 406 102 396L104 318L96 318L100 260L104 318L112 318L102 396C102 406 108 414 116 414L118 414C128 414 136 404 134 390L130 318L138 318C146 318 152 312 150 300L144 234L160 234C166 234 170 228 168 220L162 172C160 152 156 128 148 112C140 96 122 88 100 88Z" fill="url(#sg2)"/>
+</svg>
+            <div class="scan-anim"></div>
+        </div>
+        <div class="scan-d">
+            <div class="sd-item" id="sd1"><span class="sdl">Morphotype</span><span class="sdv">...</span></div>
+            <div class="sd-item" id="sd2"><span class="sdl">Épaules</span><span class="sdv">...</span></div>
+            <div class="sd-item" id="sd3"><span class="sdl">Taille</span><span class="sdv">...</span></div>
+            <div class="sd-item" id="sd4"><span class="sdl">Hanches</span><span class="sdv">...</span></div>
+            <div class="sd-item" id="sd5"><span class="sdl">Jambes</span><span class="sdv">...</span></div>
+        </div>
+    </div>
+    <div class="scan-prog">
+        <p class="scan-status" id="scStat">Analyse en cours...</p>
+        <div class="scan-bar"><div class="scan-bar-f" id="scBarF"></div></div>
+        <p class="scan-pct" id="scPct">0%</p>
+    </div>
+</div>
+</section>
+
+<!-- ===== RESULTS ===== -->
+<section class="vw" id="vw-results">
+<div class="res-pg">
+    <div class="res-hd">
+        <button class="btn btn-g" onclick="goTo('dashboard')"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M14 9H4M4 9L9 4M4 9L9 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Retour</button>
+        <h1>Tes résultats</h1>
+        <button class="btn btn-p btn-sm" onclick="shareR()"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M4 8V14H12V8M8 2V10M5 5L8 2L11 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Partager</button>
+    </div>
+    <div class="rc" id="rc">
+        <div class="rc-bg"><div class="rc-ob rc-ob1"></div><div class="rc-ob rc-ob2"></div></div>
+        <div class="rc-hdr"><span class="rc-logo">&#x2B21; Bodyscan</span><span class="rc-date" id="rcDate"></span></div>
+        <div class="rc-body">
+            <div class="rc-morph">
+                <div class="rc-mbadge" id="rcMorph">MÉSOMORPHE</div>
+                <div class="rc-sil"><svg viewBox="0 0 200 420" fill="none">
+<defs><linearGradient id="sg3" x1="50" y1="0" x2="150" y2="420"><stop stop-color="#fff"/><stop offset="1" stop-color="#ddd"/></linearGradient></defs>
+<circle cx="100" cy="52" r="36" fill="url(#sg3)" opacity=".9"/>
+<path d="M100 88C82 88 64 96 56 112C48 128 44 152 42 172L36 220C34 228 38 234 44 234L60 234L54 300C52 312 58 318 66 318L74 318L70 390C68 404 76 414 86 414L88 414C96 414 102 406 102 396L104 318L96 318L100 260L104 318L112 318L102 396C102 406 108 414 116 414L118 414C128 414 136 404 134 390L130 318L138 318C146 318 152 312 150 300L144 234L160 234C166 234 170 228 168 220L162 172C160 152 156 128 148 112C140 96 122 88 100 88Z" fill="url(#sg3)" opacity=".85"/>
+</svg></div>
+            </div>
+            <div class="rc-stats">
+                <div class="rc-st"><span class="rc-st-l">IMC</span><span class="rc-st-v" id="rcBmi">—</span></div>
+                <div class="rc-st"><span class="rc-st-l">Ratio épaules/taille</span><span class="rc-st-v" id="rcRatio">—</span></div>
+                <div class="rc-st"><span class="rc-st-l">Type corporel</span><span class="rc-st-v" id="rcType">—</span></div>
+                <div class="rc-st"><span class="rc-st-l">Points forts</span><span class="rc-st-v" id="rcStr">—</span></div>
+            </div>
+        </div>
+        <div class="rc-ft"><span>bodyscan.io</span><span>Scanne-toi aussi →</span></div>
+    </div>
+    <div class="res-det" id="resDet">
+        <div class="res-sec"><h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M3 20C3 15 6 13 11 13C16 13 19 15 19 20" stroke="currentColor" stroke-width="1.5"/></svg> Ton morphotype</h3><div class="morph-det"><p id="morphDesc"></p></div></div>
+        <div class="res-sec"><h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M3 18V4L19 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 14L8 9L12 13L19 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Muscles détectés</h3><div class="prop-bars" id="propBars"></div></div>
+        <div class="res-sec"><h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M8 11H14M11 8V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Plan d'entraînement</h3><div class="tp" id="trainPlan"></div></div>
+        <div class="res-sec"><h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M11 3C7 3 3 6 3 11C3 16 11 21 11 21C11 21 19 16 19 11C19 6 15 3 11 3Z" stroke="currentColor" stroke-width="1.5"/><circle cx="11" cy="11" r="3" stroke="currentColor" stroke-width="1.5"/></svg> Conseils nutrition</h3><div class="np" id="nutriPlan"></div></div>
+    </div>
+
+    <div class="res-acts" id="resActs">
+        <button class="btn btn-p btn-lg" onclick="switchTab(document.querySelector('[onclick*=dp-scan]'),'dp-scan');goTo('dashboard')">Nouveau scan</button>
+        <button class="btn btn-o btn-lg" onclick="shareR()">Partager ma fiche</button>
+    </div>
+
+    <!-- PAYWALL OVERLAY — covers entire results page -->
+    <div class="paywall-overlay" id="paywallOverlay" hidden>
+        <div class="pw-lock"><svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="12" y="22" width="24" height="18" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M18 22V16C18 12.7 20.7 10 24 10C27.3 10 30 12.7 30 16V22" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="32" r="2.5" fill="currentColor"/></svg></div>
+        <h2 class="pw-title">Débloque tes <span class="gt">résultats complets</span></h2>
+        <p class="pw-sub">Ton scan est prêt ! Abonne-toi pour accéder à ton analyse détaillée, ton plan d'entraînement et tes conseils nutrition.</p>
+        <div class="pw-plans">
+            <div class="pw-card">
+                <h4>Pro</h4>
+                <div class="pw-price">7,99€ <span>/mois</span></div>
+                <ul class="pw-feats"><li>5 scans / mois</li><li>Analyse morphotype</li><li>Programme training</li></ul>
+                <button class="btn btn-o btn-full btn-sm" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+            </div>
+            <div class="pw-card pw-pop">
+                <div class="pw-pop-badge">Populaire</div>
+                <h4>Premium</h4>
+                <div class="pw-price">14,99€ <span>/mois</span></div>
+                <ul class="pw-feats"><li>Scans illimités</li><li>Analyse avancée</li><li>Programme perso</li><li>Nutrition détaillée</li></ul>
+                <button class="btn btn-p btn-full btn-sm" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+            </div>
+            <div class="pw-card">
+                <h4>Elite</h4>
+                <div class="pw-price">24,99€ <span>/mois</span></div>
+                <ul class="pw-feats"><li>Tout Premium</li><li>Coach IA</li><li>Analyse vidéo</li><li>Support 24/7</li></ul>
+                <button class="btn btn-o btn-full btn-sm" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+</div>
+
+<script>
+let cv='landing',user=null,hist=[];
+
+window.addEventListener('load',()=>{loadSession();setTimeout(()=>{document.getElementById('app-loader').classList.add('hid')},1200)});
+
+function goTo(v){
+    const cur=document.querySelector('.vw.on'),nxt=document.getElementById('vw-'+v);
+    if(!nxt||cur===nxt)return;
+    const nl=document.getElementById('nlinks'),na=document.getElementById('nacts');
+    if(v==='dashboard'||v==='scanning'||v==='results'){if(nl)nl.hidden=true;if(na)na.hidden=true}
+    else{if(nl)nl.hidden=false;if(na)na.hidden=false}
+    cur.style.opacity='0';cur.style.transform='translateY(-12px)';
+    setTimeout(()=>{cur.classList.remove('on');cur.style.opacity='';cur.style.transform='';
+        nxt.style.opacity='0';nxt.style.transform='translateY(12px)';nxt.classList.add('on');
+        window.scrollTo({top:0,behavior:'instant'});
+        requestAnimationFrame(()=>{requestAnimationFrame(()=>{nxt.style.opacity='1';nxt.style.transform='translateY(0)'})});
+        cv=v;
+    },280);
+}
+
+function toggleMenu(){document.getElementById('mob-menu').classList.toggle('open')}
+
+function switchTab(el,id){
+    document.querySelectorAll('.d-link').forEach(l=>l.classList.remove('on'));
+    document.querySelectorAll('.d-panel').forEach(p=>{p.classList.remove('on');p.style.opacity='0'});
+    if(el)el.classList.add('on');
+    const pan=document.getElementById(id);
+    if(pan){pan.classList.add('on');requestAnimationFrame(()=>{pan.style.opacity='1'})}
+}
+
+function handleLogin(e){e.preventDefault();user={name:document.getElementById('l-email').value.split('@')[0],email:document.getElementById('l-email').value};saveSession();updDash();goTo('dashboard');toast('Connexion réussie !')}
+function handleSignup(e){e.preventDefault();user={name:document.getElementById('s-name').value,email:document.getElementById('s-email').value,age:document.getElementById('s-age').value,goal:document.getElementById('s-goal').value};saveSession();updDash();goTo('dashboard');toast('Compte créé !')}
+function showGoogleModal(mode){
+    const m=document.createElement('div');m.className='g-modal';m.onclick=e=>{if(e.target===m)m.remove()};
+    m.innerHTML=`<div class="g-box"><div class="g-logo"><svg width="24" height="24" viewBox="0 0 20 20"><path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.8h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.32z" fill="#4285F4"/><path d="M10 20c2.7 0 4.96-.9 6.62-2.42l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.58-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/><path d="M4.42 11.92A6.01 6.01 0 014.1 10c0-.66.12-1.31.32-1.92V5.5H1.08A9.99 9.99 0 000 10c0 1.61.39 3.14 1.08 4.5l3.34-2.58z" fill="#FBBC05"/><path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.5l3.34 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/></svg></div><h3>Se connecter</h3><p>Utiliser votre compte Google</p><div class="g-fg"><label>Adresse e-mail</label><input type="email" id="g-email" placeholder="votre@gmail.com"></div><div class="g-fg"><label>Nom d'affichage</label><input type="text" id="g-name" placeholder="Votre prénom"></div><button class="g-btn" onclick="finishGoogle()">Suivant</button><p class="g-sub">En continuant, vous acceptez les conditions d'utilisation de Bodyscan.</p></div>`;
+    document.body.appendChild(m);m.querySelector('#g-email').focus();
+}
+function finishGoogle(){
+    const n=document.getElementById('g-name').value.trim(),e=document.getElementById('g-email').value.trim();
+    if(!n||!e){toast('Remplis ton nom et email');return}
+    user={name:n,email:e,google:true};document.querySelector('.g-modal').remove();
+    saveSession();updDash();goTo('dashboard');toast('Connexion Google réussie !');
+}
+function handleGoogleLogin(){showGoogleModal('login')}
+function handleGoogleSignup(){showGoogleModal('signup')}
+function handleLogout(){user=null;hist=[];try{localStorage.removeItem('bs_user');localStorage.removeItem('bs_hist')}catch(e){}goTo('landing');toast('Déconnexion réussie')}
+function saveSession(){try{if(user){user.loginAt=user.loginAt||Date.now();localStorage.setItem('bs_user',JSON.stringify(user))}if(hist.length)localStorage.setItem('bs_hist',JSON.stringify(hist))}catch(e){}}
+function loadSession(){try{const u=localStorage.getItem('bs_user');const h=localStorage.getItem('bs_hist');if(u)user=JSON.parse(u);if(h)hist=JSON.parse(h);if(user){const days=(Date.now()-(user.loginAt||0))/(1000*60*60*24);if(days>30){user=null;hist=[];localStorage.removeItem('bs_user');localStorage.removeItem('bs_hist');return}updDash();goTo('dashboard')}}catch(e){}}
+
+function updDash(){
+    if(!user)return;
+    const nld=document.getElementById('navLoginD');if(nld)nld.hidden=true;
+    const nlm=document.getElementById('navLoginM');if(nlm)nlm.hidden=true;
+    const n=document.getElementById('uname');if(n)n.textContent=user.name;
+    const pn=document.getElementById('profN'),pe=document.getElementById('profE'),pa=document.getElementById('profAv');
+    if(pn)pn.textContent=user.name;if(pe)pe.textContent=user.email;
+    if(pa)pa.textContent=user.name.charAt(0).toUpperCase();
+    document.getElementById('st-scans').textContent=hist.length;
+    if(hist.length>0){const l=hist[hist.length-1];document.getElementById('st-morph').textContent=l.morphotype;
+    document.getElementById('st-prog').textContent=hist.length>1?'+'+hist.length+' scans':'Premier scan !';
+    document.getElementById('d-empty').hidden=true}
+    renderHist();
+}
+
+function renderHist(){
+    const c=document.getElementById('hist-container');
+    const e=document.getElementById('hist-empty');
+    if(!hist.length){if(e)e.hidden=false;return}
+    if(e)e.hidden=true;
+    let html='<div class="hist-list">';
+    [...hist].reverse().forEach((r,i)=>{
+        const muscleNames=(r.muscles||[]).slice(0,4).map(m=>`<span>${m.name}</span>`).join('');
+        const thumb=r.photo?`<img src="${r.photo}" style="width:44px;height:44px;object-fit:cover;border-radius:var(--r);flex-shrink:0">`:`<div class="hist-ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg></div>`;
+        html+=`<div class="hist-card" onclick="showRes(hist[${hist.length-1-i}]);goTo('results')">
+            ${thumb}
+            <div class="hist-info"><h4>${r.morphotype}</h4><p>${r.type} · IMC ${r.bmi}</p>
+            <div class="hist-muscles">${muscleNames}</div></div>
+            <span class="hist-date">${r.date}</span>
+        </div>`;
+    });
+    html+='</div>';
+    c.innerHTML=(e?'<div class="d-empty" id="hist-empty" hidden><p>Aucun scan dans l\'historique.</p></div>':'')+html;
+}
+
+function hFile(e){const f=e.target.files[0];if(f)procFile(f)}
+function hDrop(e){e.preventDefault();e.target.classList.remove('dg');const f=e.dataTransfer.files[0];if(f)procFile(f)}
+function procFile(f){if(!f.type.startsWith('image/')){toast('Sélectionne une image');return}
+    const r=new FileReader();r.onload=e=>{document.getElementById('upz').hidden=true;
+    document.getElementById('upprev').hidden=false;document.getElementById('prevImg').src=e.target.result;
+    document.getElementById('scForm').hidden=false};r.readAsDataURL(f)}
+function clearUp(){document.getElementById('upz').hidden=false;document.getElementById('upprev').hidden=true;document.getElementById('scForm').hidden=true;document.getElementById('phIn').value=''}
+
+function startScan(){
+    const h=document.getElementById('scH').value,w=document.getElementById('scW').value,sx=document.querySelector('input[name="scSex"]:checked').value;
+    if(!h||!w){toast('Remplis taille et poids');return}
+    goTo('scanning');
+    const steps=[{p:15,s:'Détection de la silhouette...'},{p:30,s:'Analyse des proportions...'},{p:50,s:'Calcul du morphotype...'},{p:70,s:'Évaluation musculaire...'},{p:85,s:'Génération des recommandations...'},{p:95,s:'Finalisation...'},{p:100,s:'Analyse terminée !'}];
+    let i=0;const iv=setInterval(()=>{if(i<steps.length){document.getElementById('scBarF').style.width=steps[i].p+'%';document.getElementById('scPct').textContent=steps[i].p+'%';document.getElementById('scStat').textContent=steps[i].s;i++}
+    else{clearInterval(iv);const res=genRes(+h,+w,sx);const pi=document.getElementById('prevImg');if(pi&&pi.src&&pi.src.startsWith('data:'))res.photo=pi.src;hist.push(res);saveSession();updDash();showRes(res);setTimeout(()=>goTo('results'),500)}},650);
+    [{id:'sd1',d:1400},{id:'sd2',d:2000},{id:'sd3',d:2600},{id:'sd4',d:3200},{id:'sd5',d:3800}].forEach(x=>{
+        setTimeout(()=>{const el=document.getElementById(x.id);if(el){const v=el.querySelector('.sdv');v.textContent='✓ Analysé';v.style.color='#00C49A'}},x.d)});
+}
+
+function genRes(h,w,sx){
+    const bmi=(w/((h/100)**2)).toFixed(1);let morph,type,desc,str;
+    const sr=sx==='male'?(1.4+Math.random()*.3).toFixed(2):(1.2+Math.random()*.2).toFixed(2);
+    if(bmi<20){morph='ECTOMORPHE';type='Profil longiligne';str='Endurance, agilité';desc="Tu as un profil ectomorphe — naturellement mince avec un métabolisme rapide. Concentre-toi sur l'entraînement en force avec des charges lourdes et un surplus calorique. Les exercices composés (squat, soulevé de terre, développé couché) seront tes meilleurs alliés."}
+    else if(bmi<25){morph='MÉSOMORPHE';type='Profil athlétique';str='Force, adaptation';desc="Tu as un profil mésomorphe — une structure athlétique avec une bonne capacité à développer du muscle. Un programme mixte force/hypertrophie sera idéal, avec une alimentation équilibrée en protéines et glucides complexes."}
+    else{morph='ENDOMORPHE';type='Profil puissant';str='Puissance, stabilité';desc="Tu as un profil endomorphe — une structure solide avec une tendance au stockage. Pour optimiser ta composition corporelle, privilégie le HIIT combiné à de la musculation, avec une alimentation riche en protéines et des glucides ciblés autour de l'entraînement."}
+    // Muscles visibles sur une photo de face
+    const allMuscles=[
+        {name:'Deltoïdes',zone:'épaules'},{name:'Pectoraux',zone:'torse'},{name:'Biceps',zone:'bras'},
+        {name:'Avant-bras',zone:'bras'},{name:'Trapèzes',zone:'épaules'},{name:'Abdominaux',zone:'torse'},
+        {name:'Obliques',zone:'torse'},{name:'Quadriceps',zone:'jambes'},{name:'Adducteurs',zone:'jambes'},
+        {name:'Tibial antérieur',zone:'jambes'}
+    ];
+    // Simulate detection: pick 5-8 muscles with scores
+    const pick=allMuscles.sort(()=>Math.random()-.5).slice(0,5+Math.floor(Math.random()*3));
+    const muscles=pick.map(m=>({...m,score:Math.round(40+Math.random()*55)}));
+    return{morphotype:morph,type,description:desc,strengths:str,bmi,shoulderRatio:sr,date:new Date().toLocaleDateString('fr-FR'),
+        muscles,
+        proportions:{epaules:60+Math.random()*35,poitrine:55+Math.random()*35,taille:40+Math.random()*30,hanches:50+Math.random()*35,jambes:55+Math.random()*35}};
+}
+
+function showRes(r){
+    document.getElementById('rcDate').textContent=r.date;document.getElementById('rcMorph').textContent=r.morphotype;
+    document.getElementById('rcBmi').textContent=r.bmi;document.getElementById('rcRatio').textContent=r.shoulderRatio;
+    document.getElementById('rcType').textContent=r.type;document.getElementById('rcStr').textContent=r.strengths;
+    document.getElementById('morphDesc').textContent=r.description;
+    // Render detected muscles
+    const pb=document.getElementById('propBars');pb.innerHTML='';
+    if(r.muscles&&r.muscles.length){
+        r.muscles.sort((a,b)=>b.score-a.score).forEach(m=>{
+            pb.innerHTML+=`<div class="pb-item"><div class="pb-hd"><span>${m.name}</span><span>${m.score}%</span></div><div class="pb-track"><div class="pb-fill" style="width:0%"></div></div></div>`;
+        });
+        setTimeout(()=>{pb.querySelectorAll('.pb-fill').forEach((b,i)=>{setTimeout(()=>{b.style.width=r.muscles[i].score+'%'},i*120)})},200);
+    }
+
+    const tPlans={ECTOMORPHE:[
+{i:'📅',t:'Jour 1 — Pectoraux / Triceps',d:'Développé couché 4×8 · Développé incliné haltères 3×10 · Écartés poulie 3×12 · Dips lestés 3×8 · Extension triceps poulie 3×12'},
+{i:'📅',t:'Jour 2 — Dos / Biceps',d:'Tractions lestées 4×6 · Rowing barre 4×8 · Tirage vertical serré 3×10 · Curl barre EZ 3×10 · Curl marteau 3×12'},
+{i:'📅',t:'Jour 3 — Repos',d:'Repos complet. Étirements légers, foam roller. La croissance se fait au repos.'},
+{i:'📅',t:'Jour 4 — Jambes / Fessiers',d:'Squat barre 4×8 · Presse à cuisses 3×10 · Fentes marchées 3×12 · Leg curl 3×12 · Mollets debout 4×15'},
+{i:'📅',t:'Jour 5 — Épaules / Trapèzes',d:'Développé militaire 4×8 · Élévations latérales 4×12 · Oiseau poulie 3×15 · Shrugs barre 3×12 · Face pull 3×15'},
+{i:'⚡',t:'Principe clé',d:'Séances courtes (45-60 min max). Charges lourdes, repos 2-3 min entre séries. Privilégie les exercices composés pour maximiser la prise de masse.'}],
+    MÉSOMORPHE:[
+{i:'📅',t:'Jour 1 — Push (Pecs/Épaules/Triceps)',d:'Développé couché 4×10 · Développé incliné 3×10 · Écartés 3×12 · Développé épaules 3×10 · Élévations latérales 3×15 · Dips 3×12'},
+{i:'📅',t:'Jour 2 — Pull (Dos/Biceps)',d:'Tractions 4×10 · Rowing haltère 3×10 · Tirage poulie basse 3×12 · Curl incliné 3×10 · Curl poulie 3×12 · Face pull 3×15'},
+{i:'📅',t:'Jour 3 — Legs (Quadris/Ischios/Mollets)',d:'Squat 4×10 · Presse inclinée 3×12 · Fentes bulgares 3×10 · Leg curl 3×12 · Hip thrust 3×12 · Mollets assis 4×15'},
+{i:'📅',t:'Jour 4 — Repos ou Cardio',d:'HIIT 20 min (sprints, battle ropes, rameur) ou repos actif (marche, vélo léger, natation).'},
+{i:'📅',t:'Jour 5 — Upper Body (Force)',d:'Développé couché lourd 5×5 · Rowing barre lourd 5×5 · Développé militaire 4×6 · Tractions lestées 4×6 · Supersets biceps/triceps 3×10'},
+{i:'📅',t:'Jour 6 — Lower Body (Force)',d:'Squat lourd 5×5 · Soulevé de terre roumain 4×8 · Fentes marchées lestées 3×10 · Leg extension 3×12 · Leg curl 3×12'},
+{i:'⚡',t:'Principe clé',d:'Programme PPL + Upper/Lower. Alterne hypertrophie (10-12 reps) et force (5-6 reps). Change de programme toutes les 8 semaines.'}],
+    ENDOMORPHE:[
+{i:'📅',t:'Jour 1 — Full Body A + HIIT',d:'Squat goblet 4×12 · Développé couché 3×12 · Rowing haltère 3×12 · Fentes 3×12/jambe · Planche 3×45s · HIIT 15 min (30s effort/30s repos)'},
+{i:'📅',t:'Jour 2 — Cardio',d:'45 min cardio modéré : vélo, marche rapide inclinée ou natation. Objectif : zone 65-75% FC max.'},
+{i:'📅',t:'Jour 3 — Full Body B + HIIT',d:'Soulevé de terre 4×10 · Développé épaules 3×12 · Tirage vertical 3×12 · Hip thrust 3×12 · Mountain climbers 3×20 · HIIT 15 min'},
+{i:'📅',t:'Jour 4 — Cardio actif',d:'30 min LISS (marche rapide, vélo) + circuit abdos : crunchs 3×20, relevés de jambes 3×15, gainage latéral 3×30s/côté.'},
+{i:'📅',t:'Jour 5 — Full Body C + Circuit',d:'Presse à cuisses 4×12 · Pompes 3×15 · Rowing poulie 3×12 · Élévations latérales 3×15 · Burpees 3×10 · Circuit métabolique 4 rounds'},
+{i:'📅',t:'Jour 6 — HIIT pur',d:'Tabata 4 rounds : jump squats, mountain climbers, burpees, high knees (20s effort/10s repos). Repos 1 min entre rounds.'},
+{i:'⚡',t:'Principe clé',d:'Repos courts (60-90s). Séries de 12-15 reps. 10 000 pas/jour minimum. Le cardio et la NEAT sont tes meilleurs alliés.'}]};
+    const tp=document.getElementById('trainPlan');tp.innerHTML='';(tPlans[r.morphotype]||tPlans.MÉSOMORPHE).forEach(x=>{tp.innerHTML+=`<div class="plan-i"><div class="plan-ic">${x.i}</div><div class="plan-ct"><h4>${x.t}</h4><p>${x.d}</p></div></div>`});
+
+    const nPlans={ECTOMORPHE:[{i:'🍗',t:'Surplus +300-500 kcal',d:'Protéines: 2g/kg, Glucides: 4-5g/kg, Lipides: 1g/kg.'},{i:'🥘',t:'5-6 repas/jour',d:'Fractionne pour faciliter la prise calorique.'},{i:'🥤',t:'Shaker post-training',d:'Whey + maltodextrine après la séance.'},{i:'🥜',t:'Aliments denses',d:'Beurre de cacahuète, avocat, riz, patate douce.'}],
+    MÉSOMORPHE:[{i:'⚖️',t:'Alimentation équilibrée',d:'Protéines: 2g/kg, Glucides: 3-4g/kg, Lipides: 0.8-1g/kg.'},{i:'🍗',t:'Protéines à chaque repas',d:'Poulet, poisson, œufs. 4-5 prises/jour.'},{i:'🍚',t:'Glucides cycliques',d:'Plus les jours de training, moins au repos.'},{i:'🥗',t:'Micronutriments',d:'Légumes variés, fruits, oméga-3.'}],
+    ENDOMORPHE:[{i:'📉',t:'Déficit modéré -300 kcal',d:'Protéines: 2.2g/kg, Glucides: 2g/kg, Lipides: 0.8g/kg.'},{i:'🕐',t:'Timing glucides',d:'Concentre les glucides autour du training.'},{i:'🥩',t:'Protéines prioritaires',d:'Chaque repas commence par les protéines.'},{i:'🥬',t:'Volume alimentaire',d:'Légumes en quantité pour satiété sans calories.'}]};
+    const np=document.getElementById('nutriPlan');np.innerHTML='';(nPlans[r.morphotype]||nPlans.MÉSOMORPHE).forEach(x=>{np.innerHTML+=`<div class="plan-i"><div class="plan-ic">${x.i}</div><div class="plan-ct"><h4>${x.t}</h4><p>${x.d}</p></div></div>`});
+
+    // Apply paywall: blur everything and show pricing overlay immediately
+    const rc=document.getElementById('rc');
+    const resDet=document.getElementById('resDet');
+    const resActs=document.getElementById('resActs');
+    const pwOverlay=document.getElementById('paywallOverlay');
+    const resHd=document.querySelector('.res-hd');
+    if(rc){rc.classList.add('paywall-blur')}
+    if(resDet){resDet.classList.add('paywall-blur')}
+    if(resHd){resHd.classList.add('paywall-blur')}
+    if(resActs){resActs.hidden=true}
+    if(pwOverlay){pwOverlay.hidden=false}
+
+    resetScan();
+}
+
+function resetScan(){['sd1','sd2','sd3','sd4','sd5'].forEach(id=>{const el=document.getElementById(id);if(el){const v=el.querySelector('.sdv');v.textContent='...';v.style.color=''}});
+document.getElementById('scBarF').style.width='0%';document.getElementById('scPct').textContent='0%';document.getElementById('scStat').textContent='Analyse en cours...'}
+
+function shareR(){
+    const txt='Je viens de découvrir mon morphotype avec Bodyscan ! 💪 Scanne-toi aussi → bodyscan.io';
+    if(navigator.share){navigator.share({title:'Mon analyse Bodyscan',text:txt,url:'https://bodyscan.io'}).catch(()=>{})}
+    else{try{navigator.clipboard.writeText(txt).then(()=>toast('Lien copié !'))}catch(e){toast('Copie non disponible')}}
+}
+
+function toast(msg){let t=document.querySelector('.toast');if(!t){t=document.createElement('div');t.className='toast';document.body.appendChild(t)}
+t.innerHTML='<svg width="16" height="16" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#00C49A" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#00C49A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> '+msg;
+t.classList.remove('show');requestAnimationFrame(()=>{t.classList.add('show')});setTimeout(()=>t.classList.remove('show'),2800)}
+
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'})}})});
+window.addEventListener('scroll',()=>{document.getElementById('nav').style.background=window.scrollY>40?'rgba(8,8,13,.95)':'rgba(8,8,13,.82)'});
+
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.feat-c,.step-c,.pr-c').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(18px)';el.style.transition='opacity .6s ease, transform .6s ease';obs.observe(el)});
+</script>
