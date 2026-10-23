@@ -1077,7 +1077,12 @@ img { max-width: 100% }
             <div style="margin-top:18px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px">
                 <h3 style="font:600 15px var(--f-d);margin-bottom:12px">Mon abonnement</h3>
                 <div id="profPlanInfo" style="font-size:13px;color:var(--fg-2);line-height:1.6"></div>
-                <button class="btn btn-o btn-full" style="margin-top:14px" onclick="window.open('https://whop.com/bodyscan/','_blank')">Gérer mon abonnement</button>
+                <div style="margin-top:14px;display:flex;gap:8px">
+                    <button class="btn btn-full" style="flex:1;font-size:12px;padding:8px" onclick="setPlan('pro')">Pro</button>
+                    <button class="btn btn-full" style="flex:1;font-size:12px;padding:8px" onclick="setPlan('premium')">Premium</button>
+                    <button class="btn btn-p btn-full" style="flex:1;font-size:12px;padding:8px" onclick="setPlan('elite')">Elite</button>
+                </div>
+                <button class="btn btn-o btn-full" style="margin-top:10px" onclick="window.open('https://whop.com/bodyscan/','_blank')">Gérer mon abonnement</button>
             </div>
         </div>
     </div>
@@ -1236,8 +1241,8 @@ function switchTab(el,id){
     if(pan){pan.classList.add('on');requestAnimationFrame(()=>{pan.style.opacity='1'})}
 }
 
-function handleLogin(e){e.preventDefault();user={name:document.getElementById('l-email').value.split('@')[0],email:document.getElementById('l-email').value};saveSession();updDash();goTo('dashboard');toast('Connexion réussie !')}
-function handleSignup(e){e.preventDefault();user={name:document.getElementById('s-name').value,email:document.getElementById('s-email').value,age:document.getElementById('s-age').value,goal:document.getElementById('s-goal').value};saveSession();updDash();goTo('dashboard');toast('Compte créé !')}
+function handleLogin(e){e.preventDefault();user={name:document.getElementById('l-email').value.split('@')[0],email:document.getElementById('l-email').value,plan:'elite'};saveSession();updDash();goTo('dashboard');toast('Connexion réussie — accès Elite !')}
+function handleSignup(e){e.preventDefault();user={name:document.getElementById('s-name').value,email:document.getElementById('s-email').value,age:document.getElementById('s-age').value,goal:document.getElementById('s-goal').value,plan:'elite'};saveSession();updDash();goTo('dashboard');toast('Compte créé — accès Elite !')}
 function showGoogleModal(mode){
     const m=document.createElement('div');m.className='g-modal';m.onclick=e=>{if(e.target===m)m.remove()};
     m.innerHTML=`<div class="g-box"><div class="g-logo"><svg width="24" height="24" viewBox="0 0 20 20"><path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.8h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.32z" fill="#4285F4"/><path d="M10 20c2.7 0 4.96-.9 6.62-2.42l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.58-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/><path d="M4.42 11.92A6.01 6.01 0 014.1 10c0-.66.12-1.31.32-1.92V5.5H1.08A9.99 9.99 0 000 10c0 1.61.39 3.14 1.08 4.5l3.34-2.58z" fill="#FBBC05"/><path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.5l3.34 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/></svg></div><h3>Se connecter</h3><p>Utiliser votre compte Google</p><div class="g-fg"><label>Adresse e-mail</label><input type="email" id="g-email" placeholder="votre@gmail.com"></div><div class="g-fg"><label>Nom d'affichage</label><input type="text" id="g-name" placeholder="Votre prénom"></div><button class="g-btn" onclick="finishGoogle()">Suivant</button><p class="g-sub">En continuant, vous acceptez les conditions d'utilisation de Bodyscan.</p></div>`;
@@ -1246,14 +1251,15 @@ function showGoogleModal(mode){
 function finishGoogle(){
     const n=document.getElementById('g-name').value.trim(),e=document.getElementById('g-email').value.trim();
     if(!n||!e){toast('Remplis ton nom et email');return}
-    user={name:n,email:e,google:true};document.querySelector('.g-modal').remove();
-    saveSession();updDash();goTo('dashboard');toast('Connexion Google réussie !');
+    user={name:n,email:e,google:true,plan:'elite'};document.querySelector('.g-modal').remove();
+    saveSession();updDash();goTo('dashboard');toast('Connexion Google réussie — accès Elite !');
 }
 function handleGoogleLogin(){showGoogleModal('login')}
 function handleGoogleSignup(){showGoogleModal('signup')}
+function setPlan(p){if(!user)return;user.plan=p;saveSession();updDash();toast('Plan changé → '+p.charAt(0).toUpperCase()+p.slice(1)+' ✓')}
 function handleLogout(){user=null;hist=[];try{localStorage.removeItem('bs_user');localStorage.removeItem('bs_hist')}catch(e){}goTo('landing');toast('Déconnexion réussie')}
 function saveSession(){try{if(user){user.loginAt=user.loginAt||Date.now();localStorage.setItem('bs_user',JSON.stringify(user))}if(hist.length)localStorage.setItem('bs_hist',JSON.stringify(hist))}catch(e){}}
-function loadSession(){try{const u=localStorage.getItem('bs_user');const h=localStorage.getItem('bs_hist');if(u)user=JSON.parse(u);if(h)hist=JSON.parse(h);if(user){const days=(Date.now()-(user.loginAt||0))/(1000*60*60*24);if(days>30){user=null;hist=[];localStorage.removeItem('bs_user');localStorage.removeItem('bs_hist');return}updDash();goTo('dashboard')}}catch(e){}}
+function loadSession(){try{const u=localStorage.getItem('bs_user');const h=localStorage.getItem('bs_hist');if(u)user=JSON.parse(u);if(h)hist=JSON.parse(h);if(user){const days=(Date.now()-(user.loginAt||0))/(1000*60*60*24);if(days>30){user=null;hist=[];localStorage.removeItem('bs_user');localStorage.removeItem('bs_hist');return}if(!user.plan){user.plan='elite';saveSession()}updDash();goTo('dashboard')}}catch(e){}}
 
 function updDash(){
     if(!user)return;
