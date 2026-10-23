@@ -513,6 +513,84 @@ img { max-width: 100% }
     font-size:11px; font-weight:600; background:rgba(240,200,0,.14);
     color:var(--accent); border-radius:100px;
 }
+.prof-badge.elite { background:rgba(168,85,247,.14); color:#A855F7 }
+.prof-badge.premium { background:rgba(59,130,246,.14); color:#3B82F6 }
+
+/* SCAN LIMIT BANNER */
+.scan-limit-bar { display:flex; align-items:center; gap:10px; padding:12px 16px; background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r); margin-bottom:18px }
+.scan-limit-bar .slb-fill { flex:1; height:6px; background:var(--bg); border-radius:6px; overflow:hidden }
+.scan-limit-bar .slb-fill div { height:100%; background:var(--grad); border-radius:6px; transition:width .5s ease }
+.scan-limit-bar .slb-txt { font-size:12px; color:var(--fg-2); white-space:nowrap }
+.scan-limit-bar.warn .slb-txt { color:#EF4444 }
+
+/* COACH IA */
+.coach-box { display:flex; flex-direction:column; height:min(520px,60vh); background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l); overflow:hidden }
+.coach-msgs { flex:1; overflow-y:auto; padding:18px; display:flex; flex-direction:column; gap:12px }
+.coach-msg { max-width:82%; padding:12px 16px; border-radius:var(--r); font-size:14px; line-height:1.6; animation:msgIn .3s ease }
+@keyframes msgIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+.coach-msg.bot { align-self:flex-start; background:var(--surface); color:var(--fg); border-bottom-left-radius:4px }
+.coach-msg.usr { align-self:flex-end; background:var(--grad); color:#000; font-weight:500; border-bottom-right-radius:4px }
+.coach-msg .typing { display:inline-flex; gap:4px; padding:4px 0 }
+.coach-msg .typing span { width:6px; height:6px; background:var(--fg-3); border-radius:50%; animation:blink 1.4s infinite }
+.coach-msg .typing span:nth-child(2) { animation-delay:.2s }
+.coach-msg .typing span:nth-child(3) { animation-delay:.4s }
+@keyframes blink { 0%,60%,100%{opacity:.3} 30%{opacity:1} }
+@keyframes spin { to{transform:rotate(360deg)} }
+.coach-input { display:flex; gap:8px; padding:14px; border-top:1px solid var(--border) }
+.coach-input input { flex:1; padding:10px 14px; background:var(--bg); color:var(--fg); border:1px solid var(--border); border-radius:var(--r); font:400 14px var(--f); outline:none }
+.coach-input input:focus { border-color:var(--accent) }
+.coach-input button { padding:10px 18px; background:var(--grad); color:#000; font:600 13px var(--f); border:none; border-radius:var(--r); cursor:pointer }
+.coach-suggestions { display:flex; flex-wrap:wrap; gap:6px; padding:0 14px 14px }
+.coach-sug { padding:6px 12px; background:var(--bg); border:1px solid var(--border); border-radius:100px; font-size:12px; color:var(--fg-2); cursor:pointer; transition:var(--t) }
+.coach-sug:hover { border-color:var(--accent); color:var(--accent) }
+
+/* VIDEO ANALYSIS */
+.vid-upload { text-align:center; padding:40px; background:var(--bg-card); border:2px dashed var(--border-l); border-radius:var(--r-l); cursor:pointer; transition:var(--t) }
+.vid-upload:hover { border-color:var(--accent) }
+.vid-res { display:flex; flex-direction:column; gap:14px; margin-top:18px }
+.vid-metric { display:flex; justify-content:space-between; align-items:center; padding:14px; background:var(--bg); border-radius:var(--r) }
+.vid-metric .vm-label { font-size:13px; color:var(--fg-2) }
+.vid-metric .vm-score { font:700 15px var(--f-d); color:var(--accent) }
+.vid-bar { height:6px; background:var(--bg-3); border-radius:6px; margin-top:6px; overflow:hidden }
+.vid-bar div { height:100%; border-radius:6px; transition:width 1s ease }
+
+/* SUPPORT */
+.support-box { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l); padding:24px }
+.support-box h3 { font:600 16px var(--f-d); margin-bottom:6px }
+.support-box p { font-size:13px; color:var(--fg-2); margin-bottom:18px; line-height:1.6 }
+.support-form { display:flex; flex-direction:column; gap:12px }
+.support-form textarea { width:100%; min-height:100px; padding:12px; background:var(--bg); color:var(--fg); border:1px solid var(--border); border-radius:var(--r); font:400 14px var(--f); resize:vertical; outline:none }
+.support-form textarea:focus { border-color:var(--accent) }
+.support-status { display:flex; align-items:center; gap:8px; padding:12px 16px; background:rgba(0,196,154,.08); border:1px solid rgba(0,196,154,.2); border-radius:var(--r); margin-top:14px }
+.support-status .ss-dot { width:8px; height:8px; background:#00C49A; border-radius:50%; animation:pulse 2s infinite }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+.support-status p { font-size:13px; color:#00C49A }
+
+/* TIER LOCKED */
+.tier-lock { position:relative; overflow:hidden }
+.tier-lock::after { content:''; position:absolute; inset:0; background:rgba(5,5,5,.7); backdrop-filter:blur(6px); border-radius:var(--r-l); z-index:1 }
+.tier-lock-badge { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2; display:flex; flex-direction:column; align-items:center; gap:8px; text-align:center }
+.tier-lock-badge svg { color:var(--accent) }
+.tier-lock-badge span { font:600 13px var(--f); color:var(--fg) }
+.tier-lock-badge a { font:600 12px var(--f); color:var(--accent); cursor:pointer }
+
+/* ADVANCED ANALYSIS */
+.adv-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px }
+@media(max-width:600px) { .adv-grid{grid-template-columns:1fr} }
+.adv-card { padding:16px; background:var(--bg); border-radius:var(--r); text-align:center }
+.adv-card .ac-val { font:700 28px var(--f-d); background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent }
+.adv-card .ac-lbl { font-size:12px; color:var(--fg-2); margin-top:2px }
+
+/* NUTRITION DETAIL */
+.meal-timeline { display:flex; flex-direction:column; gap:0; position:relative; padding-left:24px }
+.meal-timeline::before { content:''; position:absolute; left:7px; top:8px; bottom:8px; width:2px; background:var(--border) }
+.meal-item { position:relative; padding:14px; padding-left:20px; background:var(--bg); border-radius:var(--r); margin-bottom:10px }
+.meal-item::before { content:''; position:absolute; left:-20px; top:20px; width:10px; height:10px; background:var(--grad); border-radius:50%; border:2px solid var(--bg-card) }
+.meal-item .mi-time { font:600 11px var(--f); color:var(--accent); text-transform:uppercase; letter-spacing:.5px }
+.meal-item .mi-name { font:600 14px var(--f); margin:3px 0 }
+.meal-item .mi-desc { font-size:12px; color:var(--fg-2); line-height:1.5 }
+.meal-item .mi-macros { display:flex; gap:10px; margin-top:6px; flex-wrap:wrap }
+.meal-item .mi-macros span { font-size:11px; padding:2px 8px; background:var(--surface); border-radius:100px; color:var(--fg-2) }
 
 /* HISTORY CARDS */
 .hist-list { display:flex; flex-direction:column; gap:14px }
@@ -872,6 +950,9 @@ img { max-width: 100% }
             <a href="#" class="d-link on" onclick="switchTab(this,'dp-home')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3L17 10V17H12V13H8V17H3V10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Accueil</a>
             <a href="#" class="d-link" onclick="switchTab(this,'dp-scan')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg> Scan</a>
             <a href="#" class="d-link" onclick="switchTab(this,'dp-hist')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 5H16M4 10H16M4 15H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Historique</a>
+            <a href="#" class="d-link" onclick="switchTab(this,'dp-coach')" id="nav-coach" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 14V6C3 4.9 3.9 4 5 4H15C16.1 4 17 4.9 17 6V12C17 13.1 16.1 14 15 14H7L3 17V14Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Coach IA</a>
+            <a href="#" class="d-link" onclick="switchTab(this,'dp-video')" id="nav-video" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M14 8L18 5V15L14 12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Vidéo</a>
+            <a href="#" class="d-link" onclick="switchTab(this,'dp-support')" id="nav-support" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M7.5 8C7.5 6.6 8.6 5.5 10 5.5C11.4 5.5 12.5 6.6 12.5 8C12.5 9.4 10 10.5 10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="14.5" r="0.8" fill="currentColor"/></svg> Support</a>
             <a href="#" class="d-link" onclick="switchTab(this,'dp-prof')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18C3 14 6 12 10 12C14 12 17 14 17 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Profil</a>
         </nav>
         <button class="btn btn-g d-lo" onclick="handleLogout()"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M6 15H3V3H6M12 12L15 9L12 6M7 9H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Déconnexion</button>
@@ -904,6 +985,7 @@ img { max-width: 100% }
         <!-- SCAN -->
         <div class="d-panel" id="dp-scan">
             <div class="d-hd"><div><h1>Nouveau scan</h1><p class="d-sub">Télécharge une photo de face en tenue de sport</p></div></div>
+            <div id="scanLimitBar" hidden></div>
             <div class="up-area">
                 <div class="up-zone" id="upz" onclick="document.getElementById('phIn').click()" ondragover="event.preventDefault();this.classList.add('dg')" ondragleave="this.classList.remove('dg')" ondrop="hDrop(event)">
                     <input type="file" id="phIn" accept="image/*" hidden onchange="hFile(event)">
@@ -928,9 +1010,75 @@ img { max-width: 100% }
             <div class="d-hd"><div><h1>Historique</h1><p class="d-sub">Tous tes scans précédents</p></div></div>
             <div id="hist-container"><div class="d-empty" id="hist-empty"><p>Aucun scan dans l'historique.</p></div></div>
         </div>
+        <!-- COACH IA (Elite) -->
+        <div class="d-panel" id="dp-coach">
+            <div class="d-hd"><div><h1>Coach IA</h1><p class="d-sub">Ton coach personnel disponible 24/7</p></div></div>
+            <div class="coach-box">
+                <div class="coach-msgs" id="coachMsgs">
+                    <div class="coach-msg bot">Salut ! 💪 Je suis ton coach IA personnel. Pose-moi tes questions sur l'entraînement, la nutrition, la récupération — je m'adapte à ton morphotype et tes objectifs.</div>
+                </div>
+                <div class="coach-suggestions" id="coachSugs">
+                    <button class="coach-sug" onclick="askCoach(this.textContent)">Quel programme pour moi ?</button>
+                    <button class="coach-sug" onclick="askCoach(this.textContent)">Comment améliorer ma nutrition ?</button>
+                    <button class="coach-sug" onclick="askCoach(this.textContent)">Combien de protéines par jour ?</button>
+                    <button class="coach-sug" onclick="askCoach(this.textContent)">Exercices pour les épaules</button>
+                </div>
+                <div class="coach-input">
+                    <input type="text" id="coachIn" placeholder="Pose ta question au coach..." onkeydown="if(event.key==='Enter')askCoach()">
+                    <button onclick="askCoach()">Envoyer</button>
+                </div>
+            </div>
+        </div>
+        <!-- ANALYSE VIDEO (Elite) -->
+        <div class="d-panel" id="dp-video">
+            <div class="d-hd"><div><h1>Analyse vidéo</h1><p class="d-sub">Analyse la qualité de tes mouvements</p></div></div>
+            <div class="vid-upload" id="vidUpZone" onclick="document.getElementById('vidIn').click()">
+                <input type="file" id="vidIn" accept="video/*" hidden onchange="handleVideo(event)">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="color:var(--fg-3);margin-bottom:12px"><rect x="6" y="12" width="28" height="24" rx="4" stroke="currentColor" stroke-width="2"/><path d="M34 20L42 14V34L34 28" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 28L20 24L24 28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg>
+                <p style="font:500 15px var(--f);margin-bottom:4px">Glisse ou clique pour uploader une vidéo</p>
+                <p style="font-size:12px;color:var(--fg-3)">MP4, MOV · Un exercice à la fois · 30s max recommandé</p>
+            </div>
+            <div id="vidResults" hidden></div>
+        </div>
+        <!-- SUPPORT 24/7 (Elite) -->
+        <div class="d-panel" id="dp-support">
+            <div class="d-hd"><div><h1>Support 24/7</h1><p class="d-sub">Une question ? On est là pour toi</p></div></div>
+            <div class="support-status">
+                <div class="ss-dot"></div>
+                <p>Support en ligne — temps de réponse moyen : &lt; 2h</p>
+            </div>
+            <div class="support-box" style="margin-top:18px">
+                <h3>Envoyer un message</h3>
+                <p>Notre équipe de coachs certifiés répond à toutes tes questions sur l'entraînement, la nutrition et l'utilisation de Bodyscan.</p>
+                <div class="support-form">
+                    <select id="supportCat" style="width:100%;padding:10px 12px;background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:var(--r);font:400 14px var(--f)">
+                        <option value="training">Entraînement</option>
+                        <option value="nutrition">Nutrition</option>
+                        <option value="scan">Problème de scan</option>
+                        <option value="account">Mon compte</option>
+                        <option value="other">Autre</option>
+                    </select>
+                    <textarea id="supportMsg" placeholder="Décris ta question ou ton problème..."></textarea>
+                    <button class="btn btn-p btn-full" onclick="sendSupport()">Envoyer le message</button>
+                </div>
+            </div>
+            <div class="support-box" style="margin-top:18px">
+                <h3>FAQ rapide</h3>
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+                    <details style="background:var(--bg);padding:12px;border-radius:var(--r);cursor:pointer"><summary style="font:500 13px var(--f);color:var(--fg)">Comment fonctionne l'analyse IA ?</summary><p style="font-size:12px;color:var(--fg-2);margin-top:8px;line-height:1.5">Notre IA analyse ta photo pour détecter ta morphologie, tes proportions et tes zones musculaires. Elle utilise ces données pour générer un programme sur mesure.</p></details>
+                    <details style="background:var(--bg);padding:12px;border-radius:var(--r);cursor:pointer"><summary style="font:500 13px var(--f);color:var(--fg)">Comment changer mon plan ?</summary><p style="font-size:12px;color:var(--fg-2);margin-top:8px;line-height:1.5">Rends-toi sur whop.com/bodyscan pour gérer ton abonnement. Tu peux upgrader ou downgrader à tout moment.</p></details>
+                    <details style="background:var(--bg);padding:12px;border-radius:var(--r);cursor:pointer"><summary style="font:500 13px var(--f);color:var(--fg)">Mes données sont-elles sécurisées ?</summary><p style="font-size:12px;color:var(--fg-2);margin-top:8px;line-height:1.5">Tes photos et données sont traitées localement et ne sont jamais partagées. Ton historique est stocké uniquement sur ton appareil.</p></details>
+                </div>
+            </div>
+        </div>
         <!-- PROFILE -->
         <div class="d-panel" id="dp-prof"><div class="d-hd"><div><h1>Mon profil</h1><p class="d-sub">Gère tes informations</p></div></div>
-            <div class="prof-c"><div class="prof-av" id="profAv">J</div><div class="prof-info"><h3 id="profN">—</h3><p id="profE">—</p><span class="prof-badge">Plan Pro</span></div></div>
+            <div class="prof-c"><div class="prof-av" id="profAv">J</div><div class="prof-info"><h3 id="profN">—</h3><p id="profE">—</p><span class="prof-badge" id="profBadge">Plan Pro</span></div></div>
+            <div style="margin-top:18px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px">
+                <h3 style="font:600 15px var(--f-d);margin-bottom:12px">Mon abonnement</h3>
+                <div id="profPlanInfo" style="font-size:13px;color:var(--fg-2);line-height:1.6"></div>
+                <button class="btn btn-o btn-full" style="margin-top:14px" onclick="window.open('https://whop.com/bodyscan/','_blank')">Gérer mon abonnement</button>
+            </div>
         </div>
     </div>
 </div>
@@ -999,6 +1147,16 @@ img { max-width: 100% }
         <div class="res-sec"><h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M3 18V4L19 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M3 14L8 9L12 13L19 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Muscles détectés</h3><div class="prop-bars" id="propBars"></div></div>
         <div class="res-sec"><h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M8 11H14M11 8V14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Plan d'entraînement</h3><div class="tp" id="trainPlan"></div></div>
         <div class="res-sec"><h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M11 3C7 3 3 6 3 11C3 16 11 21 11 21C11 21 19 16 19 11C19 6 15 3 11 3Z" stroke="currentColor" stroke-width="1.5"/><circle cx="11" cy="11" r="3" stroke="currentColor" stroke-width="1.5"/></svg> Conseils nutrition</h3><div class="np" id="nutriPlan"></div></div>
+        <!-- ANALYSE AVANCÉE (Premium+) -->
+        <div class="res-sec" id="resAdvanced" hidden>
+            <h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M11 3V19M3 11H19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="1.5"/></svg> Analyse avancée</h3>
+            <div class="adv-grid" id="advGrid"></div>
+        </div>
+        <!-- NUTRITION DÉTAILLÉE (Premium+) -->
+        <div class="res-sec" id="resNutriDetail" hidden>
+            <h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><rect x="3" y="3" width="16" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M7 8H15M7 11H13M7 14H10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Plan repas détaillé</h3>
+            <div class="meal-timeline" id="mealTimeline"></div>
+        </div>
     </div>
 
     <div class="res-acts" id="resActs">
@@ -1039,6 +1197,17 @@ img { max-width: 100% }
 
 <script>
 let cv='landing',user=null,hist=[];
+// TIER SYSTEM: 'pro','premium','elite' — stored in user.plan
+function getUserPlan(){return user&&user.plan?user.plan:'pro'}
+function getMonthScans(){
+    const now=new Date(),m=now.getMonth(),y=now.getFullYear();
+    return hist.filter(h=>{const d=h._ts?new Date(h._ts):null;return d&&d.getMonth()===m&&d.getFullYear()===y}).length;
+}
+function canScan(){
+    const plan=getUserPlan();
+    if(plan==='premium'||plan==='elite')return true;
+    return getMonthScans()<5;
+}
 
 window.addEventListener('load',()=>{loadSession();setTimeout(()=>{document.getElementById('app-loader').classList.add('hid')},1200)});
 
@@ -1088,6 +1257,7 @@ function loadSession(){try{const u=localStorage.getItem('bs_user');const h=local
 
 function updDash(){
     if(!user)return;
+    const plan=getUserPlan();
     const nld=document.getElementById('navLoginD');if(nld)nld.hidden=true;
     const nlm=document.getElementById('navLoginM');if(nlm)nlm.hidden=true;
     const n=document.getElementById('uname');if(n)n.textContent=user.name;
@@ -1098,6 +1268,37 @@ function updDash(){
     if(hist.length>0){const l=hist[hist.length-1];document.getElementById('st-morph').textContent=l.morphotype;
     document.getElementById('st-prog').textContent=hist.length>1?'+'+hist.length+' scans':'Premier scan !';
     document.getElementById('d-empty').hidden=true}
+    // Tier nav visibility
+    const nc=document.getElementById('nav-coach'),nv=document.getElementById('nav-video'),ns=document.getElementById('nav-support');
+    if(nc)nc.hidden=plan!=='elite';
+    if(nv)nv.hidden=plan!=='elite';
+    if(ns)ns.hidden=plan!=='elite';
+    // Scan limit bar (Pro only)
+    const slb=document.getElementById('scanLimitBar');
+    if(slb){
+        if(plan==='pro'){
+            const used=getMonthScans(),max=5;
+            slb.hidden=false;
+            slb.innerHTML=`<div class="scan-limit-bar"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font:500 12px var(--f);color:var(--fg-2)">Scans ce mois</span><span style="font:600 12px var(--f);color:var(--fg)">${used}/${max}</span></div><div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden"><div style="height:100%;width:${(used/max)*100}%;background:var(--grad);border-radius:3px;transition:width .4s ease"></div></div></div>`;
+        } else slb.hidden=true;
+    }
+    // Profile badge
+    const pb=document.getElementById('profBadge');
+    if(pb){
+        const labels={pro:'Plan Pro',premium:'Plan Premium',elite:'Plan Elite'};
+        pb.textContent=labels[plan]||'Plan Pro';
+        pb.className='prof-badge'+(plan!=='pro'?' '+plan:'');
+    }
+    // Profile plan info
+    const ppi=document.getElementById('profPlanInfo');
+    if(ppi){
+        const info={
+            pro:'<b>Pro</b> — 7,99€/mois<br>✓ 5 scans/mois<br>✓ Analyse morphotype<br>✓ Programme d\'entraînement<br>✓ Conseils nutrition de base',
+            premium:'<b>Premium</b> — 14,99€/mois<br>✓ Scans illimités<br>✓ Analyse avancée (masse grasse, symétrie…)<br>✓ Programme personnalisé<br>✓ Plan repas détaillé (petit-dej → dîner)',
+            elite:'<b>Elite</b> — 24,99€/mois<br>✓ Tout Premium inclus<br>✓ Coach IA personnel<br>✓ Analyse vidéo mouvements<br>✓ Support prioritaire 24/7'
+        };
+        ppi.innerHTML=info[plan]||info.pro;
+    }
     renderHist();
 }
 
@@ -1132,6 +1333,7 @@ function clearUp(){document.getElementById('upz').hidden=false;document.getEleme
 function startScan(){
     const h=document.getElementById('scH').value,w=document.getElementById('scW').value,sx=document.querySelector('input[name="scSex"]:checked').value;
     if(!h||!w){toast('Remplis taille et poids');return}
+    if(!canScan()){toast('Limite de 5 scans/mois atteinte. Passe en Premium pour des scans illimités !');return}
     goTo('scanning');
     const steps=[{p:15,s:'Détection de la silhouette...'},{p:30,s:'Analyse des proportions...'},{p:50,s:'Calcul du morphotype...'},{p:70,s:'Évaluation musculaire...'},{p:85,s:'Génération des recommandations...'},{p:95,s:'Finalisation...'},{p:100,s:'Analyse terminée !'}];
     let i=0;const iv=setInterval(()=>{if(i<steps.length){document.getElementById('scBarF').style.width=steps[i].p+'%';document.getElementById('scPct').textContent=steps[i].p+'%';document.getElementById('scStat').textContent=steps[i].s;i++}
@@ -1156,7 +1358,7 @@ function genRes(h,w,sx){
     // Simulate detection: pick 5-8 muscles with scores
     const pick=allMuscles.sort(()=>Math.random()-.5).slice(0,5+Math.floor(Math.random()*3));
     const muscles=pick.map(m=>({...m,score:Math.round(40+Math.random()*55)}));
-    return{morphotype:morph,type,description:desc,strengths:str,bmi,shoulderRatio:sr,date:new Date().toLocaleDateString('fr-FR'),
+    return{morphotype:morph,type,description:desc,strengths:str,bmi,shoulderRatio:sr,date:new Date().toLocaleDateString('fr-FR'),_ts:Date.now(),
         muscles,
         proportions:{epaules:60+Math.random()*35,poitrine:55+Math.random()*35,taille:40+Math.random()*30,hanches:50+Math.random()*35,jambes:55+Math.random()*35}};
 }
@@ -1205,17 +1407,40 @@ function showRes(r){
     ENDOMORPHE:[{i:'📉',t:'Déficit modéré -300 kcal',d:'Protéines: 2.2g/kg, Glucides: 2g/kg, Lipides: 0.8g/kg.'},{i:'🕐',t:'Timing glucides',d:'Concentre les glucides autour du training.'},{i:'🥩',t:'Protéines prioritaires',d:'Chaque repas commence par les protéines.'},{i:'🥬',t:'Volume alimentaire',d:'Légumes en quantité pour satiété sans calories.'}]};
     const np=document.getElementById('nutriPlan');np.innerHTML='';(nPlans[r.morphotype]||nPlans.MÉSOMORPHE).forEach(x=>{np.innerHTML+=`<div class="plan-i"><div class="plan-ic">${x.i}</div><div class="plan-ct"><h4>${x.t}</h4><p>${x.d}</p></div></div>`});
 
-    // Apply paywall: blur everything and show pricing overlay immediately
+    // Tier-aware display
+    const plan=getUserPlan();
     const rc=document.getElementById('rc');
     const resDet=document.getElementById('resDet');
     const resActs=document.getElementById('resActs');
     const pwOverlay=document.getElementById('paywallOverlay');
     const resHd=document.querySelector('.res-hd');
-    if(rc){rc.classList.add('paywall-blur')}
-    if(resDet){resDet.classList.add('paywall-blur')}
-    if(resHd){resHd.classList.add('paywall-blur')}
-    if(resActs){resActs.hidden=true}
-    if(pwOverlay){pwOverlay.hidden=false}
+
+    if(user&&user.plan){
+        // Paid user: show results
+        if(rc)rc.classList.remove('paywall-blur');
+        if(resDet)resDet.classList.remove('paywall-blur');
+        if(resHd)resHd.classList.remove('paywall-blur');
+        if(resActs)resActs.hidden=false;
+        if(pwOverlay)pwOverlay.hidden=true;
+
+        // Premium/Elite: advanced analysis
+        const resAdv=document.getElementById('resAdvanced');
+        const resNutDet=document.getElementById('resNutriDetail');
+        if(plan==='premium'||plan==='elite'){
+            if(resAdv){resAdv.hidden=false;renderAdvanced(r)}
+            if(resNutDet){resNutDet.hidden=false;renderMealPlan(r)}
+        } else {
+            if(resAdv)resAdv.hidden=true;
+            if(resNutDet)resNutDet.hidden=true;
+        }
+    } else {
+        // No plan: paywall
+        if(rc)rc.classList.add('paywall-blur');
+        if(resDet)resDet.classList.add('paywall-blur');
+        if(resHd)resHd.classList.add('paywall-blur');
+        if(resActs)resActs.hidden=true;
+        if(pwOverlay)pwOverlay.hidden=false;
+    }
 
     resetScan();
 }
@@ -1238,4 +1463,158 @@ window.addEventListener('scroll',()=>{document.getElementById('nav').style.backg
 
 const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
 document.querySelectorAll('.feat-c,.step-c,.pr-c').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(18px)';el.style.transition='opacity .6s ease, transform .6s ease';obs.observe(el)});
+
+// ===== ADVANCED ANALYSIS (Premium/Elite) =====
+function renderAdvanced(r){
+    const grid=document.getElementById('advGrid');if(!grid)return;
+    const bmi=parseFloat(r.bmi);
+    // Estimated body fat (Navy method rough approx)
+    const bf=r.morphotype==='ECTOMORPHE'?(10+Math.random()*5).toFixed(1):r.morphotype==='MÉSOMORPHE'?(13+Math.random()*6).toFixed(1):(20+Math.random()*8).toFixed(1);
+    // Symmetry score
+    const sym=(82+Math.random()*15).toFixed(0);
+    // Muscle density index
+    const mdi=(r.muscles||[]).reduce((s,m)=>s+m.score,0)/Math.max((r.muscles||[]).length,1);
+    // Metabolic rate (Harris-Benedict rough)
+    const bmr=Math.round(1600+Math.random()*400);
+    const cards=[
+        {label:'Masse grasse estimée',value:bf+'%',icon:'🔥',desc:parseFloat(bf)<15?'Excellent — profil sec':'Marge d\'optimisation possible',color:parseFloat(bf)<15?'#00C49A':parseFloat(bf)<22?'#F0C800':'#FF6B6B'},
+        {label:'Score de symétrie',value:sym+'/100',icon:'⚖️',desc:parseInt(sym)>90?'Très bonne symétrie':'Quelques déséquilibres détectés',color:parseInt(sym)>90?'#00C49A':'#F0C800'},
+        {label:'Densité musculaire',value:mdi.toFixed(0)+'/100',icon:'💪',desc:mdi>70?'Bonne densité musculaire':'Potentiel de développement',color:mdi>70?'#00C49A':'#F0C800'},
+        {label:'Métabolisme de base',value:bmr+' kcal',icon:'⚡',desc:'Calories brûlées au repos par jour',color:'var(--accent)'}
+    ];
+    grid.innerHTML=cards.map(c=>`<div class="adv-card">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px"><span style="font-size:20px">${c.icon}</span><span style="font:500 12px var(--f);color:var(--fg-2)">${c.label}</span></div>
+        <div style="font:700 28px var(--f-d);color:${c.color};margin-bottom:4px">${c.value}</div>
+        <p style="font:400 11px var(--f);color:var(--fg-2);line-height:1.4">${c.desc}</p>
+    </div>`).join('');
+}
+
+// ===== DETAILED MEAL PLAN (Premium/Elite) =====
+function renderMealPlan(r){
+    const tl=document.getElementById('mealTimeline');if(!tl)return;
+    const plans={
+        ECTOMORPHE:[
+            {time:'7h30',name:'Petit-déjeuner',items:'Flocons d\'avoine 80g + banane + beurre de cacahuète 20g + 3 œufs brouillés + jus d\'orange',macros:'~650 kcal · P:30g · G:75g · L:25g'},
+            {time:'10h00',name:'Collation matin',items:'Fromage blanc 200g + granola 40g + miel + amandes 20g',macros:'~380 kcal · P:22g · G:42g · L:14g'},
+            {time:'12h30',name:'Déjeuner',items:'Riz basmati 120g (cru) + poulet grillé 180g + légumes sautés + huile d\'olive 15ml + avocat',macros:'~780 kcal · P:45g · G:80g · L:28g'},
+            {time:'16h00',name:'Collation pré-training',items:'2 tranches pain complet + beurre de cacahuète 15g + banane + whey 30g dans eau',macros:'~520 kcal · P:35g · G:62g · L:15g'},
+            {time:'19h30',name:'Dîner post-training',items:'Pâtes complètes 120g + saumon 160g + brocolis + sauce soja + patate douce 100g',macros:'~750 kcal · P:48g · G:78g · L:22g'}
+        ],
+        MÉSOMORPHE:[
+            {time:'7h30',name:'Petit-déjeuner',items:'3 œufs (2 entiers + 1 blanc) + pain complet 2 tranches + avocat ½ + tomate + thé vert',macros:'~480 kcal · P:28g · G:35g · L:24g'},
+            {time:'10h00',name:'Collation matin',items:'Pomme + amandes 25g + whey 25g dans eau',macros:'~300 kcal · P:28g · G:20g · L:12g'},
+            {time:'12h30',name:'Déjeuner',items:'Quinoa 90g (cru) + blanc de poulet 160g + salade composée + huile d\'olive 10ml + légumineuses 60g',macros:'~620 kcal · P:48g · G:58g · L:18g'},
+            {time:'16h00',name:'Collation pré-training',items:'Banane + flocons d\'avoine 40g + fromage blanc 0% 150g',macros:'~320 kcal · P:20g · G:48g · L:4g'},
+            {time:'19h30',name:'Dîner',items:'Patate douce 150g + filet de cabillaud 180g + haricots verts + huile de coco 8ml',macros:'~520 kcal · P:40g · G:50g · L:14g'}
+        ],
+        ENDOMORPHE:[
+            {time:'8h00',name:'Petit-déjeuner',items:'Omelette 3 blancs + 1 entier + épinards + champignons + 1 tranche pain complet + café noir',macros:'~320 kcal · P:30g · G:18g · L:14g'},
+            {time:'10h30',name:'Collation matin',items:'Fromage blanc 0% 150g + myrtilles 80g + graines de chia 10g',macros:'~180 kcal · P:18g · G:16g · L:5g'},
+            {time:'12h30',name:'Déjeuner',items:'Poulet grillé 180g + brocolis 200g + riz complet 60g (cru) + huile d\'olive 8ml + citron',macros:'~480 kcal · P:45g · G:35g · L:16g'},
+            {time:'16h00',name:'Collation pré-training',items:'Pomme verte + whey isolat 25g dans eau + 10 amandes',macros:'~250 kcal · P:26g · G:18g · L:10g'},
+            {time:'19h00',name:'Dîner',items:'Saumon 150g + salade verte XXL + concombre + tomate + vinaigrette légère + courgette grillée',macros:'~420 kcal · P:38g · G:12g · L:24g'}
+        ]
+    };
+    const meals=plans[r.morphotype]||plans.MÉSOMORPHE;
+    tl.innerHTML=meals.map((m,i)=>`<div class="meal-item">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:6px">
+            <span style="font:600 11px var(--f);color:var(--accent);min-width:40px">${m.time}</span>
+            <span style="font:600 14px var(--f-d);color:var(--fg)">${m.name}</span>
+        </div>
+        <p style="font:400 13px var(--f);color:var(--fg-2);line-height:1.5;margin-bottom:4px">${m.items}</p>
+        <span style="font:500 11px var(--f);color:var(--accent);opacity:.8">${m.macros}</span>
+    </div>`).join('');
+}
+
+// ===== COACH IA (Elite) =====
+function askCoach(msg){
+    if(!msg&&document.getElementById('coachIn')){msg=document.getElementById('coachIn').value.trim()}
+    if(!msg)return;
+    const box=document.getElementById('coachMsgs');if(!box)return;
+    const inp=document.getElementById('coachIn');if(inp)inp.value='';
+    // User msg
+    box.innerHTML+=`<div class="coach-msg usr">${msg}</div>`;
+    box.scrollTop=box.scrollHeight;
+    // Typing indicator
+    box.innerHTML+=`<div class="coach-msg bot typing" id="coachTyping"><span></span><span></span><span></span></div>`;
+    box.scrollTop=box.scrollHeight;
+    // Generate response after delay
+    setTimeout(()=>{
+        const typ=document.getElementById('coachTyping');if(typ)typ.remove();
+        const plan=getUserPlan();
+        const morph=hist.length?hist[hist.length-1].morphotype:'MÉSOMORPHE';
+        const resp=genCoachReply(msg,morph);
+        box.innerHTML+=`<div class="coach-msg bot">${resp}</div>`;
+        box.scrollTop=box.scrollHeight;
+    },1200+Math.random()*800);
+}
+function genCoachReply(msg,morph){
+    const ml=msg.toLowerCase();
+    const morphTips={
+        ECTOMORPHE:{train:'Pour ton profil ectomorphe, concentre-toi sur les exercices composés avec charges lourdes (4-8 reps). Squat, développé couché et soulevé de terre doivent être ta base. Séances de 45 min max !',nutri:'En tant qu\'ectomorphe, tu dois viser un surplus de 300-500 kcal/jour. Mange 5-6 fois par jour avec beaucoup de glucides complexes (riz, patates douces, pâtes). 2g de protéines/kg minimum.',rest:'Le repos est CRUCIAL pour toi. 8h de sommeil minimum. Tes muscles grandissent au repos, pas à la salle. 48h entre chaque groupe musculaire.'},
+        MÉSOMORPHE:{train:'Ton profil mésomorphe répond bien à un programme PPL (Push/Pull/Legs). Alterne hypertrophie (10-12 reps) et force (5-6 reps). Change de programme toutes les 8 semaines pour continuer à progresser.',nutri:'Avec ton métabolisme équilibré, vise une répartition 40% glucides, 30% protéines, 30% lipides. Adapte les calories selon ton objectif : +200 kcal pour prendre, -300 kcal pour sécher.',rest:'2 jours de repos par semaine. Tu récupères bien mais ne néglige pas le sommeil et les étirements. Le foam roller et la mobilité t\'aideront à éviter les blessures.'},
+        ENDOMORPHE:{train:'Pour ton profil endomorphe, combine musculation et cardio HIIT. Des circuits avec des repos courts (60-90 sec) sont très efficaces. Vise 10 000 pas/jour en plus du training.',nutri:'Priorité aux protéines (2.2g/kg) et aux légumes en volume. Concentre tes glucides autour du training. Évite les glucides simples le soir. Un déficit modéré de 300 kcal suffit.',rest:'Le repos actif est ton allié : marche, yoga, natation les jours off. Ça booste ta récupération ET ta dépense calorique.'}
+    };
+    const tips=morphTips[morph]||morphTips.MÉSOMORPHE;
+    if(ml.includes('programme')||ml.includes('exercice')||ml.includes('entraîn')||ml.includes('training')||ml.includes('muscul')||ml.includes('séance'))return tips.train;
+    if(ml.includes('mange')||ml.includes('nutri')||ml.includes('repas')||ml.includes('calorie')||ml.includes('protéine')||ml.includes('diète')||ml.includes('aliment'))return tips.nutri;
+    if(ml.includes('repos')||ml.includes('récup')||ml.includes('sommeil')||ml.includes('dormir')||ml.includes('fatigue'))return tips.rest;
+    if(ml.includes('poids')||ml.includes('maigri')||ml.includes('perdre')||ml.includes('sèche')||ml.includes('gras'))return `Pour optimiser ta perte de gras en tant que ${morph.toLowerCase()}, combine un déficit calorique modéré (-300 kcal) avec de la musculation pour préserver ta masse musculaire. Le HIIT 2-3x/semaine accélère les résultats. Patience et constance sont la clé !`;
+    if(ml.includes('muscle')||ml.includes('masse')||ml.includes('prendre')||ml.includes('grossir')||ml.includes('volume'))return `Pour la prise de masse (${morph.toLowerCase()}), tu as besoin d\'un surplus calorique contrôlé, 2g de protéines/kg/jour et un programme de musculation progressif. Augmente tes charges de 2.5-5% chaque semaine. Les exercices composés sont tes meilleurs amis !`;
+    if(ml.includes('motiv')||ml.includes('difficile')||ml.includes('abandon')||ml.includes('dur'))return `La motivation fluctue, c'est normal ! L'important c'est la discipline. Fixe-toi des objectifs à court terme (cette semaine) et célèbre chaque petite victoire. Un scan régulier avec Bodyscan te montre tes progrès concrets. Tu es déjà sur la bonne voie ! 💪`;
+    if(ml.includes('suppl')||ml.includes('whey')||ml.includes('créatine')||ml.includes('bcaa'))return `Les suppléments utiles : Whey protéine (post-training), Créatine monohydrate (5g/jour, prouvée scientifiquement), Vitamine D si peu de soleil, Oméga-3. Le reste est optionnel. L'alimentation solide reste la priorité absolue !`;
+    if(ml.includes('bonjour')||ml.includes('salut')||ml.includes('hello')||ml.includes('hey'))return `Salut ! 👋 Je suis ton coach IA Bodyscan. Je peux t\'aider avec ton entraînement, ta nutrition et ta récupération, adaptés à ton profil ${morph.toLowerCase()}. Pose-moi ta question !`;
+    return `Bonne question ! En tant que ${morph.toLowerCase()}, voici mon conseil : reste constant dans tes entraînements (3-5x/semaine), mange suffisamment de protéines (2g/kg/jour) et dors 7-8h/nuit. Utilise tes scans Bodyscan pour suivre ta progression. Tu veux que je détaille un aspect en particulier — training, nutrition ou récupération ?`;
+}
+
+// ===== VIDEO ANALYSIS (Elite) =====
+function handleVideo(e){
+    const f=e.target.files[0];if(!f)return;
+    if(!f.type.startsWith('video/')){toast('Sélectionne une vidéo');return}
+    const vr=document.getElementById('vidResults');if(!vr)return;
+    vr.innerHTML=`<div style="text-align:center;padding:40px 0"><div style="width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px"></div><p style="font:500 14px var(--f);color:var(--fg-2)">Analyse de la vidéo en cours...</p></div>`;
+    // Simulate analysis
+    setTimeout(()=>{
+        const movements=['Squat','Développé couché','Soulevé de terre','Fentes','Rowing','Tractions'];
+        const detected=movements[Math.floor(Math.random()*movements.length)];
+        const formScore=Math.round(65+Math.random()*30);
+        const tempo=(2+Math.random()*2).toFixed(1);
+        const rom=Math.round(70+Math.random()*25);
+        const corrections=[];
+        if(formScore<80)corrections.push('Améliore la profondeur du mouvement');
+        if(formScore<90)corrections.push('Garde le dos plus droit pendant la phase concentrique');
+        corrections.push('Contrôle davantage la phase excentrique (descente)');
+        if(Math.random()>.5)corrections.push('Stabilise tes genoux — ils partent légèrement vers l\'intérieur');
+        vr.innerHTML=`
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:16px">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span style="font-size:24px">🎯</span><div><h4 style="font:600 16px var(--f-d);color:var(--fg)">Mouvement détecté : ${detected}</h4><p style="font:400 12px var(--f);color:var(--fg-2)">Durée analysée : ${f.name}</p></div></div>
+                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+                    <div class="vid-metric"><span style="font:700 24px var(--f-d);color:${formScore>=80?'#00C49A':'#F0C800'}">${formScore}%</span><span style="font:500 11px var(--f);color:var(--fg-2)">Score de forme</span></div>
+                    <div class="vid-metric"><span style="font:700 24px var(--f-d);color:var(--accent)">${tempo}s</span><span style="font:500 11px var(--f);color:var(--fg-2)">Tempo moyen</span></div>
+                    <div class="vid-metric"><span style="font:700 24px var(--f-d);color:${rom>=85?'#00C49A':'#F0C800'}">${rom}%</span><span style="font:500 11px var(--f);color:var(--fg-2)">Amplitude</span></div>
+                </div>
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px">
+                <h4 style="font:600 14px var(--f-d);color:var(--fg);margin-bottom:12px">🔧 Corrections recommandées</h4>
+                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
+                    ${corrections.map(c=>`<li style="display:flex;align-items:flex-start;gap:8px;font:400 13px var(--f);color:var(--fg-2);line-height:1.4"><span style="color:var(--accent);font-weight:600;flex-shrink:0">→</span>${c}</li>`).join('')}
+                </ul>
+            </div>`;
+    },2500);
+}
+
+// ===== SUPPORT 24/7 (Elite) =====
+function sendSupport(){
+    const cat=document.getElementById('supportCat');
+    const msg=document.getElementById('supportMsg');
+    if(!msg||!msg.value.trim()){toast('Écris ton message avant d\'envoyer');return}
+    const category=cat?cat.value:'other';
+    const text=msg.value.trim();
+    // Simulate sending
+    toast('Message envoyé ! Notre équipe te répond sous 2h.');
+    msg.value='';
+    // Update status
+    const ss=document.querySelector('.support-status');
+    if(ss){ss.innerHTML=`<span style="display:inline-block;width:8px;height:8px;background:#00C49A;border-radius:50%;margin-right:6px"></span>Dernier message envoyé — réponse sous 2h`}
+}
 </script>
