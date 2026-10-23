@@ -554,17 +554,6 @@ img { max-width: 100% }
 .vid-bar { height:6px; background:var(--bg-3); border-radius:6px; margin-top:6px; overflow:hidden }
 .vid-bar div { height:100%; border-radius:6px; transition:width 1s ease }
 
-/* SUPPORT */
-.support-box { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r-l); padding:24px }
-.support-box h3 { font:600 16px var(--f-d); margin-bottom:6px }
-.support-box p { font-size:13px; color:var(--fg-2); margin-bottom:18px; line-height:1.6 }
-.support-form { display:flex; flex-direction:column; gap:12px }
-.support-form textarea { width:100%; min-height:100px; padding:12px; background:var(--bg); color:var(--fg); border:1px solid var(--border); border-radius:var(--r); font:400 14px var(--f); resize:vertical; outline:none }
-.support-form textarea:focus { border-color:var(--accent) }
-.support-status { display:flex; align-items:center; gap:8px; padding:12px 16px; background:rgba(0,196,154,.08); border:1px solid rgba(0,196,154,.2); border-radius:var(--r); margin-top:14px }
-.support-status .ss-dot { width:8px; height:8px; background:#00C49A; border-radius:50%; animation:pulse 2s infinite }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-.support-status p { font-size:13px; color:#00C49A }
 
 /* TIER LOCKED */
 .tier-lock { position:relative; overflow:hidden }
@@ -952,7 +941,6 @@ img { max-width: 100% }
             <a href="#" class="d-link" onclick="switchTab(this,'dp-hist')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 5H16M4 10H16M4 15H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Historique</a>
             <a href="#" class="d-link" onclick="switchTab(this,'dp-coach')" id="nav-coach" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 14V6C3 4.9 3.9 4 5 4H15C16.1 4 17 4.9 17 6V12C17 13.1 16.1 14 15 14H7L3 17V14Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Coach IA</a>
             <a href="#" class="d-link" onclick="switchTab(this,'dp-video')" id="nav-video" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M14 8L18 5V15L14 12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Vidéo</a>
-            <a href="#" class="d-link" onclick="switchTab(this,'dp-support')" id="nav-support" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M7.5 8C7.5 6.6 8.6 5.5 10 5.5C11.4 5.5 12.5 6.6 12.5 8C12.5 9.4 10 10.5 10 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="14.5" r="0.8" fill="currentColor"/></svg> Support</a>
             <a href="#" class="d-link" onclick="switchTab(this,'dp-prof')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18C3 14 6 12 10 12C14 12 17 14 17 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Profil</a>
         </nav>
         <button class="btn btn-g d-lo" onclick="handleLogout()"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M6 15H3V3H6M12 12L15 9L12 6M7 9H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Déconnexion</button>
@@ -1032,44 +1020,13 @@ img { max-width: 100% }
         <!-- ANALYSE VIDEO (Elite) -->
         <div class="d-panel" id="dp-video">
             <div class="d-hd"><div><h1>Analyse vidéo</h1><p class="d-sub">Analyse la qualité de tes mouvements</p></div></div>
-            <div class="vid-upload" id="vidUpZone" onclick="document.getElementById('vidIn').click()">
-                <input type="file" id="vidIn" accept="video/*" hidden onchange="handleVideo(event)">
+            <label id="vidUpZone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:200px;border:2px dashed var(--border);border-radius:var(--r-l);padding:32px 20px;text-align:center;cursor:pointer;box-sizing:border-box">
+                <input type="file" id="vidIn" accept="video/*" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)" onchange="handleVideo(event)">
                 <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="color:var(--fg-3);margin-bottom:12px"><rect x="6" y="12" width="28" height="24" rx="4" stroke="currentColor" stroke-width="2"/><path d="M34 20L42 14V34L34 28" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 28L20 24L24 28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg>
-                <p style="font:500 15px var(--f);margin-bottom:4px">Glisse ou clique pour uploader une vidéo</p>
+                <p style="font:500 15px var(--f);margin-bottom:4px">Appuie ici pour uploader une vidéo</p>
                 <p style="font-size:12px;color:var(--fg-3)">MP4, MOV · Un exercice à la fois · 30s max recommandé</p>
-            </div>
+            </label>
             <div id="vidResults" hidden></div>
-        </div>
-        <!-- SUPPORT 24/7 (Elite) -->
-        <div class="d-panel" id="dp-support">
-            <div class="d-hd"><div><h1>Support 24/7</h1><p class="d-sub">Une question ? On est là pour toi</p></div></div>
-            <div class="support-status">
-                <div class="ss-dot"></div>
-                <p>Support en ligne — temps de réponse moyen : &lt; 2h</p>
-            </div>
-            <div class="support-box" style="margin-top:18px">
-                <h3>Envoyer un message</h3>
-                <p>Notre équipe de coachs certifiés répond à toutes tes questions sur l'entraînement, la nutrition et l'utilisation de Bodyscan.</p>
-                <div class="support-form">
-                    <select id="supportCat" style="width:100%;padding:10px 12px;background:var(--bg);color:var(--fg);border:1px solid var(--border);border-radius:var(--r);font:400 14px var(--f)">
-                        <option value="training">Entraînement</option>
-                        <option value="nutrition">Nutrition</option>
-                        <option value="scan">Problème de scan</option>
-                        <option value="account">Mon compte</option>
-                        <option value="other">Autre</option>
-                    </select>
-                    <textarea id="supportMsg" placeholder="Décris ta question ou ton problème..."></textarea>
-                    <button class="btn btn-p btn-full" onclick="sendSupport()">Envoyer le message</button>
-                </div>
-            </div>
-            <div class="support-box" style="margin-top:18px">
-                <h3>FAQ rapide</h3>
-                <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
-                    <details style="background:var(--bg);padding:12px;border-radius:var(--r);cursor:pointer"><summary style="font:500 13px var(--f);color:var(--fg)">Comment fonctionne l'analyse IA ?</summary><p style="font-size:12px;color:var(--fg-2);margin-top:8px;line-height:1.5">Notre IA analyse ta photo pour détecter ta morphologie, tes proportions et tes zones musculaires. Elle utilise ces données pour générer un programme sur mesure.</p></details>
-                    <details style="background:var(--bg);padding:12px;border-radius:var(--r);cursor:pointer"><summary style="font:500 13px var(--f);color:var(--fg)">Comment changer mon plan ?</summary><p style="font-size:12px;color:var(--fg-2);margin-top:8px;line-height:1.5">Rends-toi sur whop.com/bodyscan pour gérer ton abonnement. Tu peux upgrader ou downgrader à tout moment.</p></details>
-                    <details style="background:var(--bg);padding:12px;border-radius:var(--r);cursor:pointer"><summary style="font:500 13px var(--f);color:var(--fg)">Mes données sont-elles sécurisées ?</summary><p style="font-size:12px;color:var(--fg-2);margin-top:8px;line-height:1.5">Tes photos et données sont traitées localement et ne sont jamais partagées. Ton historique est stocké uniquement sur ton appareil.</p></details>
-                </div>
-            </div>
         </div>
         <!-- PROFILE -->
         <div class="d-panel" id="dp-prof"><div class="d-hd"><div><h1>Mon profil</h1><p class="d-sub">Gère tes informations</p></div></div>
@@ -1191,7 +1148,7 @@ img { max-width: 100% }
             <div class="pw-card">
                 <h4>Elite</h4>
                 <div class="pw-price">24,99€ <span>/mois</span></div>
-                <ul class="pw-feats"><li>Tout Premium</li><li>Coach IA</li><li>Analyse vidéo</li><li>Support 24/7</li></ul>
+                <ul class="pw-feats"><li>Tout Premium</li><li>Coach IA</li><li>Analyse vidéo</li><li>Résultats illimités</li></ul>
                 <button class="btn btn-o btn-full btn-sm" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
             </div>
         </div>
@@ -1275,10 +1232,9 @@ function updDash(){
     document.getElementById('st-prog').textContent=hist.length>1?'+'+hist.length+' scans':'Premier scan !';
     document.getElementById('d-empty').hidden=true}
     // Tier nav visibility
-    const nc=document.getElementById('nav-coach'),nv=document.getElementById('nav-video'),ns=document.getElementById('nav-support');
+    const nc=document.getElementById('nav-coach'),nv=document.getElementById('nav-video');
     if(nc)nc.hidden=plan!=='elite';
     if(nv)nv.hidden=plan!=='elite';
-    if(ns)ns.hidden=plan!=='elite';
     // Scan limit bar (Pro only)
     const slb=document.getElementById('scanLimitBar');
     if(slb){
@@ -1301,7 +1257,7 @@ function updDash(){
         const info={
             pro:'<b>Pro</b> — 7,99€/mois<br>✓ 5 scans/mois<br>✓ Analyse morphotype<br>✓ Programme d\'entraînement<br>✓ Conseils nutrition de base',
             premium:'<b>Premium</b> — 14,99€/mois<br>✓ Scans illimités<br>✓ Analyse avancée (masse grasse, symétrie…)<br>✓ Programme personnalisé<br>✓ Plan repas détaillé (petit-dej → dîner)',
-            elite:'<b>Elite</b> — 24,99€/mois<br>✓ Tout Premium inclus<br>✓ Coach IA personnel<br>✓ Analyse vidéo mouvements<br>✓ Support prioritaire 24/7'
+            elite:'<b>Elite</b> — 24,99€/mois<br>✓ Tout Premium inclus<br>✓ Coach IA personnel<br>✓ Analyse vidéo avancée<br>✓ Résultats illimités'
         };
         ppi.innerHTML=info[plan]||info.pro;
     }
@@ -1578,49 +1534,82 @@ function handleVideo(e){
     const f=e.target.files[0];if(!f)return;
     if(!f.type.startsWith('video/')){toast('Sélectionne une vidéo');return}
     const vr=document.getElementById('vidResults');if(!vr)return;
-    vr.innerHTML=`<div style="text-align:center;padding:40px 0"><div style="width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px"></div><p style="font:500 14px var(--f);color:var(--fg-2)">Analyse de la vidéo en cours...</p></div>`;
-    // Simulate analysis
+    vr.hidden=false;document.getElementById('vidUpZone').hidden=true;
+    // Loading steps
+    const steps=['Détection du mouvement...','Analyse de la posture...','Évaluation des phases...','Scan des muscles ciblés...','Calcul du score final...'];
+    let si=0;
+    vr.innerHTML=`<div style="text-align:center;padding:40px 0"><div style="width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px"></div><p style="font:500 14px var(--f);color:var(--fg-2)" id="vidStep">${steps[0]}</p><div style="margin-top:12px;height:4px;background:var(--border);border-radius:2px;max-width:200px;margin-left:auto;margin-right:auto;overflow:hidden"><div id="vidProg" style="height:100%;width:0%;background:var(--grad);border-radius:2px;transition:width .5s ease"></div></div></div>`;
+    const stepIv=setInterval(()=>{si++;if(si<steps.length){document.getElementById('vidStep').textContent=steps[si];document.getElementById('vidProg').style.width=((si+1)/steps.length*100)+'%'}else{clearInterval(stepIv)}},700);
     setTimeout(()=>{
-        const movements=['Squat','Développé couché','Soulevé de terre','Fentes','Rowing','Tractions'];
-        const detected=movements[Math.floor(Math.random()*movements.length)];
+        clearInterval(stepIv);
+        const moveData={
+            Squat:{muscles:['Quadriceps','Fessiers','Ischio-jambiers','Lombaires','Abdominaux'],tips:{conc:'Pousse le sol avec les talons, expire en montant',exc:'Descends en contrôlant 3 secondes, inspire',lock:'Verrouille les genoux sans hyper-extension'}},
+            'Développé couché':{muscles:['Pectoraux','Deltoïdes antérieurs','Triceps','Grand dentelé','Trapèzes'],tips:{conc:'Pousse explosif en expirant, coudes à 45°',exc:'Descente lente 2-3s, barre au niveau des tétons',lock:'Contracte les pecs en haut sans claquer les coudes'}},
+            'Soulevé de terre':{muscles:['Ischio-jambiers','Fessiers','Érecteurs du rachis','Trapèzes','Avant-bras'],tips:{conc:'Pousse les hanches vers l\'avant, barre contre les tibias',exc:'Recule les hanches d\'abord, dos plat',lock:'Serre les fessiers en haut, épaules en arrière'}},
+            Fentes:{muscles:['Quadriceps','Fessiers','Adducteurs','Mollets','Abdominaux'],tips:{conc:'Pousse à travers le talon avant',exc:'Genou arrière frôle le sol, torse droit',lock:'Stabilise le bassin, pas de rotation'}},
+            Rowing:{muscles:['Grand dorsal','Rhomboïdes','Trapèzes','Biceps','Érecteurs du rachis'],tips:{conc:'Tire les coudes vers l\'arrière, serre les omoplates',exc:'Étends les bras complètement, étire le dos',lock:'Maintiens le buste à 45°, pas d\'élan'}},
+            Tractions:{muscles:['Grand dorsal','Biceps','Brachial','Trapèzes inférieurs','Abdominaux'],tips:{conc:'Tire les coudes vers les hanches, menton au-dessus',exc:'Descends en 3 secondes, bras presque tendus',lock:'Engage les épaules, pas de balancement'}}
+        };
+        const moveNames=Object.keys(moveData);
+        const detected=moveNames[Math.floor(Math.random()*moveNames.length)];
+        const info=moveData[detected];
         const formScore=Math.round(65+Math.random()*30);
         const tempo=(2+Math.random()*2).toFixed(1);
         const rom=Math.round(70+Math.random()*25);
+        const reps=Math.round(6+Math.random()*8);
+        const concScore=Math.round(60+Math.random()*35);
+        const excScore=Math.round(55+Math.random()*40);
+        const lockScore=Math.round(65+Math.random()*30);
+        const stability=Math.round(60+Math.random()*35);
+        function scoreColor(s){return s>=85?'#00C49A':s>=70?'#F0C800':'#FF6B6B'}
+        function scoreLabel(s){return s>=85?'Excellent':s>=70?'Bon':'À améliorer'}
         const corrections=[];
-        if(formScore<80)corrections.push('Améliore la profondeur du mouvement');
-        if(formScore<90)corrections.push('Garde le dos plus droit pendant la phase concentrique');
-        corrections.push('Contrôle davantage la phase excentrique (descente)');
-        if(Math.random()>.5)corrections.push('Stabilise tes genoux — ils partent légèrement vers l\'intérieur');
+        if(excScore<75)corrections.push({text:'Contrôle davantage la phase excentrique (descente)',tip:info.tips.exc});
+        if(concScore<75)corrections.push({text:'Améliore l\'explosivité de la phase concentrique',tip:info.tips.conc});
+        if(stability<75)corrections.push({text:'Renforce ta stabilité — léger déséquilibre détecté',tip:'Travaille le gainage et les exercices unilatéraux'});
+        if(rom<80)corrections.push({text:'Augmente ton amplitude de mouvement',tip:'Travaille la mobilité articulaire avant ta séance'});
+        if(formScore<80)corrections.push({text:'Corrige l\'alignement du dos pendant le mouvement',tip:'Filme-toi de profil pour mieux voir ta posture'});
+        if(!corrections.length)corrections.push({text:'Excellent ! Maintiens cette qualité d\'exécution',tip:'Essaie d\'augmenter la charge progressivement (+2.5kg)'});
         vr.innerHTML=`
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:16px">
-                <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px"><span style="font-size:24px">🎯</span><div><h4 style="font:600 16px var(--f-d);color:var(--fg)">Mouvement détecté : ${detected}</h4><p style="font:400 12px var(--f);color:var(--fg-2)">Durée analysée : ${f.name}</p></div></div>
-                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-                    <div class="vid-metric"><span style="font:700 24px var(--f-d);color:${formScore>=80?'#00C49A':'#F0C800'}">${formScore}%</span><span style="font:500 11px var(--f);color:var(--fg-2)">Score de forme</span></div>
-                    <div class="vid-metric"><span style="font:700 24px var(--f-d);color:var(--accent)">${tempo}s</span><span style="font:500 11px var(--f);color:var(--fg-2)">Tempo moyen</span></div>
-                    <div class="vid-metric"><span style="font:700 24px var(--f-d);color:${rom>=85?'#00C49A':'#F0C800'}">${rom}%</span><span style="font:500 11px var(--f);color:var(--fg-2)">Amplitude</span></div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:12px">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><span style="font-size:28px">🎯</span><div><h4 style="font:700 18px var(--f-d);color:var(--fg)">${detected}</h4><p style="font:400 12px var(--f);color:var(--fg-2)">${reps} répétitions détectées · Tempo moyen ${tempo}s</p></div></div>
+                <div style="display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:16px">
+                    <div style="position:relative;width:90px;height:90px">
+                        <svg width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="38" fill="none" stroke="var(--border)" stroke-width="6"/><circle cx="45" cy="45" r="38" fill="none" stroke="${scoreColor(formScore)}" stroke-width="6" stroke-dasharray="${formScore*2.39} 239" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 45 45)" style="transition:stroke-dasharray 1s ease"/></svg>
+                        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:800 24px var(--f-d);color:${scoreColor(formScore)}">${formScore}</span><span style="font:500 9px var(--f);color:var(--fg-2)">SCORE</span></div>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:6px;flex:1">
+                        <div style="display:flex;justify-content:space-between;font:500 12px var(--f);color:var(--fg-2)"><span>Amplitude</span><span style="color:${scoreColor(rom)}">${rom}%</span></div>
+                        <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="height:100%;width:${rom}%;background:${scoreColor(rom)};border-radius:3px"></div></div>
+                        <div style="display:flex;justify-content:space-between;font:500 12px var(--f);color:var(--fg-2)"><span>Stabilité</span><span style="color:${scoreColor(stability)}">${stability}%</span></div>
+                        <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="height:100%;width:${stability}%;background:${scoreColor(stability)};border-radius:3px"></div></div>
+                    </div>
                 </div>
             </div>
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px">
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:12px">
+                <h4 style="font:600 14px var(--f-d);color:var(--fg);margin-bottom:14px">⚙️ Analyse par phase</h4>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                    <div style="display:flex;align-items:center;gap:10px"><div style="width:8px;height:8px;border-radius:50%;background:${scoreColor(concScore)};flex-shrink:0"></div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font:500 12px var(--f);color:var(--fg)">Concentrique (montée)</span><span style="font:600 12px var(--f);color:${scoreColor(concScore)}">${concScore}% · ${scoreLabel(concScore)}</span></div><p style="font:400 11px var(--f);color:var(--fg-3)">${info.tips.conc}</p></div></div>
+                    <div style="display:flex;align-items:center;gap:10px"><div style="width:8px;height:8px;border-radius:50%;background:${scoreColor(excScore)};flex-shrink:0"></div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font:500 12px var(--f);color:var(--fg)">Excentrique (descente)</span><span style="font:600 12px var(--f);color:${scoreColor(excScore)}">${excScore}% · ${scoreLabel(excScore)}</span></div><p style="font:400 11px var(--f);color:var(--fg-3)">${info.tips.exc}</p></div></div>
+                    <div style="display:flex;align-items:center;gap:10px"><div style="width:8px;height:8px;border-radius:50%;background:${scoreColor(lockScore)};flex-shrink:0"></div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font:500 12px var(--f);color:var(--fg)">Verrouillage (lockout)</span><span style="font:600 12px var(--f);color:${scoreColor(lockScore)}">${lockScore}% · ${scoreLabel(lockScore)}</span></div><p style="font:400 11px var(--f);color:var(--fg-3)">${info.tips.lock}</p></div></div>
+                </div>
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:12px">
+                <h4 style="font:600 14px var(--f-d);color:var(--fg);margin-bottom:12px">💪 Muscles ciblés</h4>
+                <div style="display:flex;flex-wrap:wrap;gap:6px">${info.muscles.map(m=>`<span style="padding:5px 12px;background:rgba(240,200,0,.1);border:1px solid rgba(240,200,0,.25);border-radius:20px;font:500 12px var(--f);color:var(--accent)">${m}</span>`).join('')}</div>
+            </div>
+            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:16px">
                 <h4 style="font:600 14px var(--f-d);color:var(--fg);margin-bottom:12px">🔧 Corrections recommandées</h4>
-                <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px">
-                    ${corrections.map(c=>`<li style="display:flex;align-items:flex-start;gap:8px;font:400 13px var(--f);color:var(--fg-2);line-height:1.4"><span style="color:var(--accent);font-weight:600;flex-shrink:0">→</span>${c}</li>`).join('')}
-                </ul>
-            </div>`;
-    },2500);
+                <div style="display:flex;flex-direction:column;gap:10px">
+                    ${corrections.map(c=>`<div style="display:flex;align-items:flex-start;gap:8px"><span style="color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px">→</span><div><p style="font:500 13px var(--f);color:var(--fg);margin-bottom:2px">${c.text}</p><p style="font:400 11px var(--f);color:var(--fg-3)">${c.tip}</p></div></div>`).join('')}
+                </div>
+            </div>
+            <button class="btn btn-o btn-full" onclick="resetVideo()">Analyser une autre vidéo</button>`;
+    },3500);
 }
-
-// ===== SUPPORT 24/7 (Elite) =====
-function sendSupport(){
-    const cat=document.getElementById('supportCat');
-    const msg=document.getElementById('supportMsg');
-    if(!msg||!msg.value.trim()){toast('Écris ton message avant d\'envoyer');return}
-    const category=cat?cat.value:'other';
-    const text=msg.value.trim();
-    // Simulate sending
-    toast('Message envoyé ! Notre équipe te répond sous 2h.');
-    msg.value='';
-    // Update status
-    const ss=document.querySelector('.support-status');
-    if(ss){ss.innerHTML=`<span style="display:inline-block;width:8px;height:8px;background:#00C49A;border-radius:50%;margin-right:6px"></span>Dernier message envoyé — réponse sous 2h`}
+function resetVideo(){
+    const vr=document.getElementById('vidResults');if(vr){vr.hidden=true;vr.innerHTML=''}
+    const uz=document.getElementById('vidUpZone');if(uz)uz.hidden=false;
+    const vi=document.getElementById('vidIn');if(vi)vi.value='';
 }
 </script>
