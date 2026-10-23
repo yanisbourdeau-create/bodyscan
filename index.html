@@ -1543,12 +1543,12 @@ function handleVideo(e){
     setTimeout(()=>{
         clearInterval(stepIv);
         const moveData={
-            Squat:{muscles:['Quadriceps','Fessiers','Ischio-jambiers','Lombaires','Abdominaux'],tips:{conc:'Pousse le sol avec les talons, expire en montant',exc:'Descends en contrôlant 3 secondes, inspire',lock:'Verrouille les genoux sans hyper-extension'}},
-            'Développé couché':{muscles:['Pectoraux','Deltoïdes antérieurs','Triceps','Grand dentelé','Trapèzes'],tips:{conc:'Pousse explosif en expirant, coudes à 45°',exc:'Descente lente 2-3s, barre au niveau des tétons',lock:'Contracte les pecs en haut sans claquer les coudes'}},
-            'Soulevé de terre':{muscles:['Ischio-jambiers','Fessiers','Érecteurs du rachis','Trapèzes','Avant-bras'],tips:{conc:'Pousse les hanches vers l\'avant, barre contre les tibias',exc:'Recule les hanches d\'abord, dos plat',lock:'Serre les fessiers en haut, épaules en arrière'}},
-            Fentes:{muscles:['Quadriceps','Fessiers','Adducteurs','Mollets','Abdominaux'],tips:{conc:'Pousse à travers le talon avant',exc:'Genou arrière frôle le sol, torse droit',lock:'Stabilise le bassin, pas de rotation'}},
-            Rowing:{muscles:['Grand dorsal','Rhomboïdes','Trapèzes','Biceps','Érecteurs du rachis'],tips:{conc:'Tire les coudes vers l\'arrière, serre les omoplates',exc:'Étends les bras complètement, étire le dos',lock:'Maintiens le buste à 45°, pas d\'élan'}},
-            Tractions:{muscles:['Grand dorsal','Biceps','Brachial','Trapèzes inférieurs','Abdominaux'],tips:{conc:'Tire les coudes vers les hanches, menton au-dessus',exc:'Descends en 3 secondes, bras presque tendus',lock:'Engage les épaules, pas de balancement'}}
+            Squat:{muscles:['Quadriceps','Fessiers','Ischio-jambiers'],tips:{conc:'Pousse le sol avec les talons, expire en montant',exc:'Descends en contrôlant 3 secondes, inspire',lock:'Verrouille les genoux sans hyper-extension'}},
+            'Développé couché':{muscles:['Pectoraux','Triceps','Deltoïdes antérieurs'],tips:{conc:'Pousse explosif en expirant, coudes à 45°',exc:'Descente lente 2-3s, barre au niveau des tétons',lock:'Contracte les pecs en haut sans claquer les coudes'}},
+            'Soulevé de terre':{muscles:['Ischio-jambiers','Fessiers','Érecteurs du rachis'],tips:{conc:'Pousse les hanches vers l\'avant, barre contre les tibias',exc:'Recule les hanches d\'abord, dos plat',lock:'Serre les fessiers en haut, épaules en arrière'}},
+            Fentes:{muscles:['Quadriceps','Fessiers','Mollets'],tips:{conc:'Pousse à travers le talon avant',exc:'Genou arrière frôle le sol, torse droit',lock:'Stabilise le bassin, pas de rotation'}},
+            Rowing:{muscles:['Grand dorsal','Trapèzes','Biceps'],tips:{conc:'Tire les coudes vers l\'arrière, serre les omoplates',exc:'Étends les bras complètement, étire le dos',lock:'Maintiens le buste à 45°, pas d\'élan'}},
+            Tractions:{muscles:['Grand dorsal','Biceps','Avant-bras'],tips:{conc:'Tire les coudes vers les hanches, menton au-dessus',exc:'Descends en 3 secondes, bras presque tendus',lock:'Engage les épaules, pas de balancement'}}
         };
         const moveNames=Object.keys(moveData);
         const detected=moveNames[Math.floor(Math.random()*moveNames.length)];
