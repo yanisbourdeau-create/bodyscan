@@ -1335,7 +1335,7 @@ async function startScan(){
     const pi=document.getElementById('prevImg');
     if(!pi||!pi.src||!pi.src.startsWith('data:')){toast('Ajoute une photo');return}
     if(!h||!w){toast('Remplis taille et poids');return}
-    if(!getUserPlan()){toast('Abonne-toi pour lancer un scan');openWhop();return}
+    if(!getUserPlan()){toast('Abonne-toi pour lancer un scan');goTo('landing');setTimeout(()=>{document.getElementById('pricing').scrollIntoView({behavior:'smooth'})},350);return}
     if(!canScan()){toast('Limite de 5 scans/mois atteinte. Passe en Premium pour des scans illimités !');return}
     goTo('scanning');
     const steps=['Détection de la silhouette...','Analyse des proportions...','Calcul du morphotype...','Évaluation musculaire...','Génération des recommandations...'];
