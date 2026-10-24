@@ -821,7 +821,7 @@ img { max-width: 100% }
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Programme d'entraînement</li>
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Fiche partageable</li>
             </ul>
-            <button class="btn btn-o btn-full" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+            <button class="btn btn-o btn-full" onclick="openWhop()">Commencer</button>
         </div>
         <div class="pr-c pr-pop">
             <div class="pr-badge">Le + populaire</div>
@@ -833,18 +833,18 @@ img { max-width: 100% }
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Suivi progression</li>
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Plan nutrition détaillé</li>
             </ul>
-            <button class="btn btn-p btn-full" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+            <button class="btn btn-p btn-full" onclick="openWhop()">Commencer</button>
         </div>
         <div class="pr-c">
             <div class="pr-hd"><h3>Elite</h3><div class="pr-price"><span class="pr-amt">24,99€</span><span class="pr-per">/mois</span></div><p class="pr-desc">L'expérience ultime</p></div>
             <ul class="pr-feat">
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Tout Premium inclus</li>
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Coach IA en temps réel</li>
-                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Analyse vidéo mouvement</li>
+                <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Analyse vidéo (bientôt)</li>
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Accès prioritaire</li>
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Support dédié 24/7</li>
             </ul>
-            <button class="btn btn-o btn-full" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+            <button class="btn btn-o btn-full" onclick="openWhop()">Commencer</button>
         </div>
     </div>
 </div>
@@ -863,8 +863,8 @@ img { max-width: 100% }
     <div class="cta-box">
         <div class="cta-orb"></div>
         <h2>Prêt à découvrir ton <span class="gt">potentiel</span> ?</h2>
-        <p>Rejoins des milliers d'utilisateurs qui transforment leur corps avec l'IA.</p>
-        <button class="btn btn-p btn-lg" onclick="goTo('signup')">Commencer gratuitement <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <p>Une photo, et l'IA te dit par où commencer.</p>
+        <button class="btn btn-p btn-lg" onclick="goTo('signup')">Commencer <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
 </div>
 
@@ -890,8 +890,8 @@ img { max-width: 100% }
     </div>
     <form class="auth-f" onsubmit="handleLogin(event)">
         <div class="fg"><label>Email</label><input type="email" id="l-email" placeholder="ton@email.com" required></div>
-        <div class="fg"><label>Mot de passe</label><input type="password" id="l-pw" placeholder="••••••••" required></div>
-        <button type="submit" class="btn btn-p btn-full btn-lg">Se connecter</button>
+        <button type="submit" class="btn btn-p btn-full btn-lg">Recevoir mon lien de connexion</button>
+        <p style="font-size:12px;color:var(--fg-3);text-align:center;margin-top:8px">Pas de mot de passe : on t'envoie un lien par email.</p>
     </form>
     <div class="auth-div"><span>ou</span></div>
     <button class="btn-soc" onclick="handleGoogleLogin()"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.8h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.32z" fill="#4285F4"/><path d="M10 20c2.7 0 4.96-.9 6.62-2.42l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.58-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/><path d="M4.42 11.92A6.01 6.01 0 014.1 10c0-.66.12-1.31.32-1.92V5.5H1.08A9.99 9.99 0 000 10c0 1.61.39 3.14 1.08 4.5l3.34-2.58z" fill="#FBBC05"/><path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.5l3.34 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/></svg> Continuer avec Google</button>
@@ -904,15 +904,14 @@ img { max-width: 100% }
 <div class="auth-pg"><div class="auth-cd">
     <div class="auth-hd">
         <a href="#" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
-        <h2>Crée ton compte</h2><p>Commence ton analyse gratuitement</p>
+        <h2>Crée ton compte</h2><p>Utilise le même email que sur Whop</p>
     </div>
     <form class="auth-f" onsubmit="handleSignup(event)">
         <div class="fr">
             <div class="fg"><label>Prénom</label><input type="text" id="s-name" placeholder="Jean" required></div>
-            <div class="fg"><label>Âge</label><input type="number" id="s-age" placeholder="25" min="14" max="99" required></div>
+            <div class="fg"><label>Âge</label><input type="number" id="s-age" placeholder="25" min="18" max="99" required></div>
         </div>
         <div class="fg"><label>Email</label><input type="email" id="s-email" placeholder="ton@email.com" required></div>
-        <div class="fg"><label>Mot de passe</label><input type="password" id="s-pw" placeholder="8 caractères min" minlength="8" required></div>
         <div class="fg"><label>Objectif</label>
             <select id="s-goal" required>
                 <option value="" disabled selected>Choisis ton objectif</option>
@@ -924,6 +923,7 @@ img { max-width: 100% }
             </select>
         </div>
         <button type="submit" class="btn btn-p btn-full btn-lg">Créer mon compte</button>
+        <p style="font-size:12px;color:var(--fg-3);text-align:center;margin-top:8px">Utilise le même email que pour ton abonnement Whop. Réservé aux 18 ans et plus.</p>
     </form>
     <div class="auth-div"><span>ou</span></div>
     <button class="btn-soc" onclick="handleGoogleSignup()"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.8h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.32z" fill="#4285F4"/><path d="M10 20c2.7 0 4.96-.9 6.62-2.42l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.58-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/><path d="M4.42 11.92A6.01 6.01 0 014.1 10c0-.66.12-1.31.32-1.92V5.5H1.08A9.99 9.99 0 000 10c0 1.61.39 3.14 1.08 4.5l3.34-2.58z" fill="#FBBC05"/><path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.5l3.34 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/></svg> Continuer avec Google</button>
@@ -974,6 +974,7 @@ img { max-width: 100% }
         <div class="d-panel" id="dp-scan">
             <div class="d-hd"><div><h1>Nouveau scan</h1><p class="d-sub">Télécharge une photo de face en tenue de sport</p></div></div>
             <div id="scanLimitBar" hidden></div>
+            <div id="noPlanBar" hidden style="background:var(--bg-card);border:1px solid var(--accent);border-radius:var(--r-l);padding:16px;margin-bottom:16px"><p style="font:600 14px var(--f);margin-bottom:6px">Aucun abonnement actif sur <span id="npEmail"></span></p><p style="font-size:12px;color:var(--fg-2);margin-bottom:10px">Abonne-toi sur Whop avec ce même email, puis clique sur « Actualiser ».</p><div style="display:flex;gap:8px"><button class="btn btn-p btn-sm" onclick="openWhop()">Voir les abonnements</button><button class="btn btn-o btn-sm" onclick="refreshPlan(true)">Actualiser</button></div></div>
             <div class="up-area">
                 <div class="up-zone" id="upz" onclick="document.getElementById('phIn').click()" ondragover="event.preventDefault();this.classList.add('dg')" ondragleave="this.classList.remove('dg')" ondrop="hDrop(event)">
                     <input type="file" id="phIn" accept="image/*" hidden onchange="hFile(event)">
@@ -1020,13 +1021,7 @@ img { max-width: 100% }
         <!-- ANALYSE VIDEO (Elite) -->
         <div class="d-panel" id="dp-video">
             <div class="d-hd"><div><h1>Analyse vidéo</h1><p class="d-sub">Analyse la qualité de tes mouvements</p></div></div>
-            <label id="vidUpZone" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;min-height:200px;border:2px dashed var(--border);border-radius:var(--r-l);padding:32px 20px;text-align:center;cursor:pointer;box-sizing:border-box">
-                <input type="file" id="vidIn" accept="video/*" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)" onchange="handleVideo(event)">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" style="color:var(--fg-3);margin-bottom:12px"><rect x="6" y="12" width="28" height="24" rx="4" stroke="currentColor" stroke-width="2"/><path d="M34 20L42 14V34L34 28" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M16 28L20 24L24 28" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".5"/></svg>
-                <p style="font:500 15px var(--f);margin-bottom:4px">Appuie ici pour uploader une vidéo</p>
-                <p style="font-size:12px;color:var(--fg-3)">MP4, MOV · Un exercice à la fois · 30s max recommandé</p>
-            </label>
-            <div id="vidResults" hidden></div>
+            <div class="d-empty" style="padding:40px 20px;text-align:center"><p style="font:600 16px var(--f-d);margin-bottom:6px">Bientôt disponible</p><p style="font-size:13px;color:var(--fg-2)">L\'analyse vidéo de tes mouvements arrive prochainement pour les membres Elite.</p></div>
         </div>
         <!-- PROFILE -->
         <div class="d-panel" id="dp-prof"><div class="d-hd"><div><h1>Mon profil</h1><p class="d-sub">Gère tes informations</p></div></div>
@@ -1034,12 +1029,8 @@ img { max-width: 100% }
             <div style="margin-top:18px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px">
                 <h3 style="font:600 15px var(--f-d);margin-bottom:12px">Mon abonnement</h3>
                 <div id="profPlanInfo" style="font-size:13px;color:var(--fg-2);line-height:1.6"></div>
-                <div style="margin-top:14px;display:flex;gap:8px">
-                    <button class="btn btn-full" style="flex:1;font-size:12px;padding:8px" onclick="setPlan('pro')">Pro</button>
-                    <button class="btn btn-full" style="flex:1;font-size:12px;padding:8px" onclick="setPlan('premium')">Premium</button>
-                    <button class="btn btn-p btn-full" style="flex:1;font-size:12px;padding:8px" onclick="setPlan('elite')">Elite</button>
-                </div>
-                <button class="btn btn-o btn-full" style="margin-top:10px" onclick="window.open('https://whop.com/bodyscan/','_blank')">Gérer mon abonnement</button>
+                <button class="btn btn-o btn-full" style="margin-top:10px" onclick="openWhop()">Gérer mon abonnement</button>
+                <button class="btn btn-g btn-full" style="margin-top:8px" onclick="refreshPlan(true)">J'ai payé — actualiser mon accès</button>
             </div>
         </div>
     </div>
@@ -1136,20 +1127,20 @@ img { max-width: 100% }
                 <h4>Pro</h4>
                 <div class="pw-price">7,99€ <span>/mois</span></div>
                 <ul class="pw-feats"><li>5 scans / mois</li><li>Analyse morphotype</li><li>Programme training</li></ul>
-                <button class="btn btn-o btn-full btn-sm" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+                <button class="btn btn-o btn-full btn-sm" onclick="openWhop()">Commencer</button>
             </div>
             <div class="pw-card pw-pop">
                 <div class="pw-pop-badge">Populaire</div>
                 <h4>Premium</h4>
                 <div class="pw-price">14,99€ <span>/mois</span></div>
                 <ul class="pw-feats"><li>Scans illimités</li><li>Analyse avancée</li><li>Programme perso</li><li>Nutrition détaillée</li></ul>
-                <button class="btn btn-p btn-full btn-sm" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+                <button class="btn btn-p btn-full btn-sm" onclick="openWhop()">Commencer</button>
             </div>
             <div class="pw-card">
                 <h4>Elite</h4>
                 <div class="pw-price">24,99€ <span>/mois</span></div>
-                <ul class="pw-feats"><li>Tout Premium</li><li>Coach IA</li><li>Analyse vidéo</li><li>Résultats illimités</li></ul>
-                <button class="btn btn-o btn-full btn-sm" onclick="window.open('https://whop.com/bodyscan/','_blank')">Commencer</button>
+                <ul class="pw-feats"><li>Tout Premium</li><li>Coach IA</li><li>Analyse vidéo (bientôt)</li><li>Résultats illimités</li></ul>
+                <button class="btn btn-o btn-full btn-sm" onclick="openWhop()">Commencer</button>
             </div>
         </div>
     </div>
@@ -1157,18 +1148,20 @@ img { max-width: 100% }
 </section>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.min.js"></script>
 <script>
 let cv='landing',user=null,hist=[];
 // TIER SYSTEM: 'pro','premium','elite' — stored in user.plan
-function getUserPlan(){return user&&user.plan?user.plan:'pro'}
+function getUserPlan(){return user&&user.plan?user.plan:null}
 function getMonthScans(){
     const now=new Date(),m=now.getMonth(),y=now.getFullYear();
     return hist.filter(h=>{const d=h._ts?new Date(h._ts):null;return d&&d.getMonth()===m&&d.getFullYear()===y}).length;
 }
 function canScan(){
     const plan=getUserPlan();
+    if(!plan)return false;
     if(plan==='premium'||plan==='elite')return true;
-    return getMonthScans()<5;
+    return monthScans<5;
 }
 
 window.addEventListener('load',()=>{loadSession();setTimeout(()=>{document.getElementById('app-loader').classList.add('hid')},1200)});
@@ -1198,26 +1191,54 @@ function switchTab(el,id){
     if(pan){pan.classList.add('on');requestAnimationFrame(()=>{pan.style.opacity='1'})}
 }
 
-function handleLogin(e){e.preventDefault();user={name:document.getElementById('l-email').value.split('@')[0],email:document.getElementById('l-email').value,plan:'elite'};saveSession();updDash();goTo('dashboard');toast('Connexion réussie — accès Elite !')}
-function handleSignup(e){e.preventDefault();user={name:document.getElementById('s-name').value,email:document.getElementById('s-email').value,age:document.getElementById('s-age').value,goal:document.getElementById('s-goal').value,plan:'elite'};saveSession();updDash();goTo('dashboard');toast('Compte créé — accès Elite !')}
-function showGoogleModal(mode){
-    const m=document.createElement('div');m.className='g-modal';m.onclick=e=>{if(e.target===m)m.remove()};
-    m.innerHTML=`<div class="g-box"><div class="g-logo"><svg width="24" height="24" viewBox="0 0 20 20"><path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.8h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.32z" fill="#4285F4"/><path d="M10 20c2.7 0 4.96-.9 6.62-2.42l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.58-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/><path d="M4.42 11.92A6.01 6.01 0 014.1 10c0-.66.12-1.31.32-1.92V5.5H1.08A9.99 9.99 0 000 10c0 1.61.39 3.14 1.08 4.5l3.34-2.58z" fill="#FBBC05"/><path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.5l3.34 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/></svg></div><h3>Se connecter</h3><p>Utiliser votre compte Google</p><div class="g-fg"><label>Adresse e-mail</label><input type="email" id="g-email" placeholder="votre@gmail.com"></div><div class="g-fg"><label>Nom d'affichage</label><input type="text" id="g-name" placeholder="Votre prénom"></div><button class="g-btn" onclick="finishGoogle()">Suivant</button><p class="g-sub">En continuant, vous acceptez les conditions d'utilisation de Bodyscan.</p></div>`;
-    document.body.appendChild(m);m.querySelector('#g-email').focus();
+// ===== CONFIG =====
+const SB_URL='https://nlpdfvsluujyfzakojsz.supabase.co';
+const SB_ANON='sb_publishable_yONZOOzmdwpyOc_kgrHdWg_0uN7MM_s';
+const WHOP_URL='https://whop.com/bodyscan/';
+const sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+function openWhop(){window.open(WHOP_URL,'_blank')}
+async function api(action,payload){
+    const {data:{session}}=await sb.auth.getSession();
+    if(!session)throw Object.assign(new Error('Connecte-toi'),{code:'auth'});
+    const r=await fetch(SB_URL+'/functions/v1/rapid-apiapi',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token,apikey:SB_ANON},body:JSON.stringify({action,...payload})});
+    const j=await r.json().catch(()=>({error:'Réponse invalide'}));
+    if(!r.ok)throw Object.assign(new Error(j.error||('Erreur '+r.status)),{code:j.code,status:r.status});
+    return j;
 }
-function finishGoogle(){
-    const n=document.getElementById('g-name').value.trim(),e=document.getElementById('g-email').value.trim();
-    if(!n||!e){toast('Remplis ton nom et email');return}
-    user={name:n,email:e,google:true,plan:'elite'};document.querySelector('.g-modal').remove();
-    saveSession();updDash();goTo('dashboard');toast('Connexion Google réussie — accès Elite !');
+const REDIRECT=location.origin+location.pathname;
+async function handleLogin(e){e.preventDefault();const em=document.getElementById('l-email').value.trim();
+    const {error}=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:REDIRECT,shouldCreateUser:true}});
+    toast(error?('Erreur : '+error.message):'Lien envoyé à '+em+' — ouvre ton email ✉️')}
+async function handleSignup(e){e.preventDefault();const em=document.getElementById('s-email').value.trim();
+    const meta={name:document.getElementById('s-name').value.trim(),age:document.getElementById('s-age').value,goal:document.getElementById('s-goal').value};
+    try{localStorage.setItem('bs_profile',JSON.stringify(meta))}catch(_){}
+    const {error}=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:REDIRECT,data:meta}});
+    toast(error?('Erreur : '+error.message):'Lien envoyé à '+em+' — ouvre ton email ✉️')}
+async function oauthGoogle(){const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:REDIRECT}});if(error)toast('Erreur Google : '+error.message)}
+function handleGoogleLogin(){oauthGoogle()}
+function handleGoogleSignup(){oauthGoogle()}
+async function handleLogout(){await sb.auth.signOut();user=null;hist=[];try{localStorage.removeItem('bs_hist')}catch(e){}goTo('landing');toast('Déconnexion réussie')}
+function saveSession(){try{if(hist.length)localStorage.setItem('bs_hist',JSON.stringify(hist.map(h=>({...h,photo:undefined}))))}catch(e){}}
+let monthScans=0;
+async function refreshPlan(manual){
+    if(!user)return;
+    try{const me=await api('me',{});user.plan=me.plan||null;monthScans=me.monthScans||0;updDash();
+        if(manual)toast(me.plan?('Accès '+me.plan.charAt(0).toUpperCase()+me.plan.slice(1)+' actif ✓'):'Aucun abonnement trouvé pour '+user.email);
+    }catch(e){if(manual)toast(e.message)}
 }
-function handleGoogleLogin(){showGoogleModal('login')}
-function handleGoogleSignup(){showGoogleModal('signup')}
-function setPlan(p){if(!user)return;user.plan=p;saveSession();updDash();toast('Plan changé → '+p.charAt(0).toUpperCase()+p.slice(1)+' ✓')}
-function handleLogout(){user=null;hist=[];try{localStorage.removeItem('bs_user');localStorage.removeItem('bs_hist')}catch(e){}goTo('landing');toast('Déconnexion réussie')}
-function saveSession(){try{if(user){user.loginAt=user.loginAt||Date.now();localStorage.setItem('bs_user',JSON.stringify(user))}if(hist.length)localStorage.setItem('bs_hist',JSON.stringify(hist))}catch(e){}}
-function loadSession(){try{const u=localStorage.getItem('bs_user');const h=localStorage.getItem('bs_hist');if(u)user=JSON.parse(u);if(h)hist=JSON.parse(h);if(user){const days=(Date.now()-(user.loginAt||0))/(1000*60*60*24);if(days>30){user=null;hist=[];localStorage.removeItem('bs_user');localStorage.removeItem('bs_hist');return}if(!user.plan){user.plan='elite';saveSession()}updDash();goTo('dashboard')}}catch(e){}}
-
+function setUserFromSession(session){
+    const u=session.user,md=u.user_metadata||{};let prof={};try{prof=JSON.parse(localStorage.getItem('bs_profile')||'{}')}catch(_){}
+    user={id:u.id,email:u.email,name:md.name||md.full_name||prof.name||u.email.split('@')[0],age:md.age||prof.age||'',goal:md.goal||prof.goal||'',plan:user&&user.email===u.email?user.plan:null};
+}
+async function loadSession(){
+    try{const h=localStorage.getItem('bs_hist');if(h)hist=JSON.parse(h)}catch(e){}
+    const {data:{session}}=await sb.auth.getSession();
+    if(session){setUserFromSession(session);updDash();goTo('dashboard');await refreshPlan(false)}
+    sb.auth.onAuthStateChange((ev,session)=>{
+        if(ev==='SIGNED_IN'&&session&&(!user||user.id!==session.user.id)){setUserFromSession(session);updDash();goTo('dashboard');refreshPlan(false);toast('Connexion réussie ✓')}
+        if(ev==='SIGNED_OUT'){user=null}
+    });
+}
 function updDash(){
     if(!user)return;
     const plan=getUserPlan();
@@ -1235,11 +1256,12 @@ function updDash(){
     const nc=document.getElementById('nav-coach'),nv=document.getElementById('nav-video');
     if(nc)nc.hidden=plan!=='elite';
     if(nv)nv.hidden=plan!=='elite';
+    const npb=document.getElementById('noPlanBar');if(npb){npb.hidden=!!plan;const ne=document.getElementById('npEmail');if(ne)ne.textContent=user.email}
     // Scan limit bar (Pro only)
     const slb=document.getElementById('scanLimitBar');
     if(slb){
         if(plan==='pro'){
-            const used=getMonthScans(),max=5;
+            const used=monthScans,max=5;
             slb.hidden=false;
             slb.innerHTML=`<div class="scan-limit-bar"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><span style="font:500 12px var(--f);color:var(--fg-2)">Scans ce mois</span><span style="font:600 12px var(--f);color:var(--fg)">${used}/${max}</span></div><div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden"><div style="height:100%;width:${(used/max)*100}%;background:var(--grad);border-radius:3px;transition:width .4s ease"></div></div></div>`;
         } else slb.hidden=true;
@@ -1248,8 +1270,8 @@ function updDash(){
     const pb=document.getElementById('profBadge');
     if(pb){
         const labels={pro:'Plan Pro',premium:'Plan Premium',elite:'Plan Elite'};
-        pb.textContent=labels[plan]||'Plan Pro';
-        pb.className='prof-badge'+(plan!=='pro'?' '+plan:'');
+        pb.textContent=labels[plan]||'Aucun abonnement';
+        pb.className='prof-badge'+(plan&&plan!=='pro'?' '+plan:'');
     }
     // Profile plan info
     const ppi=document.getElementById('profPlanInfo');
@@ -1257,9 +1279,9 @@ function updDash(){
         const info={
             pro:'<b>Pro</b> — 7,99€/mois<br>✓ 5 scans/mois<br>✓ Analyse morphotype<br>✓ Programme d\'entraînement<br>✓ Conseils nutrition de base',
             premium:'<b>Premium</b> — 14,99€/mois<br>✓ Scans illimités<br>✓ Analyse avancée (masse grasse, symétrie…)<br>✓ Programme personnalisé<br>✓ Plan repas détaillé (petit-dej → dîner)',
-            elite:'<b>Elite</b> — 24,99€/mois<br>✓ Tout Premium inclus<br>✓ Coach IA personnel<br>✓ Analyse vidéo avancée<br>✓ Résultats illimités'
+            elite:'<b>Elite</b> — 24,99€/mois<br>✓ Tout Premium inclus<br>✓ Coach IA personnel<br>✓ Analyse vidéo (bientôt)<br>✓ Résultats illimités'
         };
-        ppi.innerHTML=info[plan]||info.pro;
+        ppi.innerHTML=info[plan]||'Aucun abonnement actif pour <b>'+user.email+'</b>. Abonne-toi sur Whop avec cet email.';
     }
     renderHist();
 }
@@ -1292,37 +1314,31 @@ function procFile(f){if(!f.type.startsWith('image/')){toast('Sélectionne une im
     document.getElementById('scForm').hidden=false};r.readAsDataURL(f)}
 function clearUp(){document.getElementById('upz').hidden=false;document.getElementById('upprev').hidden=true;document.getElementById('scForm').hidden=true;document.getElementById('phIn').value=''}
 
-function startScan(){
+function compressImg(src,max=1280){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',0.85))};im.onerror=rej;im.src=src})}
+async function startScan(){
     const h=document.getElementById('scH').value,w=document.getElementById('scW').value,sx=document.querySelector('input[name="scSex"]:checked').value;
+    const pi=document.getElementById('prevImg');
+    if(!pi||!pi.src||!pi.src.startsWith('data:')){toast('Ajoute une photo');return}
     if(!h||!w){toast('Remplis taille et poids');return}
+    if(!getUserPlan()){toast('Abonne-toi pour lancer un scan');openWhop();return}
     if(!canScan()){toast('Limite de 5 scans/mois atteinte. Passe en Premium pour des scans illimités !');return}
     goTo('scanning');
-    const steps=[{p:15,s:'Détection de la silhouette...'},{p:30,s:'Analyse des proportions...'},{p:50,s:'Calcul du morphotype...'},{p:70,s:'Évaluation musculaire...'},{p:85,s:'Génération des recommandations...'},{p:95,s:'Finalisation...'},{p:100,s:'Analyse terminée !'}];
-    let i=0;const iv=setInterval(()=>{if(i<steps.length){document.getElementById('scBarF').style.width=steps[i].p+'%';document.getElementById('scPct').textContent=steps[i].p+'%';document.getElementById('scStat').textContent=steps[i].s;i++}
-    else{clearInterval(iv);const res=genRes(+h,+w,sx);const pi=document.getElementById('prevImg');if(pi&&pi.src&&pi.src.startsWith('data:'))res.photo=pi.src;hist.push(res);saveSession();updDash();showRes(res);setTimeout(()=>goTo('results'),500)}},650);
-    [{id:'sd1',d:1400},{id:'sd2',d:2000},{id:'sd3',d:2600},{id:'sd4',d:3200},{id:'sd5',d:3800}].forEach(x=>{
-        setTimeout(()=>{const el=document.getElementById(x.id);if(el){const v=el.querySelector('.sdv');v.textContent='✓ Analysé';v.style.color='#00C49A'}},x.d)});
-}
-
-function genRes(h,w,sx){
-    const bmi=(w/((h/100)**2)).toFixed(1);let morph,type,desc,str;
-    const sr=sx==='male'?(1.4+Math.random()*.3).toFixed(2):(1.2+Math.random()*.2).toFixed(2);
-    if(bmi<20){morph='ECTOMORPHE';type='Profil longiligne';str='Endurance, agilité';desc="Tu as un profil ectomorphe — naturellement mince avec un métabolisme rapide. Concentre-toi sur l'entraînement en force avec des charges lourdes et un surplus calorique. Les exercices composés (squat, soulevé de terre, développé couché) seront tes meilleurs alliés."}
-    else if(bmi<25){morph='MÉSOMORPHE';type='Profil athlétique';str='Force, adaptation';desc="Tu as un profil mésomorphe — une structure athlétique avec une bonne capacité à développer du muscle. Un programme mixte force/hypertrophie sera idéal, avec une alimentation équilibrée en protéines et glucides complexes."}
-    else{morph='ENDOMORPHE';type='Profil puissant';str='Puissance, stabilité';desc="Tu as un profil endomorphe — une structure solide avec une tendance au stockage. Pour optimiser ta composition corporelle, privilégie le HIIT combiné à de la musculation, avec une alimentation riche en protéines et des glucides ciblés autour de l'entraînement."}
-    // Muscles visibles sur une photo de face
-    const allMuscles=[
-        {name:'Deltoïdes',zone:'épaules'},{name:'Pectoraux',zone:'torse'},{name:'Biceps',zone:'bras'},
-        {name:'Avant-bras',zone:'bras'},{name:'Trapèzes',zone:'épaules'},{name:'Abdominaux',zone:'torse'},
-        {name:'Obliques',zone:'torse'},{name:'Quadriceps',zone:'jambes'},{name:'Adducteurs',zone:'jambes'},
-        {name:'Tibial antérieur',zone:'jambes'}
-    ];
-    // Simulate detection: pick 5-8 muscles with scores
-    const pick=allMuscles.sort(()=>Math.random()-.5).slice(0,5+Math.floor(Math.random()*3));
-    const muscles=pick.map(m=>({...m,score:Math.round(40+Math.random()*55)}));
-    return{morphotype:morph,type,description:desc,strengths:str,bmi,shoulderRatio:sr,date:new Date().toLocaleDateString('fr-FR'),_ts:Date.now(),
-        muscles,
-        proportions:{epaules:60+Math.random()*35,poitrine:55+Math.random()*35,taille:40+Math.random()*30,hanches:50+Math.random()*35,jambes:55+Math.random()*35}};
+    const steps=['Détection de la silhouette...','Analyse des proportions...','Calcul du morphotype...','Évaluation musculaire...','Génération des recommandations...'];
+    let i=0;const setP=(p,t)=>{document.getElementById('scBarF').style.width=p+'%';document.getElementById('scPct').textContent=p+'%';document.getElementById('scStat').textContent=t};
+    setP(5,steps[0]);
+    const iv=setInterval(()=>{i++;const p=Math.min(90,5+i*7);setP(p,steps[Math.min(steps.length-1,Math.floor(i/2))]);
+        const el=document.getElementById('sd'+Math.min(5,Math.ceil(i/2)));if(el){const v=el.querySelector('.sdv');v.textContent='✓ Analysé';v.style.color='#00C49A'}},900);
+    try{
+        const img=await compressImg(pi.src);
+        const {result}=await api('analyze',{image:img,height:+h,weight:+w,sex:sx,age:user&&user.age});
+        clearInterval(iv);setP(100,'Analyse terminée !');
+        const res={...result,date:new Date().toLocaleDateString('fr-FR'),_ts:Date.now(),photo:img};
+        hist.push(res);saveSession();monthScans++;updDash();showRes(res);setTimeout(()=>goTo('results'),500);
+    }catch(e){
+        clearInterval(iv);resetScan();goTo('dashboard');switchTab(document.querySelector('[onclick*=dp-scan]'),'dp-scan');
+        toast(e.message||'Erreur pendant l\'analyse');
+        if(e.code==='no_plan')refreshPlan(false);
+    }
 }
 
 function showRes(r){
@@ -1431,13 +1447,13 @@ function renderAdvanced(r){
     const grid=document.getElementById('advGrid');if(!grid)return;
     const bmi=parseFloat(r.bmi);
     // Estimated body fat (Navy method rough approx)
-    const bf=r.morphotype==='ECTOMORPHE'?(10+Math.random()*5).toFixed(1):r.morphotype==='MÉSOMORPHE'?(13+Math.random()*6).toFixed(1):(20+Math.random()*8).toFixed(1);
+    const bf=(r.bodyFatPct!=null?(+r.bodyFatPct).toFixed(1):'—');
     // Symmetry score
-    const sym=(82+Math.random()*15).toFixed(0);
+    const sym=(r.symmetry!=null?Math.round(r.symmetry):'—');
     // Muscle density index
     const mdi=(r.muscles||[]).reduce((s,m)=>s+m.score,0)/Math.max((r.muscles||[]).length,1);
     // Metabolic rate (Harris-Benedict rough)
-    const bmr=Math.round(1600+Math.random()*400);
+    const bmr=r.bmr||'—';
     const cards=[
         {label:'Masse grasse estimée',value:bf+'%',icon:'🔥',desc:parseFloat(bf)<15?'Excellent — profil sec':'Marge d\'optimisation possible',color:parseFloat(bf)<15?'#00C49A':parseFloat(bf)<22?'#F0C800':'#FF6B6B'},
         {label:'Score de symétrie',value:sym+'/100',icon:'⚖️',desc:parseInt(sym)>90?'Très bonne symétrie':'Quelques déséquilibres détectés',color:parseInt(sym)>90?'#00C49A':'#F0C800'},
@@ -1489,127 +1505,25 @@ function renderMealPlan(r){
 }
 
 // ===== COACH IA (Elite) =====
-function askCoach(msg){
+let coachHist=[];
+function escH(t){return String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+async function askCoach(msg){
     if(!msg&&document.getElementById('coachIn')){msg=document.getElementById('coachIn').value.trim()}
     if(!msg)return;
     const box=document.getElementById('coachMsgs');if(!box)return;
     const inp=document.getElementById('coachIn');if(inp)inp.value='';
-    // User msg
-    box.innerHTML+=`<div class="coach-msg usr">${msg}</div>`;
+    box.insertAdjacentHTML('beforeend',`<div class="coach-msg usr">${escH(msg)}</div>`);
+    box.insertAdjacentHTML('beforeend',`<div class="coach-msg bot typing" id="coachTyping"><span></span><span></span><span></span></div>`);
     box.scrollTop=box.scrollHeight;
-    // Typing indicator
-    box.innerHTML+=`<div class="coach-msg bot typing" id="coachTyping"><span></span><span></span><span></span></div>`;
+    const last=hist.length?{...hist[hist.length-1],photo:undefined}:null;
+    let reply;
+    try{const r=await api('coach',{message:msg,history:coachHist,lastScan:last});reply=r.reply}
+    catch(e){reply='⚠️ '+e.message}
+    const typ=document.getElementById('coachTyping');if(typ)typ.remove();
+    coachHist.push({role:'user',text:msg},{role:'coach',text:reply});coachHist=coachHist.slice(-10);
+    box.insertAdjacentHTML('beforeend',`<div class="coach-msg bot">${escH(reply).replace(/\n/g,'<br>')}</div>`);
     box.scrollTop=box.scrollHeight;
-    // Generate response after delay
-    setTimeout(()=>{
-        const typ=document.getElementById('coachTyping');if(typ)typ.remove();
-        const plan=getUserPlan();
-        const morph=hist.length?hist[hist.length-1].morphotype:'MÉSOMORPHE';
-        const resp=genCoachReply(msg,morph);
-        box.innerHTML+=`<div class="coach-msg bot">${resp}</div>`;
-        box.scrollTop=box.scrollHeight;
-    },1200+Math.random()*800);
-}
-function genCoachReply(msg,morph){
-    const ml=msg.toLowerCase();
-    const morphTips={
-        ECTOMORPHE:{train:'Pour ton profil ectomorphe, concentre-toi sur les exercices composés avec charges lourdes (4-8 reps). Squat, développé couché et soulevé de terre doivent être ta base. Séances de 45 min max !',nutri:'En tant qu\'ectomorphe, tu dois viser un surplus de 300-500 kcal/jour. Mange 5-6 fois par jour avec beaucoup de glucides complexes (riz, patates douces, pâtes). 2g de protéines/kg minimum.',rest:'Le repos est CRUCIAL pour toi. 8h de sommeil minimum. Tes muscles grandissent au repos, pas à la salle. 48h entre chaque groupe musculaire.'},
-        MÉSOMORPHE:{train:'Ton profil mésomorphe répond bien à un programme PPL (Push/Pull/Legs). Alterne hypertrophie (10-12 reps) et force (5-6 reps). Change de programme toutes les 8 semaines pour continuer à progresser.',nutri:'Avec ton métabolisme équilibré, vise une répartition 40% glucides, 30% protéines, 30% lipides. Adapte les calories selon ton objectif : +200 kcal pour prendre, -300 kcal pour sécher.',rest:'2 jours de repos par semaine. Tu récupères bien mais ne néglige pas le sommeil et les étirements. Le foam roller et la mobilité t\'aideront à éviter les blessures.'},
-        ENDOMORPHE:{train:'Pour ton profil endomorphe, combine musculation et cardio HIIT. Des circuits avec des repos courts (60-90 sec) sont très efficaces. Vise 10 000 pas/jour en plus du training.',nutri:'Priorité aux protéines (2.2g/kg) et aux légumes en volume. Concentre tes glucides autour du training. Évite les glucides simples le soir. Un déficit modéré de 300 kcal suffit.',rest:'Le repos actif est ton allié : marche, yoga, natation les jours off. Ça booste ta récupération ET ta dépense calorique.'}
-    };
-    const tips=morphTips[morph]||morphTips.MÉSOMORPHE;
-    if(ml.includes('programme')||ml.includes('exercice')||ml.includes('entraîn')||ml.includes('training')||ml.includes('muscul')||ml.includes('séance'))return tips.train;
-    if(ml.includes('mange')||ml.includes('nutri')||ml.includes('repas')||ml.includes('calorie')||ml.includes('protéine')||ml.includes('diète')||ml.includes('aliment'))return tips.nutri;
-    if(ml.includes('repos')||ml.includes('récup')||ml.includes('sommeil')||ml.includes('dormir')||ml.includes('fatigue'))return tips.rest;
-    if(ml.includes('poids')||ml.includes('maigri')||ml.includes('perdre')||ml.includes('sèche')||ml.includes('gras'))return `Pour optimiser ta perte de gras en tant que ${morph.toLowerCase()}, combine un déficit calorique modéré (-300 kcal) avec de la musculation pour préserver ta masse musculaire. Le HIIT 2-3x/semaine accélère les résultats. Patience et constance sont la clé !`;
-    if(ml.includes('muscle')||ml.includes('masse')||ml.includes('prendre')||ml.includes('grossir')||ml.includes('volume'))return `Pour la prise de masse (${morph.toLowerCase()}), tu as besoin d\'un surplus calorique contrôlé, 2g de protéines/kg/jour et un programme de musculation progressif. Augmente tes charges de 2.5-5% chaque semaine. Les exercices composés sont tes meilleurs amis !`;
-    if(ml.includes('motiv')||ml.includes('difficile')||ml.includes('abandon')||ml.includes('dur'))return `La motivation fluctue, c'est normal ! L'important c'est la discipline. Fixe-toi des objectifs à court terme (cette semaine) et célèbre chaque petite victoire. Un scan régulier avec Bodyscan te montre tes progrès concrets. Tu es déjà sur la bonne voie ! 💪`;
-    if(ml.includes('suppl')||ml.includes('whey')||ml.includes('créatine')||ml.includes('bcaa'))return `Les suppléments utiles : Whey protéine (post-training), Créatine monohydrate (5g/jour, prouvée scientifiquement), Vitamine D si peu de soleil, Oméga-3. Le reste est optionnel. L'alimentation solide reste la priorité absolue !`;
-    if(ml.includes('bonjour')||ml.includes('salut')||ml.includes('hello')||ml.includes('hey'))return `Salut ! 👋 Je suis ton coach IA Bodyscan. Je peux t\'aider avec ton entraînement, ta nutrition et ta récupération, adaptés à ton profil ${morph.toLowerCase()}. Pose-moi ta question !`;
-    return `Bonne question ! En tant que ${morph.toLowerCase()}, voici mon conseil : reste constant dans tes entraînements (3-5x/semaine), mange suffisamment de protéines (2g/kg/jour) et dors 7-8h/nuit. Utilise tes scans Bodyscan pour suivre ta progression. Tu veux que je détaille un aspect en particulier — training, nutrition ou récupération ?`;
 }
 
-// ===== VIDEO ANALYSIS (Elite) =====
-function handleVideo(e){
-    const f=e.target.files[0];if(!f)return;
-    if(!f.type.startsWith('video/')){toast('Sélectionne une vidéo');return}
-    const vr=document.getElementById('vidResults');if(!vr)return;
-    vr.hidden=false;document.getElementById('vidUpZone').hidden=true;
-    // Loading steps
-    const steps=['Détection du mouvement...','Analyse de la posture...','Évaluation des phases...','Scan des muscles ciblés...','Calcul du score final...'];
-    let si=0;
-    vr.innerHTML=`<div style="text-align:center;padding:40px 0"><div style="width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 16px"></div><p style="font:500 14px var(--f);color:var(--fg-2)" id="vidStep">${steps[0]}</p><div style="margin-top:12px;height:4px;background:var(--border);border-radius:2px;max-width:200px;margin-left:auto;margin-right:auto;overflow:hidden"><div id="vidProg" style="height:100%;width:0%;background:var(--grad);border-radius:2px;transition:width .5s ease"></div></div></div>`;
-    const stepIv=setInterval(()=>{si++;if(si<steps.length){document.getElementById('vidStep').textContent=steps[si];document.getElementById('vidProg').style.width=((si+1)/steps.length*100)+'%'}else{clearInterval(stepIv)}},700);
-    setTimeout(()=>{
-        clearInterval(stepIv);
-        const moveData={
-            Squat:{muscles:['Quadriceps','Fessiers','Ischio-jambiers'],tips:{conc:'Pousse le sol avec les talons, expire en montant',exc:'Descends en contrôlant 3 secondes, inspire',lock:'Verrouille les genoux sans hyper-extension'}},
-            'Développé couché':{muscles:['Pectoraux','Triceps','Deltoïdes antérieurs'],tips:{conc:'Pousse explosif en expirant, coudes à 45°',exc:'Descente lente 2-3s, barre au niveau des tétons',lock:'Contracte les pecs en haut sans claquer les coudes'}},
-            'Soulevé de terre':{muscles:['Ischio-jambiers','Fessiers','Érecteurs du rachis'],tips:{conc:'Pousse les hanches vers l\'avant, barre contre les tibias',exc:'Recule les hanches d\'abord, dos plat',lock:'Serre les fessiers en haut, épaules en arrière'}},
-            Fentes:{muscles:['Quadriceps','Fessiers','Mollets'],tips:{conc:'Pousse à travers le talon avant',exc:'Genou arrière frôle le sol, torse droit',lock:'Stabilise le bassin, pas de rotation'}},
-            Rowing:{muscles:['Grand dorsal','Trapèzes','Biceps'],tips:{conc:'Tire les coudes vers l\'arrière, serre les omoplates',exc:'Étends les bras complètement, étire le dos',lock:'Maintiens le buste à 45°, pas d\'élan'}},
-            Tractions:{muscles:['Grand dorsal','Biceps','Avant-bras'],tips:{conc:'Tire les coudes vers les hanches, menton au-dessus',exc:'Descends en 3 secondes, bras presque tendus',lock:'Engage les épaules, pas de balancement'}}
-        };
-        const moveNames=Object.keys(moveData);
-        const detected=moveNames[Math.floor(Math.random()*moveNames.length)];
-        const info=moveData[detected];
-        const formScore=Math.round(65+Math.random()*30);
-        const tempo=(2+Math.random()*2).toFixed(1);
-        const rom=Math.round(70+Math.random()*25);
-        const reps=Math.round(6+Math.random()*8);
-        const concScore=Math.round(60+Math.random()*35);
-        const excScore=Math.round(55+Math.random()*40);
-        const lockScore=Math.round(65+Math.random()*30);
-        const stability=Math.round(60+Math.random()*35);
-        function scoreColor(s){return s>=85?'#00C49A':s>=70?'#F0C800':'#FF6B6B'}
-        function scoreLabel(s){return s>=85?'Excellent':s>=70?'Bon':'À améliorer'}
-        const corrections=[];
-        if(excScore<75)corrections.push({text:'Contrôle davantage la phase excentrique (descente)',tip:info.tips.exc});
-        if(concScore<75)corrections.push({text:'Améliore l\'explosivité de la phase concentrique',tip:info.tips.conc});
-        if(stability<75)corrections.push({text:'Renforce ta stabilité — léger déséquilibre détecté',tip:'Travaille le gainage et les exercices unilatéraux'});
-        if(rom<80)corrections.push({text:'Augmente ton amplitude de mouvement',tip:'Travaille la mobilité articulaire avant ta séance'});
-        if(formScore<80)corrections.push({text:'Corrige l\'alignement du dos pendant le mouvement',tip:'Filme-toi de profil pour mieux voir ta posture'});
-        if(!corrections.length)corrections.push({text:'Excellent ! Maintiens cette qualité d\'exécution',tip:'Essaie d\'augmenter la charge progressivement (+2.5kg)'});
-        vr.innerHTML=`
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:12px">
-                <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px"><span style="font-size:28px">🎯</span><div><h4 style="font:700 18px var(--f-d);color:var(--fg)">${detected}</h4><p style="font:400 12px var(--f);color:var(--fg-2)">${reps} répétitions détectées · Tempo moyen ${tempo}s</p></div></div>
-                <div style="display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:16px">
-                    <div style="position:relative;width:90px;height:90px">
-                        <svg width="90" height="90" viewBox="0 0 90 90"><circle cx="45" cy="45" r="38" fill="none" stroke="var(--border)" stroke-width="6"/><circle cx="45" cy="45" r="38" fill="none" stroke="${scoreColor(formScore)}" stroke-width="6" stroke-dasharray="${formScore*2.39} 239" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 45 45)" style="transition:stroke-dasharray 1s ease"/></svg>
-                        <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font:800 24px var(--f-d);color:${scoreColor(formScore)}">${formScore}</span><span style="font:500 9px var(--f);color:var(--fg-2)">SCORE</span></div>
-                    </div>
-                    <div style="display:flex;flex-direction:column;gap:6px;flex:1">
-                        <div style="display:flex;justify-content:space-between;font:500 12px var(--f);color:var(--fg-2)"><span>Amplitude</span><span style="color:${scoreColor(rom)}">${rom}%</span></div>
-                        <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="height:100%;width:${rom}%;background:${scoreColor(rom)};border-radius:3px"></div></div>
-                        <div style="display:flex;justify-content:space-between;font:500 12px var(--f);color:var(--fg-2)"><span>Stabilité</span><span style="color:${scoreColor(stability)}">${stability}%</span></div>
-                        <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden"><div style="height:100%;width:${stability}%;background:${scoreColor(stability)};border-radius:3px"></div></div>
-                    </div>
-                </div>
-            </div>
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:12px">
-                <h4 style="font:600 14px var(--f-d);color:var(--fg);margin-bottom:14px">⚙️ Analyse par phase</h4>
-                <div style="display:flex;flex-direction:column;gap:10px">
-                    <div style="display:flex;align-items:center;gap:10px"><div style="width:8px;height:8px;border-radius:50%;background:${scoreColor(concScore)};flex-shrink:0"></div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font:500 12px var(--f);color:var(--fg)">Concentrique (montée)</span><span style="font:600 12px var(--f);color:${scoreColor(concScore)}">${concScore}% · ${scoreLabel(concScore)}</span></div><p style="font:400 11px var(--f);color:var(--fg-3)">${info.tips.conc}</p></div></div>
-                    <div style="display:flex;align-items:center;gap:10px"><div style="width:8px;height:8px;border-radius:50%;background:${scoreColor(excScore)};flex-shrink:0"></div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font:500 12px var(--f);color:var(--fg)">Excentrique (descente)</span><span style="font:600 12px var(--f);color:${scoreColor(excScore)}">${excScore}% · ${scoreLabel(excScore)}</span></div><p style="font:400 11px var(--f);color:var(--fg-3)">${info.tips.exc}</p></div></div>
-                    <div style="display:flex;align-items:center;gap:10px"><div style="width:8px;height:8px;border-radius:50%;background:${scoreColor(lockScore)};flex-shrink:0"></div><div style="flex:1"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font:500 12px var(--f);color:var(--fg)">Verrouillage (lockout)</span><span style="font:600 12px var(--f);color:${scoreColor(lockScore)}">${lockScore}% · ${scoreLabel(lockScore)}</span></div><p style="font:400 11px var(--f);color:var(--fg-3)">${info.tips.lock}</p></div></div>
-                </div>
-            </div>
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:12px">
-                <h4 style="font:600 14px var(--f-d);color:var(--fg);margin-bottom:12px">💪 Muscles ciblés</h4>
-                <div style="display:flex;flex-wrap:wrap;gap:6px">${info.muscles.map(m=>`<span style="padding:5px 12px;background:rgba(240,200,0,.1);border:1px solid rgba(240,200,0,.25);border-radius:20px;font:500 12px var(--f);color:var(--accent)">${m}</span>`).join('')}</div>
-            </div>
-            <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-l);padding:20px;margin-bottom:16px">
-                <h4 style="font:600 14px var(--f-d);color:var(--fg);margin-bottom:12px">🔧 Corrections recommandées</h4>
-                <div style="display:flex;flex-direction:column;gap:10px">
-                    ${corrections.map(c=>`<div style="display:flex;align-items:flex-start;gap:8px"><span style="color:var(--accent);font-weight:700;flex-shrink:0;margin-top:1px">→</span><div><p style="font:500 13px var(--f);color:var(--fg);margin-bottom:2px">${c.text}</p><p style="font:400 11px var(--f);color:var(--fg-3)">${c.tip}</p></div></div>`).join('')}
-                </div>
-            </div>
-            <button class="btn btn-o btn-full" onclick="resetVideo()">Analyser une autre vidéo</button>`;
-    },3500);
-}
-function resetVideo(){
-    const vr=document.getElementById('vidResults');if(vr){vr.hidden=true;vr.innerHTML=''}
-    const uz=document.getElementById('vidUpZone');if(uz)uz.hidden=false;
-    const vi=document.getElementById('vidIn');if(vi)vi.value='';
-}
+
 </script>
