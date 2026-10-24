@@ -730,11 +730,11 @@ img { max-width: 100% }
 <!-- NAV -->
 <nav id="nav">
 <div class="nav-in">
-    <a href="#" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
+    <a href="javascript:void(0)" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
     <div class="n-links" id="nlinks">
-        <a href="#features" class="n-link">Fonctionnalités</a>
-        <a href="#how" class="n-link">Comment ça marche</a>
-        <a href="#pricing" class="n-link">Tarifs</a>
+        <a href="javascript:void(0)" class="n-link" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Fonctionnalités</a>
+        <a href="javascript:void(0)" class="n-link" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Comment ça marche</a>
+        <a href="javascript:void(0)" class="n-link" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Tarifs</a>
     </div>
     <div class="n-acts" id="nacts">
         <button class="btn btn-g" id="navLoginD" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Connexion</button>
@@ -743,9 +743,9 @@ img { max-width: 100% }
     <button class="burger" id="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 </div>
 <div class="mob-menu" id="mob-menu">
-    <a href="#features" class="mob-link" onclick="toggleMenu()">Fonctionnalités</a>
-    <a href="#how" class="mob-link" onclick="toggleMenu()">Comment ça marche</a>
-    <a href="#pricing" class="mob-link" onclick="toggleMenu()">Tarifs</a>
+    <a href="javascript:void(0)" class="mob-link" onclick="toggleMenu();document.getElementById('features').scrollIntoView({behavior:'smooth'})">Fonctionnalités</a>
+    <a href="javascript:void(0)" class="mob-link" onclick="toggleMenu();document.getElementById('how').scrollIntoView({behavior:'smooth'})">Comment ça marche</a>
+    <a href="javascript:void(0)" class="mob-link" onclick="toggleMenu();document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Tarifs</a>
     <div class="mob-acts">
         <button class="btn btn-g" id="navLoginM" onclick="toggleMenu();document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Connexion</button>
         <button class="btn btn-p" onclick="toggleMenu();document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Commencer</button>
@@ -872,9 +872,9 @@ img { max-width: 100% }
     <div class="ft-in">
         <div class="ft-brand"><span class="logo"><span class="logo-i">&#x2B21;</span> Bodyscan</span><p>L'analyse morphologique propulsée par l'IA.</p></div>
         <div class="ft-links">
-            <div class="ft-col"><h4>Produit</h4><a href="#">Fonctionnalités</a><a href="#">Tarifs</a><a href="#">FAQ</a></div>
-            <div class="ft-col"><h4>Légal</h4><a href="#">CGU</a><a href="#">Confidentialité</a><a href="#">Mentions légales</a></div>
-            <div class="ft-col"><h4>Contact</h4><a href="#">Support</a><a href="#">Instagram</a><a href="#">TikTok</a></div>
+            <div class="ft-col"><h4>Produit</h4><a href="javascript:void(0)" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Fonctionnalités</a><a href="javascript:void(0)" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Tarifs</a><a href="javascript:void(0)">FAQ</a></div>
+            <div class="ft-col"><h4>Légal</h4><a href="javascript:void(0)">CGU</a><a href="javascript:void(0)">Confidentialité</a><a href="javascript:void(0)">Mentions légales</a></div>
+            <div class="ft-col"><h4>Contact</h4><a href="javascript:void(0)">Support</a><a href="javascript:void(0)">Instagram</a><a href="javascript:void(0)">TikTok</a></div>
         </div>
     </div>
     <div class="ft-bot"><p>&copy; 2026 Bodyscan · <a href="confidentialite.html" style="color:inherit">Confidentialité</a> · <a href="cgu.html" style="color:inherit">CGU</a></p></div>
@@ -885,7 +885,7 @@ img { max-width: 100% }
 <section class="vw" id="vw-login">
 <div class="auth-pg"><div class="auth-cd">
     <div class="auth-hd">
-        <a href="#" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
+        <a href="javascript:void(0)" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
         <h2>Content de te revoir</h2><p>Connecte-toi pour accéder à tes scans</p>
     </div>
     <form class="auth-f" onsubmit="handleLogin(event)">
@@ -895,7 +895,7 @@ img { max-width: 100% }
     </form>
     <div class="auth-div"><span>ou</span></div>
     <button class="btn-soc" onclick="handleGoogleLogin()"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.8h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.32z" fill="#4285F4"/><path d="M10 20c2.7 0 4.96-.9 6.62-2.42l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.58-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/><path d="M4.42 11.92A6.01 6.01 0 014.1 10c0-.66.12-1.31.32-1.92V5.5H1.08A9.99 9.99 0 000 10c0 1.61.39 3.14 1.08 4.5l3.34-2.58z" fill="#FBBC05"/><path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.5l3.34 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/></svg> Continuer avec Google</button>
-    <p class="auth-sw">Pas encore de compte ? <a href="#" onclick="goTo('signup')">Créer un compte</a></p>
+    <p class="auth-sw">Pas encore de compte ? <a href="javascript:void(0)" onclick="goTo('signup')">Créer un compte</a></p>
 </div></div>
 </section>
 
@@ -903,7 +903,7 @@ img { max-width: 100% }
 <section class="vw" id="vw-signup">
 <div class="auth-pg"><div class="auth-cd">
     <div class="auth-hd">
-        <a href="#" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
+        <a href="javascript:void(0)" class="logo" onclick="goTo('landing')"><span class="logo-i">&#x2B21;</span> Bodyscan</a>
         <h2>Crée ton compte</h2><p>Utilise le même email que sur Whop</p>
     </div>
     <form class="auth-f" onsubmit="handleSignup(event)">
@@ -927,7 +927,7 @@ img { max-width: 100% }
     </form>
     <div class="auth-div"><span>ou</span></div>
     <button class="btn-soc" onclick="handleGoogleSignup()"><svg width="18" height="18" viewBox="0 0 20 20"><path d="M19.6 10.23c0-.68-.06-1.36-.17-2H10v3.8h5.38a4.6 4.6 0 01-2 3.02v2.5h3.24c1.89-1.74 2.98-4.3 2.98-7.32z" fill="#4285F4"/><path d="M10 20c2.7 0 4.96-.9 6.62-2.42l-3.24-2.5c-.9.6-2.04.96-3.38.96-2.6 0-4.8-1.76-5.58-4.12H1.08v2.58A9.99 9.99 0 0010 20z" fill="#34A853"/><path d="M4.42 11.92A6.01 6.01 0 014.1 10c0-.66.12-1.31.32-1.92V5.5H1.08A9.99 9.99 0 000 10c0 1.61.39 3.14 1.08 4.5l3.34-2.58z" fill="#FBBC05"/><path d="M10 3.96c1.47 0 2.78.5 3.82 1.5l2.86-2.86C14.96.99 12.7 0 10 0A9.99 9.99 0 001.08 5.5l3.34 2.58C5.2 5.72 7.4 3.96 10 3.96z" fill="#EA4335"/></svg> Continuer avec Google</button>
-    <p class="auth-sw">Déjà un compte ? <a href="#" onclick="goTo('login')">Se connecter</a></p>
+    <p class="auth-sw">Déjà un compte ? <a href="javascript:void(0)" onclick="goTo('login')">Se connecter</a></p>
 </div></div>
 </section>
 
@@ -936,12 +936,12 @@ img { max-width: 100% }
 <div class="dash">
     <div class="d-side">
         <nav class="d-nav">
-            <a href="#" class="d-link on" onclick="switchTab(this,'dp-home')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3L17 10V17H12V13H8V17H3V10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Accueil</a>
-            <a href="#" class="d-link" onclick="switchTab(this,'dp-scan')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg> Scan</a>
-            <a href="#" class="d-link" onclick="switchTab(this,'dp-hist')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 5H16M4 10H16M4 15H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Historique</a>
-            <a href="#" class="d-link" onclick="switchTab(this,'dp-coach')" id="nav-coach" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 14V6C3 4.9 3.9 4 5 4H15C16.1 4 17 4.9 17 6V12C17 13.1 16.1 14 15 14H7L3 17V14Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Coach IA</a>
-            <a href="#" class="d-link" onclick="switchTab(this,'dp-video')" id="nav-video" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M14 8L18 5V15L14 12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Vidéo</a>
-            <a href="#" class="d-link" onclick="switchTab(this,'dp-prof')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18C3 14 6 12 10 12C14 12 17 14 17 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Profil</a>
+            <a href="javascript:void(0)" class="d-link on" onclick="switchTab(this,'dp-home')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 10L10 3L17 10V17H12V13H8V17H3V10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Accueil</a>
+            <a href="javascript:void(0)" class="d-link" onclick="switchTab(this,'dp-scan')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg> Scan</a>
+            <a href="javascript:void(0)" class="d-link" onclick="switchTab(this,'dp-hist')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 5H16M4 10H16M4 15H12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Historique</a>
+            <a href="javascript:void(0)" class="d-link" onclick="switchTab(this,'dp-coach')" id="nav-coach" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 14V6C3 4.9 3.9 4 5 4H15C16.1 4 17 4.9 17 6V12C17 13.1 16.1 14 15 14H7L3 17V14Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Coach IA</a>
+            <a href="javascript:void(0)" class="d-link" onclick="switchTab(this,'dp-video')" id="nav-video" hidden><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="2" y="4" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M14 8L18 5V15L14 12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg> Vidéo</a>
+            <a href="javascript:void(0)" class="d-link" onclick="switchTab(this,'dp-prof')"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18C3 14 6 12 10 12C14 12 17 14 17 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Profil</a>
         </nav>
         <button class="btn btn-g d-lo" onclick="handleLogout()"><svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M6 15H3V3H6M12 12L15 9L12 6M7 9H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Déconnexion</button>
     </div>
