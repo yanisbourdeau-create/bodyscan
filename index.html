@@ -1210,7 +1210,7 @@ async function api(action,payload){
     if(!r.ok)throw Object.assign(new Error(j.error||('Erreur '+r.status)),{code:j.code,status:r.status});
     return j;
 }
-const REDIRECT=location.origin+location.pathname;
+const REDIRECT=window.top===window?location.origin+location.pathname:'https://bodyscan.site';
 async function handleLogin(e){e.preventDefault();const em=document.getElementById('l-email').value.trim();
     const {error}=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:REDIRECT,shouldCreateUser:true}});
     toast(error?('Erreur : '+error.message):'Lien envoyé à '+em+' — ouvre ton email ✉️')}
@@ -1219,7 +1219,17 @@ async function handleSignup(e){e.preventDefault();const em=document.getElementBy
     try{localStorage.setItem('bs_profile',JSON.stringify(meta))}catch(_){}
     const {error}=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:REDIRECT,data:meta}});
     toast(error?('Erreur : '+error.message):'Lien envoyé à '+em+' — ouvre ton email ✉️')}
-async function oauthGoogle(){const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:REDIRECT}});if(error)toast('Erreur Google : '+error.message)}
+async function oauthGoogle(){
+    const redir=window.top!==window?'https://yanisbourdeau-create.github.io/bodyscan/':REDIRECT;
+    if(window.top!==window){
+        const {data,error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:redir,skipBrowserRedirect:true}});
+        if(error)return toast('Erreur Google : '+error.message);
+        if(data?.url)window.top.location.href=data.url;
+    } else {
+        const {error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:redir}});
+        if(error)toast('Erreur Google : '+error.message);
+    }
+}
 function handleGoogleLogin(){oauthGoogle()}
 function handleGoogleSignup(){oauthGoogle()}
 async function handleLogout(){await sb.auth.signOut();user=null;hist=[];try{localStorage.removeItem('bs_hist')}catch(e){}goTo('landing');toast('Déconnexion réussie')}
