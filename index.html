@@ -821,7 +821,7 @@ img { max-width: 100% }
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Programme d'entraînement</li>
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Fiche partageable</li>
             </ul>
-            <button class="btn btn-o btn-full" onclick="openWhop()">Commencer</button>
+            <button class="btn btn-o btn-full" onclick="openWhop('pro')">Commencer</button>
         </div>
         <div class="pr-c pr-pop">
             <div class="pr-badge">Le + populaire</div>
@@ -833,7 +833,7 @@ img { max-width: 100% }
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Suivi progression</li>
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Plan nutrition détaillé</li>
             </ul>
-            <button class="btn btn-p btn-full" onclick="openWhop()">Commencer</button>
+            <button class="btn btn-p btn-full" onclick="openWhop('premium')">Commencer</button>
         </div>
         <div class="pr-c">
             <div class="pr-hd"><h3>Elite</h3><div class="pr-price"><span class="pr-amt">24,99€</span><span class="pr-per">/mois</span></div><p class="pr-desc">L'expérience ultime</p></div>
@@ -844,7 +844,7 @@ img { max-width: 100% }
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Accès prioritaire</li>
                 <li><svg class="ck" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#F0C800" stroke-width="1.5"/><path d="M6 9L8 11L12 7" stroke="#F0C800" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Support dédié 24/7</li>
             </ul>
-            <button class="btn btn-o btn-full" onclick="openWhop()">Commencer</button>
+            <button class="btn btn-o btn-full" onclick="openWhop('elite')">Commencer</button>
         </div>
     </div>
 </div>
@@ -1127,20 +1127,20 @@ img { max-width: 100% }
                 <h4>Pro</h4>
                 <div class="pw-price">7,99€ <span>/mois</span></div>
                 <ul class="pw-feats"><li>5 scans / mois</li><li>Analyse morphotype</li><li>Programme training</li></ul>
-                <button class="btn btn-o btn-full btn-sm" onclick="openWhop()">Commencer</button>
+                <button class="btn btn-o btn-full btn-sm" onclick="openWhop('pro')">Commencer</button>
             </div>
             <div class="pw-card pw-pop">
                 <div class="pw-pop-badge">Populaire</div>
                 <h4>Premium</h4>
                 <div class="pw-price">14,99€ <span>/mois</span></div>
                 <ul class="pw-feats"><li>Scans illimités</li><li>Analyse avancée</li><li>Programme perso</li><li>Nutrition détaillée</li></ul>
-                <button class="btn btn-p btn-full btn-sm" onclick="openWhop()">Commencer</button>
+                <button class="btn btn-p btn-full btn-sm" onclick="openWhop('premium')">Commencer</button>
             </div>
             <div class="pw-card">
                 <h4>Elite</h4>
                 <div class="pw-price">24,99€ <span>/mois</span></div>
                 <ul class="pw-feats"><li>Tout Premium</li><li>Coach IA</li><li>Analyse vidéo (bientôt)</li><li>Résultats illimités</li></ul>
-                <button class="btn btn-o btn-full btn-sm" onclick="openWhop()">Commencer</button>
+                <button class="btn btn-o btn-full btn-sm" onclick="openWhop('elite')">Commencer</button>
             </div>
         </div>
     </div>
@@ -1194,9 +1194,14 @@ function switchTab(el,id){
 // ===== CONFIG =====
 const SB_URL='https://nlpdfvsluujyfzakojsz.supabase.co';
 const SB_ANON='sb_publishable_yONZOOzmdwpyOc_kgrHdWg_0uN7MM_s';
-const WHOP_URL='https://whop.com/bodyscan/';
+const WHOP_URLS={
+    pro:'https://whop.com/bodyscan/products/bodyscan-pro-97/',
+    premium:'https://whop.com/bodyscan/products/bodyscan-premium/',
+    elite:'https://whop.com/bodyscan/products/bodyscan-elite/',
+    default:'https://whop.com/bodyscan/'
+};
 const sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-function openWhop(){window.open(WHOP_URL,'_blank')}
+function openWhop(tier){window.open(WHOP_URLS[tier]||WHOP_URLS.default,'_blank')}
 async function api(action,payload){
     const {data:{session}}=await sb.auth.getSession();
     if(!session)throw Object.assign(new Error('Connecte-toi'),{code:'auth'});
