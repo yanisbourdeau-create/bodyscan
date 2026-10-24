@@ -15,7 +15,7 @@ const json = (b: unknown, s = 200) =>
 const SB_URL = Deno.env.get("SUPABASE_URL")!;
 const SB_SERVICE = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const admin = createClient(SB_URL, SB_SERVICE);
-const MODEL = Deno.env.get("ANTHROPIC_MODEL") || "claude-sonnet-5-5";
+const MODEL = Deno.env.get("ANTHROPIC_MODEL") || "claude-sonnet-4-5-20250514";
 const RANK: Record<string, number> = { pro: 1, premium: 2, elite: 3 };
 const PRO_MONTHLY_SCANS = 5;
 
