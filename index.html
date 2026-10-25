@@ -1,6 +1,13 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bodyscan</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Découvre ton morphotype en 30 secondes grâce à l'IA. Analyse ta silhouette et reçois un plan personnalisé.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+</head>
+<body>
 
 <style>
 /* Dark-first fitness app — deliberately single-theme dark */
@@ -1093,7 +1100,7 @@ img { max-width: 100% }
                 <div class="rc-st"><span class="rc-st-l">Points forts</span><span class="rc-st-v" id="rcStr">—</span></div>
             </div>
         </div>
-        <div class="rc-ft"><span>bodyscan.io</span><span>Scanne-toi aussi →</span></div>
+        <div class="rc-ft"><span>bodyscan.site</span><span>Scanne-toi aussi →</span></div>
     </div>
     <div class="res-det" id="resDet">
         <div class="res-sec"><h3><svg width="20" height="20" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M3 20C3 15 6 13 11 13C16 13 19 15 19 20" stroke="currentColor" stroke-width="1.5"/></svg> Ton morphotype</h3><div class="morph-det"><p id="morphDesc"></p></div></div>
@@ -1331,7 +1338,10 @@ function clearUp(){document.getElementById('upz').hidden=false;document.getEleme
 
 function compressImg(src,max=1280){return new Promise((res,rej)=>{const im=new Image();im.onload=()=>{const k=Math.min(1,max/Math.max(im.width,im.height));const c=document.createElement('canvas');c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);res(c.toDataURL('image/jpeg',0.85))};im.onerror=rej;im.src=src})}
 async function startScan(){
-    const h=document.getElementById('scH').value,w=document.getElementById('scW').value,sx=document.querySelector('input[name="scSex"]:checked').value;
+    const h=document.getElementById('scH').value,w=document.getElementById('scW').value;
+    const sxEl=document.querySelector('input[name="scSex"]:checked');
+    if(!sxEl){toast('Sélectionne ton sexe');return}
+    const sx=sxEl.value;
     const pi=document.getElementById('prevImg');
     if(!pi||!pi.src||!pi.src.startsWith('data:')){toast('Ajoute une photo');return}
     if(!h||!w){toast('Remplis taille et poids');return}
@@ -1442,8 +1452,8 @@ function resetScan(){['sd1','sd2','sd3','sd4','sd5'].forEach(id=>{const el=docum
 document.getElementById('scBarF').style.width='0%';document.getElementById('scPct').textContent='0%';document.getElementById('scStat').textContent='Analyse en cours...'}
 
 function shareR(){
-    const txt='Je viens de découvrir mon morphotype avec Bodyscan ! 💪 Scanne-toi aussi → bodyscan.io';
-    if(navigator.share){navigator.share({title:'Mon analyse Bodyscan',text:txt,url:'https://bodyscan.io'}).catch(()=>{})}
+    const txt='Je viens de découvrir mon morphotype avec Bodyscan ! 💪 Scanne-toi aussi → bodyscan.site';
+    if(navigator.share){navigator.share({title:'Mon analyse Bodyscan',text:txt,url:'https://bodyscan.site'}).catch(()=>{})}
     else{try{navigator.clipboard.writeText(txt).then(()=>toast('Lien copié !'))}catch(e){toast('Copie non disponible')}}
 }
 
@@ -1542,3 +1552,5 @@ async function askCoach(msg){
 
 
 </script>
+</body>
+</html>
