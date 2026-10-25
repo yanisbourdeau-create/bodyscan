@@ -19,6 +19,9 @@ const MODEL = Deno.env.get("ANTHROPIC_MODEL") || "claude-sonnet-4-5-20250514";
 const RANK: Record<string, number> = { pro: 1, premium: 2, elite: 3 };
 const PRO_MONTHLY_SCANS = 5;
 
+// Admin emails — accès Elite gratuit (propriétaire)
+const ADMIN_EMAILS = (Deno.env.get("ADMIN_EMAILS") || "fdbyanis@gmail.com").toLowerCase().split(",").map(e => e.trim());
+
 const ids = (k: string) => (Deno.env.get(k) || "").split(",").map((s) => s.trim()).filter(Boolean);
 
 function tierOf(m: any): string | null {
@@ -37,6 +40,8 @@ function tierOf(m: any): string | null {
 // Cherche un abonnement Whop actif pour cet email (cache 10 min en base)
 async function getPlan(email: string): Promise<string | null> {
   const em = email.toLowerCase();
+  // Admin bypass — accès Elite sans abonnement Whop
+  if (ADMIN_EMAILS.includes(em)) return "elite";
   const { data: cached } = await admin.from("subscriptions").select("*").eq("email", em).maybeSingle();
   if (cached && Date.now() - new Date(cached.checked_at).getTime() < 10 * 60 * 1000) return cached.plan;
 
