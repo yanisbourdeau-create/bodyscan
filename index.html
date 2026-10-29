@@ -1173,9 +1173,12 @@ function canScan(){
 
 window.addEventListener('load',()=>{loadSession();setTimeout(()=>{document.getElementById('app-loader').classList.add('hid')},1200)});
 
+let _navLock=false;
 function goTo(v){
+    if(v===cv||_navLock)return;
     const cur=document.querySelector('.vw.on'),nxt=document.getElementById('vw-'+v);
     if(!nxt||cur===nxt)return;
+    _navLock=true;
     const nl=document.getElementById('nlinks'),na=document.getElementById('nacts');
     if(v==='dashboard'||v==='scanning'||v==='results'){if(nl)nl.hidden=true;if(na)na.hidden=true}
     else{if(nl)nl.hidden=false;if(na)na.hidden=false}
@@ -1185,6 +1188,7 @@ function goTo(v){
         window.scrollTo({top:0,behavior:'instant'});
         requestAnimationFrame(()=>{requestAnimationFrame(()=>{nxt.style.opacity='1';nxt.style.transform='translateY(0)'})});
         cv=v;
+        _navLock=false;
     },280);
 }
 
@@ -1254,11 +1258,16 @@ function setUserFromSession(session){
 }
 async function loadSession(){
     try{const h=localStorage.getItem('bs_hist');if(h)hist=JSON.parse(h)}catch(e){}
+    let initialAuth=false;
     const {data:{session}}=await sb.auth.getSession();
-    if(session){setUserFromSession(session);updDash();goTo('dashboard');await refreshPlan(false)}
+    if(session){initialAuth=true;setUserFromSession(session);updDash();goTo('dashboard');await refreshPlan(false)}
     sb.auth.onAuthStateChange((ev,session)=>{
-        if(ev==='SIGNED_IN'&&session&&(!user||user.id!==session.user.id)){setUserFromSession(session);updDash();goTo('dashboard');refreshPlan(false);toast('Connexion réussie ✓')}
-        if(ev==='SIGNED_OUT'){user=null}
+        if(ev==='SIGNED_IN'&&session){
+            if(initialAuth&&user&&user.id===session.user.id){initialAuth=false;return}
+            initialAuth=false;
+            setUserFromSession(session);updDash();goTo('dashboard');refreshPlan(false);toast('Connexion réussie ✓');
+        }
+        if(ev==='SIGNED_OUT'){user=null;initialAuth=false}
     });
 }
 function updDash(){
