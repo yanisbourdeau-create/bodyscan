@@ -1221,7 +1221,7 @@ async function api(action,payload){
     if(!r.ok)throw Object.assign(new Error(j.error||('Erreur '+r.status)),{code:j.code,status:r.status});
     return j;
 }
-const REDIRECT=window.top===window?location.origin+location.pathname:'https://bodyscan.site';
+const REDIRECT=window.top===window?location.origin+location.pathname:'https://bodyscan-vercel.vercel.app';
 async function handleLogin(e){e.preventDefault();const em=document.getElementById('l-email').value.trim();
     const {error}=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:REDIRECT,shouldCreateUser:true}});
     toast(error?('Erreur : '+error.message):'Lien envoyé à '+em+' — ouvre ton email ✉️')}
@@ -1231,7 +1231,7 @@ async function handleSignup(e){e.preventDefault();const em=document.getElementBy
     const {error}=await sb.auth.signInWithOtp({email:em,options:{emailRedirectTo:REDIRECT,data:meta}});
     toast(error?('Erreur : '+error.message):'Lien envoyé à '+em+' — ouvre ton email ✉️')}
 async function oauthGoogle(){
-    const redir=window.top!==window?'https://yanisbourdeau-create.github.io/bodyscan/':REDIRECT;
+    const redir=window.top!==window?'https://bodyscan-vercel.vercel.app':REDIRECT;
     if(window.top!==window){
         const {data,error}=await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:redir,skipBrowserRedirect:true}});
         if(error)return toast('Erreur Google : '+error.message);
