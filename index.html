@@ -744,8 +744,8 @@ img { max-width: 100% }
         <a href="javascript:void(0)" class="n-link" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Tarifs</a>
     </div>
     <div class="n-acts" id="nacts">
-        <button class="btn btn-g" id="navLoginD" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Connexion</button>
-        <button class="btn btn-p btn-sm" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Commencer</button>
+        <button class="btn btn-g" id="navLoginD" onclick="enterApp()">Connexion</button>
+        <button class="btn btn-p btn-sm" onclick="enterApp()">Commencer</button>
     </div>
     <button class="burger" id="burger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 </div>
@@ -754,8 +754,8 @@ img { max-width: 100% }
     <a href="javascript:void(0)" class="mob-link" onclick="toggleMenu();document.getElementById('how').scrollIntoView({behavior:'smooth'})">Comment ça marche</a>
     <a href="javascript:void(0)" class="mob-link" onclick="toggleMenu();document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Tarifs</a>
     <div class="mob-acts">
-        <button class="btn btn-g" id="navLoginM" onclick="toggleMenu();document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Connexion</button>
-        <button class="btn btn-p" onclick="toggleMenu();document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Commencer</button>
+        <button class="btn btn-g" id="navLoginM" onclick="toggleMenu();enterApp()">Connexion</button>
+        <button class="btn btn-p" onclick="toggleMenu();enterApp()">Commencer</button>
     </div>
 </div>
 </nav>
@@ -772,7 +772,7 @@ img { max-width: 100% }
         <h1 class="h-title">Découvre ton <span class="gt">morphotype</span> en 30 secondes</h1>
         <p class="h-sub">Une simple photo suffit. Notre IA analyse ta silhouette et génère un plan personnalisé pour atteindre tes objectifs.</p>
         <div class="h-cta">
-            <button class="btn btn-p btn-lg" onclick="goTo('signup')">Scanner mon corps <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="btn btn-p btn-lg" onclick="enterApp()">Scanner mon corps <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
             <button class="btn btn-o btn-lg" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">Voir la démo</button>
         </div>
         <div class="h-stats">
@@ -871,7 +871,7 @@ img { max-width: 100% }
         <div class="cta-orb"></div>
         <h2>Prêt à découvrir ton <span class="gt">potentiel</span> ?</h2>
         <p>Une photo, et l'IA te dit par où commencer.</p>
-        <button class="btn btn-p btn-lg" onclick="goTo('signup')">Commencer <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="btn btn-p btn-lg" onclick="enterApp()">Commencer <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
 </div>
 
@@ -1215,11 +1215,17 @@ const sb=supabase.createClient(SB_URL,SB_ANON,{auth:{persistSession:true,autoRef
 function openWhop(tier){window.open(WHOP_URLS[tier]||WHOP_URLS.default,'_blank')}
 async function api(action,payload){
     const {data:{session}}=await sb.auth.getSession();
-    if(!session)throw Object.assign(new Error('Connecte-toi'),{code:'auth'});
-    const r=await fetch(SB_URL+'/functions/v1/rapid-apiapi',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+session.access_token,apikey:SB_ANON},body:JSON.stringify({action,...payload})});
+    const headers={'Content-Type':'application/json',apikey:SB_ANON};
+    if(session)headers['Authorization']='Bearer '+session.access_token;
+    else headers['Authorization']='Bearer '+SB_ANON;
+    const r=await fetch(SB_URL+'/functions/v1/rapid-apiapi',{method:'POST',headers,body:JSON.stringify({action,...payload})});
     const j=await r.json().catch(()=>({error:'Réponse invalide'}));
     if(!r.ok)throw Object.assign(new Error(j.error||('Erreur '+r.status)),{code:j.code,status:r.status});
     return j;
+}
+function enterApp(){
+    if(!user)user={id:'guest',email:'guest@bodyscan.io',name:'Utilisateur',age:'',goal:'',plan:'premium'};
+    updDash();goTo('dashboard');
 }
 const REDIRECT=window.top===window?location.origin+location.pathname:'https://bodyscan-vercel.vercel.app';
 async function handleLogin(e){e.preventDefault();const em=document.getElementById('l-email').value.trim();
@@ -1354,8 +1360,7 @@ async function startScan(){
     const pi=document.getElementById('prevImg');
     if(!pi||!pi.src||!pi.src.startsWith('data:')){toast('Ajoute une photo');return}
     if(!h||!w){toast('Remplis taille et poids');return}
-    if(!getUserPlan()){toast('Abonne-toi pour lancer un scan');goTo('landing');setTimeout(()=>{document.getElementById('pricing').scrollIntoView({behavior:'smooth'})},350);return}
-    if(!canScan()){toast('Limite de 5 scans/mois atteinte. Passe en Premium pour des scans illimités !');return}
+    if(!user)user={id:'guest',email:'guest@bodyscan.io',name:'Utilisateur',age:'',goal:'',plan:'premium'};
     goTo('scanning');
     const steps=['Détection de la silhouette...','Analyse des proportions...','Calcul du morphotype...','Évaluation musculaire...','Génération des recommandations...'];
     let i=0;const setP=(p,t)=>{document.getElementById('scBarF').style.width=p+'%';document.getElementById('scPct').textContent=p+'%';document.getElementById('scStat').textContent=t};
